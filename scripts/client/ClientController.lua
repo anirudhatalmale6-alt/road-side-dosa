@@ -922,16 +922,23 @@ Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nigh
 		if cctvFilter then cctvFilter.Enabled = false end
 	end
 
-	-- Reset lighting/atmosphere to defaults (undo dark atmosphere from previous night)
-	Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+	-- Reset lighting/atmosphere to lobby defaults (server's setNightAtmosphere will darken)
+	Lighting.Brightness = 2
+	Lighting.ClockTime = 14
 	Lighting.FogEnd = 1000
 	Lighting.FogStart = 0
-	local atmosphere = Lighting:FindFirstChild("Atmosphere")
+	Lighting.Ambient = Color3.new(0.5, 0.5, 0.5)
+	Lighting.OutdoorAmbient = Color3.new(0.4, 0.4, 0.4)
+	local atmosphere = Lighting:FindFirstChild("NightAtmosphere")
 	if atmosphere then
 		atmosphere.Density = 0
+		atmosphere.Glare = 0
+		atmosphere.Haze = 0
 	end
-	local bloom = Lighting:FindFirstChild("Bloom")
+	local bloom = Lighting:FindFirstChild("HorrorBloom")
 	if bloom then bloom.Enabled = false end
+	local colorEffect = Lighting:FindFirstChild("HorrorColor")
+	if colorEffect then colorEffect.Enabled = false end
 	local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
 	if cctvFilter then cctvFilter.Enabled = false end
 
@@ -1096,12 +1103,21 @@ if retryBtn then
 		phoneScreenGui.Enabled = false
 		cctvScreenGui.Enabled = false
 
-		-- Reset lighting
-		Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+		-- Reset lighting to lobby defaults
+		Lighting.Brightness = 2
+		Lighting.ClockTime = 14
 		Lighting.FogEnd = 1000
 		Lighting.FogStart = 0
+		Lighting.Ambient = Color3.new(0.5, 0.5, 0.5)
+		Lighting.OutdoorAmbient = Color3.new(0.4, 0.4, 0.4)
 		local cctvFilter2 = Lighting:FindFirstChild("CCTVFilter")
 		if cctvFilter2 then cctvFilter2.Enabled = false end
+		local horrorColor = Lighting:FindFirstChild("HorrorColor")
+		if horrorColor then horrorColor.Enabled = false end
+		local horrorBloom = Lighting:FindFirstChild("HorrorBloom")
+		if horrorBloom then horrorBloom.Enabled = false end
+		local nightAtmo = Lighting:FindFirstChild("NightAtmosphere")
+		if nightAtmo then nightAtmo.Density = 0; nightAtmo.Glare = 0; nightAtmo.Haze = 0 end
 
 		-- Reset camera
 		camera.CameraType = Enum.CameraType.Custom
@@ -1798,4 +1814,4 @@ end)
 -- Initialize CCTV
 initCCTV()
 
-print("[ClientController] v4.1 — Client initialized for " .. player.Name)
+print("[ClientController] v4.2 — Client initialized for " .. player.Name)

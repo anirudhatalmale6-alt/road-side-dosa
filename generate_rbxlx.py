@@ -1018,7 +1018,7 @@ def build_ui():
                         bg_color=(0.15,0.4,0.15), text_color=(1,1,1),
                         children=make_uicorner(10)),
         # Credits
-        make_textlabel("CreditsLabel", "v4.0", "0.85,0,0.92,0", "0.1,0,0,18",
+        make_textlabel("CreditsLabel", "v4.2", "0.85,0,0.92,0", "0.1,0,0,18",
                        text_color=(0.3,0.3,0.3), font=4),
         # Controls info
         make_textlabel("ControlsInfo",
@@ -1256,43 +1256,45 @@ def build_lighting():
     return f'''<Item class="Lighting" referent="{r}">
 <Properties>
 {prop_string("Name", "Lighting")}
-{prop_float("Brightness", 0.3)}
-{prop_float("ClockTime", 22)}
-{prop_color3("Ambient", 0.05, 0.03, 0.08)}
-{prop_color3("OutdoorAmbient", 0.03, 0.02, 0.05)}
-{prop_float("FogEnd", 180)}
-{prop_color3("FogColor", 0.04, 0.02, 0.06)}
+{prop_float("Brightness", 2)}
+{prop_float("ClockTime", 14)}
+{prop_color3("Ambient", 0.5, 0.5, 0.5)}
+{prop_color3("OutdoorAmbient", 0.4, 0.4, 0.4)}
+{prop_float("FogEnd", 1000)}
+{prop_color3("FogColor", 0.75, 0.75, 0.75)}
 {prop_token("Technology", 3)}
-{prop_float("EnvironmentDiffuseScale", 0.3)}
-{prop_float("EnvironmentSpecularScale", 0.2)}
+{prop_float("EnvironmentDiffuseScale", 1)}
+{prop_float("EnvironmentSpecularScale", 0.5)}
 {prop_bool("GlobalShadows", True)}
 </Properties>
 <Item class="Atmosphere" referent="{atmosphere_ref}">
 <Properties>
 {prop_string("Name", "NightAtmosphere")}
-{prop_float("Density", 0.35)}
+{prop_float("Density", 0)}
 {prop_float("Offset", 0)}
-{prop_color3("Color", 0.1, 0.08, 0.15)}
-{prop_color3("Decay", 0.5, 0.4, 0.6)}
-{prop_float("Glare", 0.1)}
-{prop_float("Haze", 3)}
+{prop_color3("Color", 0.7, 0.7, 0.8)}
+{prop_color3("Decay", 0.9, 0.9, 0.9)}
+{prop_float("Glare", 0)}
+{prop_float("Haze", 0)}
 </Properties>
 </Item>
 <Item class="BloomEffect" referent="{bloom_ref}">
 <Properties>
 {prop_string("Name", "HorrorBloom")}
-{prop_float("Intensity", 0.4)}
+{prop_float("Intensity", 0)}
 {prop_float("Size", 30)}
 {prop_float("Threshold", 1.5)}
+{prop_bool("Enabled", False)}
 </Properties>
 </Item>
 <Item class="ColorCorrectionEffect" referent="{color_ref}">
 <Properties>
 {prop_string("Name", "HorrorColor")}
-{prop_float("Brightness", -0.05)}
-{prop_float("Contrast", 0.15)}
-{prop_float("Saturation", -0.3)}
-{prop_color3("TintColor", 0.9, 0.85, 1)}
+{prop_float("Brightness", 0)}
+{prop_float("Contrast", 0)}
+{prop_float("Saturation", 0)}
+{prop_color3("TintColor", 1, 1, 1)}
+{prop_bool("Enabled", False)}
 </Properties>
 </Item>
 <Item class="ColorCorrectionEffect" referent="{cctv_filter_ref}">

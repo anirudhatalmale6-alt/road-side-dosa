@@ -4008,43 +4008,45 @@
 <Item class="Lighting" referent="RBX00000192">
 <Properties>
 <string name="Name">Lighting</string>
-<float name="Brightness">0.3</float>
-<float name="ClockTime">22</float>
-<Color3 name="Ambient"><R>0.05</R><G>0.03</G><B>0.08</B></Color3>
-<Color3 name="OutdoorAmbient"><R>0.03</R><G>0.02</G><B>0.05</B></Color3>
-<float name="FogEnd">180</float>
-<Color3 name="FogColor"><R>0.04</R><G>0.02</G><B>0.06</B></Color3>
+<float name="Brightness">2</float>
+<float name="ClockTime">14</float>
+<Color3 name="Ambient"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
+<Color3 name="OutdoorAmbient"><R>0.4</R><G>0.4</G><B>0.4</B></Color3>
+<float name="FogEnd">1000</float>
+<Color3 name="FogColor"><R>0.75</R><G>0.75</G><B>0.75</B></Color3>
 <token name="Technology">3</token>
-<float name="EnvironmentDiffuseScale">0.3</float>
-<float name="EnvironmentSpecularScale">0.2</float>
+<float name="EnvironmentDiffuseScale">1</float>
+<float name="EnvironmentSpecularScale">0.5</float>
 <bool name="GlobalShadows">true</bool>
 </Properties>
 <Item class="Atmosphere" referent="RBX00000193">
 <Properties>
 <string name="Name">NightAtmosphere</string>
-<float name="Density">0.35</float>
+<float name="Density">0</float>
 <float name="Offset">0</float>
-<Color3 name="Color"><R>0.1</R><G>0.08</G><B>0.15</B></Color3>
-<Color3 name="Decay"><R>0.5</R><G>0.4</G><B>0.6</B></Color3>
-<float name="Glare">0.1</float>
-<float name="Haze">3</float>
+<Color3 name="Color"><R>0.7</R><G>0.7</G><B>0.8</B></Color3>
+<Color3 name="Decay"><R>0.9</R><G>0.9</G><B>0.9</B></Color3>
+<float name="Glare">0</float>
+<float name="Haze">0</float>
 </Properties>
 </Item>
 <Item class="BloomEffect" referent="RBX00000194">
 <Properties>
 <string name="Name">HorrorBloom</string>
-<float name="Intensity">0.4</float>
+<float name="Intensity">0</float>
 <float name="Size">30</float>
 <float name="Threshold">1.5</float>
+<bool name="Enabled">false</bool>
 </Properties>
 </Item>
 <Item class="ColorCorrectionEffect" referent="RBX00000195">
 <Properties>
 <string name="Name">HorrorColor</string>
-<float name="Brightness">-0.05</float>
-<float name="Contrast">0.15</float>
-<float name="Saturation">-0.3</float>
-<Color3 name="TintColor"><R>0.9</R><G>0.85</G><B>1</B></Color3>
+<float name="Brightness">0</float>
+<float name="Contrast">0</float>
+<float name="Saturation">0</float>
+<Color3 name="TintColor"><R>1</R><G>1</G><B>1</B></Color3>
+<bool name="Enabled">false</bool>
 </Properties>
 </Item>
 <Item class="ColorCorrectionEffect" referent="RBX00000196">
@@ -4136,25 +4138,32 @@ local function setNightAtmosphere(nightNum)
 	Lighting.ClockTime = 22 + (nightNum * 0.5) -- Gets later each night (22:00 → 00:30)
 	Lighting.FogEnd = 200 - (nightNum * 30)
 	Lighting.FogColor = Color3.fromRGB(10 - nightNum, 5 - nightNum, 15 - nightNum * 2)
+	Lighting.Ambient = Color3.fromRGB(13, 8, 20)
+	Lighting.OutdoorAmbient = Color3.fromRGB(8, 5, 13)
 
 	local atmosphere = Lighting:FindFirstChild("NightAtmosphere")
 	if atmosphere then
 		atmosphere.Density = 0.3 + (nightNum * 0.08)
 		atmosphere.Glare = 0.05 + (nightNum * 0.03)
 		atmosphere.Haze = 2 + (nightNum * 1.5)
+		atmosphere.Color = Color3.new(0.1, 0.08, 0.15)
+		atmosphere.Decay = Color3.new(0.5, 0.4, 0.6)
 	end
 
-	-- Color correction gets more intense each night
+	-- Enable and intensify color correction each night
 	local colorEffect = Lighting:FindFirstChild("HorrorColor")
 	if colorEffect then
+		colorEffect.Enabled = true
 		colorEffect.Contrast = 0.15 + (nightNum * 0.05)
 		colorEffect.Saturation = -0.3 - (nightNum * 0.1)
 		colorEffect.Brightness = -0.05 - (nightNum * 0.02)
+		colorEffect.TintColor = Color3.new(0.9, 0.85, 1)
 	end
 
-	-- Bloom intensifies
+	-- Enable bloom and intensify
 	local bloom = Lighting:FindFirstChild("HorrorBloom")
 	if bloom then
+		bloom.Enabled = true
 		bloom.Intensity = 0.4 + (nightNum * 0.1)
 	end
 end
@@ -6480,7 +6489,7 @@ return NightData
 <Item class="TextLabel" referent="RBX00000114">
 <Properties>
 <string name="Name">CreditsLabel</string>
-<string name="Text">v4.0</string>
+<string name="Text">v4.2</string>
 <UDim2 name="Position"><XS>0.85</XS><XO>0</XO><YS>0.92</YS><YO>0</YO></UDim2>
 <UDim2 name="Size"><XS>0.1</XS><XO>0</XO><YS>0.0</YS><YO>18</YO></UDim2>
 <Color3 name="TextColor3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
@@ -8778,16 +8787,23 @@ Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nigh
 		if cctvFilter then cctvFilter.Enabled = false end
 	end
 
-	-- Reset lighting/atmosphere to defaults (undo dark atmosphere from previous night)
-	Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+	-- Reset lighting/atmosphere to lobby defaults (server's setNightAtmosphere will darken)
+	Lighting.Brightness = 2
+	Lighting.ClockTime = 14
 	Lighting.FogEnd = 1000
 	Lighting.FogStart = 0
-	local atmosphere = Lighting:FindFirstChild("Atmosphere")
+	Lighting.Ambient = Color3.new(0.5, 0.5, 0.5)
+	Lighting.OutdoorAmbient = Color3.new(0.4, 0.4, 0.4)
+	local atmosphere = Lighting:FindFirstChild("NightAtmosphere")
 	if atmosphere then
 		atmosphere.Density = 0
+		atmosphere.Glare = 0
+		atmosphere.Haze = 0
 	end
-	local bloom = Lighting:FindFirstChild("Bloom")
+	local bloom = Lighting:FindFirstChild("HorrorBloom")
 	if bloom then bloom.Enabled = false end
+	local colorEffect = Lighting:FindFirstChild("HorrorColor")
+	if colorEffect then colorEffect.Enabled = false end
 	local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
 	if cctvFilter then cctvFilter.Enabled = false end
 
@@ -8952,12 +8968,21 @@ if retryBtn then
 		phoneScreenGui.Enabled = false
 		cctvScreenGui.Enabled = false
 
-		-- Reset lighting
-		Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+		-- Reset lighting to lobby defaults
+		Lighting.Brightness = 2
+		Lighting.ClockTime = 14
 		Lighting.FogEnd = 1000
 		Lighting.FogStart = 0
+		Lighting.Ambient = Color3.new(0.5, 0.5, 0.5)
+		Lighting.OutdoorAmbient = Color3.new(0.4, 0.4, 0.4)
 		local cctvFilter2 = Lighting:FindFirstChild("CCTVFilter")
 		if cctvFilter2 then cctvFilter2.Enabled = false end
+		local horrorColor = Lighting:FindFirstChild("HorrorColor")
+		if horrorColor then horrorColor.Enabled = false end
+		local horrorBloom = Lighting:FindFirstChild("HorrorBloom")
+		if horrorBloom then horrorBloom.Enabled = false end
+		local nightAtmo = Lighting:FindFirstChild("NightAtmosphere")
+		if nightAtmo then nightAtmo.Density = 0; nightAtmo.Glare = 0; nightAtmo.Haze = 0 end
 
 		-- Reset camera
 		camera.CameraType = Enum.CameraType.Custom
@@ -9654,7 +9679,7 @@ end)
 -- Initialize CCTV
 initCCTV()
 
-print("[ClientController] v4.1 — Client initialized for " .. player.Name)
+print("[ClientController] v4.2 — Client initialized for " .. player.Name)
 ]]></ProtectedString>
 <bool name="Disabled">false</bool>
 </Properties>

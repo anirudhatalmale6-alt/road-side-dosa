@@ -67,25 +67,32 @@ local function setNightAtmosphere(nightNum)
 	Lighting.ClockTime = 22 + (nightNum * 0.5) -- Gets later each night (22:00 → 00:30)
 	Lighting.FogEnd = 200 - (nightNum * 30)
 	Lighting.FogColor = Color3.fromRGB(10 - nightNum, 5 - nightNum, 15 - nightNum * 2)
+	Lighting.Ambient = Color3.fromRGB(13, 8, 20)
+	Lighting.OutdoorAmbient = Color3.fromRGB(8, 5, 13)
 
 	local atmosphere = Lighting:FindFirstChild("NightAtmosphere")
 	if atmosphere then
 		atmosphere.Density = 0.3 + (nightNum * 0.08)
 		atmosphere.Glare = 0.05 + (nightNum * 0.03)
 		atmosphere.Haze = 2 + (nightNum * 1.5)
+		atmosphere.Color = Color3.new(0.1, 0.08, 0.15)
+		atmosphere.Decay = Color3.new(0.5, 0.4, 0.6)
 	end
 
-	-- Color correction gets more intense each night
+	-- Enable and intensify color correction each night
 	local colorEffect = Lighting:FindFirstChild("HorrorColor")
 	if colorEffect then
+		colorEffect.Enabled = true
 		colorEffect.Contrast = 0.15 + (nightNum * 0.05)
 		colorEffect.Saturation = -0.3 - (nightNum * 0.1)
 		colorEffect.Brightness = -0.05 - (nightNum * 0.02)
+		colorEffect.TintColor = Color3.new(0.9, 0.85, 1)
 	end
 
-	-- Bloom intensifies
+	-- Enable bloom and intensify
 	local bloom = Lighting:FindFirstChild("HorrorBloom")
 	if bloom then
+		bloom.Enabled = true
 		bloom.Intensity = 0.4 + (nightNum * 0.1)
 	end
 end
