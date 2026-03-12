@@ -1,0 +1,263 @@
+========================================================
+   ROAD SIDE DOSA - Game Walkthrough & Setup Guide
+   A Psychological Horror Management Game for Roblox
+========================================================
+
+TABLE OF CONTENTS
+1. Quick Start
+2. Game Controls
+3. Night-by-Night Walkthrough
+4. Game Mechanics
+5. Configurable Values
+6. Gamepass Items
+7. Admin / Developer Notes
+8. Sound & Asset Setup (IMPORTANT)
+9. Troubleshooting
+
+========================================================
+1. QUICK START
+========================================================
+
+1. Open "RoadSideDosa.rbxlx" in Roblox Studio
+2. Add sound assets (see Section 8)
+3. Click "Play" to test locally
+4. When ready, File > Publish to Roblox
+
+The game is a complete 5-night horror experience set in
+an Indian roadside Dhaba (restaurant). Players work the
+night shift, cooking and serving customers while following
+cryptic rules delivered via phone calls from the manager.
+
+========================================================
+2. GAME CONTROLS
+========================================================
+
+Movement:     WASD
+Sprint:       Left Shift (drains stamina)
+Grab Batter:  F (near fridge)
+Cook Dosa:    T (near tawa/griddle)
+Serve:        E or click ProximityPrompt on NPC
+Toggle CCTV:  C
+Switch Cam:   Q (prev) / E (next) while in CCTV
+Toggle Lights: L
+Shutters:     1 (front), 2 (left), 3 (right)
+Pick up Phone: P
+Spill Batter: G (Night 5 only)
+
+========================================================
+3. NIGHT-BY-NIGHT WALKTHROUGH
+========================================================
+
+--- NIGHT 1 (Easy) ---
+- Manager calls: introduces you, mentions new Soda item
+- RULE: Chinese Hat Man enters — serve him ONLY Soda
+- DO NOT serve him Dosa (instant jumpscare death)
+- Serve normal customers Dosa for $150 each
+- Survive until dawn (5 minutes)
+
+--- NIGHT 2 (Medium) ---
+- New dosa flavor available
+- THREAT: Terrifier Truck parks outside
+  → DO NOT look at it for more than 5 seconds (gaze death)
+  → Use CCTV (C key) to check outside safely
+- EVENT: Naked guy may run through and throw something
+  → Just clean the mess (interact with it)
+- Serve customers normally
+
+--- NIGHT 3 (Hard) ---
+- Ayran added to menu
+- THREAT: Saree Woman enters (lights flicker when she arrives)
+  → Serve her whatever she orders
+  → DO NOT look at her face/head (instant death)
+  → Keep your camera pointed down when near her
+- Terrifier Truck may return — don't stare
+
+--- NIGHT 4 (Very Hard) ---
+- New dosa flavor
+- RULE: Dancing Guy enters, begs for food
+  → DO NOT serve him — ignore completely
+  → He leaves after ~20 seconds if ignored
+- THREAT: Terrifier Truck returns AGGRESSIVELY
+  → IMMEDIATELY close ALL shutters (keys 1, 2, 3)
+  → If any shutter is open when truck arrives → death
+- Multi-threat: manage shutters + ignore dancer + serve regulars
+
+--- NIGHT 5 (Final Night / Boss) ---
+- "Soothu Dosai" added to menu
+- BOSS: Suthan arrives (shirt says "SUTHAN")
+  → He orders Soothu Dosai
+  → Grab batter from fridge (F key)
+  → Walk up to Suthan and press G to SPILL BATTER on his head
+  → IMMEDIATELY press L to TURN OFF LIGHTS
+  → RUN to the back room (behind the kitchen)
+  → Reach the safe room to WIN
+- If lights stay on after spilling batter → Suthan catches you → death
+- All previous anomalies may also appear this night
+
+========================================================
+4. GAME MECHANICS
+========================================================
+
+COOKING LOOP:
+1. Go to Fridge (F to grab batter, max 5)
+2. Go to Tawa (T to cook, takes 4 seconds)
+3. Select menu item from bottom HUD
+4. Approach customer NPC, press E to serve
+5. Earn $150 per successful serve
+
+DEFENSE SYSTEM:
+- CCTV Monitor (C): View outside cameras safely
+  - 4 cameras: Front, Kitchen, Road, Parking
+  - Switch with Q/E keys
+- Mechanical Shutters (1/2/3): Close windows/door
+  - Essential for Night 4 truck defense
+  - Takes 1.5s to close
+- Gaze Timer: Looking at cursed objects (Truck) for
+  >5 seconds triggers death
+
+STAMINA:
+- Max: 100, Sprint drains 20/sec, Regens at 10/sec
+- Stamina bar shown at bottom of screen
+- Sprint speed: 1.6x normal
+
+CURRENCY:
+- Earn $150 per sale
+- Saved via DataStore (persists between sessions)
+- Shown on global "Top Chefs" leaderboard
+
+========================================================
+5. CONFIGURABLE VALUES
+========================================================
+
+All game values are in the Config module
+(ReplicatedStorage > Config). Key values:
+
+NIGHT_DURATION = 300     -- seconds per night (5 min)
+COOKING_TIME = 4         -- seconds to cook dosa
+GAZE_DEATH_TIME = 5      -- seconds before gaze kills
+CURRENCY_PER_SALE = 150  -- money per serve
+MAX_STAMINA = 100
+SPRINT_DRAIN = 20        -- stamina drain per second
+STAMINA_REGEN = 10       -- regen per second
+NPC_SPAWN_INTERVAL = 20  -- seconds between spawns
+SERVING_TIMEOUT = 30     -- customer patience (seconds)
+
+Night-specific rules and dialogue are in:
+ReplicatedStorage > NightData
+
+========================================================
+6. GAMEPASS ITEMS
+========================================================
+
+Set real GamePass IDs in Config module after creating
+them on the Roblox Creator Dashboard:
+
+1. Anomaly Identifier (250 R$)
+   - Highlights ghosts/anomalies on CCTV cameras
+   - Config key: GAMEPASS_ANOMALY_IDENTIFIER
+
+2. Jumpscare Friend (100 R$)
+   - Remote trigger to jumpscare another player
+   - Config key: GAMEPASS_JUMPSCARE_FRIEND
+
+3. The Gun (350 R$)
+   - Defensive weapon for Nights 4 and 5
+   - Config key: GAMEPASS_GUN
+
+4. Humanity Serum (500 R$)
+   - Instantly turns anomaly NPC into normal human
+   - Config key: GAMEPASS_HUMANITY_SERUM
+
+To set up: Create gamepasses on Roblox, copy their IDs,
+and paste into the Config module values.
+
+========================================================
+7. ADMIN / DEVELOPER NOTES
+========================================================
+
+SCRIPTS LOCATION:
+- Server: ServerScriptService (GameManager, NPCManager,
+  DataManager, GamePassManager)
+- Client: StarterPlayer > StarterPlayerScripts
+  (ClientController)
+- Shared: ReplicatedStorage (Config, NightData, Remotes)
+
+REMOTE EVENTS (ReplicatedStorage > Remotes):
+- 40+ RemoteEvents handling all client-server communication
+- Named descriptively: StartNight, ServeCustomer, etc.
+
+DATA PERSISTENCE:
+- Uses DataStoreService (auto-saves every 60 seconds)
+- Saves: currency, night progress, total earnings,
+  deaths, inventory, stats
+- Leaderboard refreshes every 30 seconds
+
+NPC SYSTEM:
+- NPCs spawn from NPCSpawns folder in Workspace
+- Walk to CounterTarget position
+- Each has dialogue, rules, and unique behaviors
+- ProximityPrompts on NPCs for interaction
+
+ENVIRONMENT:
+- Restaurant: ~40 studs x 30 studs
+- Kitchen in back, counter in middle, dining in front
+- Road outside with parking area for truck
+- Back room (safe room) behind kitchen
+
+========================================================
+8. SOUND & ASSET SETUP (IMPORTANT!)
+========================================================
+
+The .rbxlx file uses PLACEHOLDER sound IDs. You need to
+add actual Roblox sound assets:
+
+In SoundService, find and set SoundId for:
+- AmbientHorror: Eerie ambient loop (horror drone)
+- JumpScareSound: Loud sharp scare sfx
+- PhoneRing: Telephone ring sound
+- CookingSound: Sizzling/cooking sfx
+- ShutterSound: Metal shutter closing sfx
+- HeartbeatSound: Heartbeat loop (tension)
+- FootstepSound: Walking sfx
+- VictorySound: Triumphant win sfx
+
+Recommended free Roblox audio IDs:
+(Search Roblox audio library for "horror ambient",
+"jumpscare", "phone ring", etc.)
+
+For NPC models: The current NPCs use basic Part geometry
+with color-coding. For a polished look:
+- Replace with custom meshes or Roblox marketplace models
+- Chinese Guy: Add proper conical hat mesh
+- Saree Woman: Add saree mesh + dark face
+- Terrifier Truck: Replace with ice cream truck mesh
+- Suthan: Add detailed character with shirt text
+
+========================================================
+9. TROUBLESHOOTING
+========================================================
+
+Q: NPCs don't spawn?
+A: Check NPCSpawns folder in Workspace has spawn parts.
+   Verify GameManager is starting the night correctly.
+
+Q: Phone dialogue doesn't show?
+A: Ensure MainUI > PhoneUI and DialogueUI exist in StarterGui.
+   Check RemoteEvents are properly created.
+
+Q: Gaze system not working?
+A: The TerrifierTruck part needs the "CursedObject" attribute
+   set to true. Check in its properties.
+
+Q: DataStore errors in Studio?
+A: Enable API Services: Game Settings > Security >
+   Enable Studio Access to API Services
+
+Q: CCTV cameras show wrong angles?
+A: Adjust CFrame of parts in CCTVCameras folder to point
+   where you want each camera to look.
+
+========================================================
+   Built by Anirudha Talmale
+   Road Side Dosa v1.0
+========================================================
