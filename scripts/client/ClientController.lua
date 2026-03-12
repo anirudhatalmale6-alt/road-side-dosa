@@ -616,30 +616,7 @@ Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	end
 end)
 
-Remotes:WaitForChild("UpdateHUD").OnClientEvent:Connect(function(data)
-	updateHUD(data)
-end)
-
-Remotes:WaitForChild("TriggerEvent").OnClientEvent:Connect(function(eventType, eventData)
-	if eventType == "lights_flicker" then
-		flickerLights(3)
-	elseif eventType == "terrifier_truck" or eventType == "terrifier_truck_aggressive" then
-		-- Truck appears outside
-		showFloatingText("Something is outside...", Color3.fromRGB(255, 0, 0))
-		if eventData.requiresShutters then
-			showFloatingText("CLOSE THE SHUTTERS!", Color3.fromRGB(255, 0, 0))
-		end
-		-- Trigger truck arrival on server
-		task.wait(2)
-		if eventData.killIfOpen then
-			Remotes:WaitForChild("TruckArrival"):FireServer()
-		end
-	elseif eventType == "naked_guy_throw" then
-		showFloatingText("What the--?! Clean that up!", Color3.fromRGB(255, 150, 0))
-	elseif eventType == "final_sequence" then
-		showFloatingText("He's here... Suthan...", Color3.fromRGB(200, 0, 0))
-	end
-end)
+-- UpdateHUD and TriggerEvent handlers are below with cooking/cleanup mechanics
 
 Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue)
 	-- Show NPC dialogue
@@ -667,14 +644,96 @@ if retryBtn then
 	end)
 end
 
--- Night start button (lobby)
-local startBtn = mainUI:FindFirstChild("StartButton")
+-- Lobby screen
+local lobbyScreenGui = playerGui:WaitForChild("LobbyScreenGui")
+local lobbyUI = lobbyScreenGui:WaitForChild("LobbyUI")
+local startBtn = lobbyUI:FindFirstChild("StartButton")
 if startBtn then
 	startBtn.MouseButton1Click:Connect(function()
-		startBtn.Visible = false
+		lobbyScreenGui.Enabled = false
 		Remotes:WaitForChild("RequestStartNight"):FireServer()
 	end)
 end
+
+-- === COOKING VISUAL FEEDBACK ===
+local dosaVisual = workspace:FindFirstChild("DosaOnTawa")
+
+Remotes:WaitForChild("UpdateHUD").OnClientEvent:Connect(function(data)
+	updateHUD(data)
+
+	-- Show dosa cooking on tawa
+	if data.dosaReady and dosaVisual then
+		dosaVisual.Transparency = 0
+		task.delay(3, function()
+			if dosaVisual then dosaVisual.Transparency = 1 end
+		end)
+	end
+end)
+
+-- === CLEANUP MECHANIC (Night 2) ===
+local messVisible = false
+local messZone = workspace:FindFirstChild("MessZone")
+
+Remotes:WaitForChild("TriggerEvent").OnClientEvent:Connect(function(eventType, eventData)
+	if eventType == "naked_guy_throw" then
+		-- Make mess visible
+		messVisible = true
+		if messZone then
+			messZone.Transparency = 0
+			messZone.BrickColor = BrickColor.new("Dirt brown")
+		end
+		showFloatingText("What the--?! Clean that up! [E near mess]", Color3.fromRGB(255, 150, 0))
+	elseif eventType == "lights_flicker" then
+		flickerLights(3)
+	elseif eventType == "terrifier_truck" or eventType == "terrifier_truck_aggressive" then
+		showFloatingText("Something is outside...", Color3.fromRGB(255, 0, 0))
+		if eventData and eventData.requiresShutters then
+			task.wait(1)
+			showFloatingText("CLOSE THE SHUTTERS! [1] [2] [3]", Color3.fromRGB(255, 0, 0))
+		end
+		if eventData and eventData.killIfOpen then
+			task.wait(2)
+			Remotes:WaitForChild("TruckArrival"):FireServer()
+		end
+	elseif eventType == "final_sequence" then
+		showFloatingText("He's here... Suthan...", Color3.fromRGB(200, 0, 0))
+	end
+end)
+
+-- === SAFE ROOM DETECTION (Night 5) ===
+RunService.Heartbeat:Connect(function()
+	if not isAlive or currentNight ~= 5 then return end
+
+	local character = player.Character
+	if not character then return end
+	local hrp = character:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+
+	local safeTrigger = workspace:FindFirstChild("SafeRoomTrigger")
+	if safeTrigger then
+		local dist = (hrp.Position - safeTrigger.Position).Magnitude
+		if dist < 6 then
+			Remotes:WaitForChild("ReachedSafeRoom"):FireServer()
+		end
+	end
+end)
+
+-- E key for cleanup when near mess
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed then return end
+	if input.KeyCode == Enum.KeyCode.E and messVisible then
+		local character = player.Character
+		if character and messZone then
+			local hrp = character:FindFirstChild("HumanoidRootPart")
+			if hrp and (hrp.Position - messZone.Position).Magnitude < 8 then
+				messVisible = false
+				messZone.Transparency = 1
+				Remotes:WaitForChild("CleanMess"):FireServer()
+				showFloatingText("Mess Cleaned!", Color3.fromRGB(100, 200, 255))
+			end
+		end
+	end
+end)
 
 -- Initialize CCTV
 initCCTV()

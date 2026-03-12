@@ -420,15 +420,42 @@ def build_restaurant():
     parts.append(make_part("ParkingArea", 25, -0.2, 25, 10, 0.5, 10,
                            color=(0.25, 0.25, 0.25), material=256))
 
-    # == TERRIFIER TRUCK (Cursed Object) ==
-    truck_children = make_pointlight(0.3, (1, 0, 0), 15)
+    # == TERRIFIER TRUCK (Cursed Object - Ice Cream Van style) ==
+    # Main body
+    truck_children = make_pointlight(0.4, (1, 0, 0), 18)
     parts.append(make_part("TerrifierTruck", 25, 3, 25, 5, 5, 10,
-                           color=(0.9, 0.9, 0.95), material=256,
+                           color=(0.95, 0.95, 0.98), material=256,
                            children=truck_children,
                            attributes={"CursedObject": True, "NPCType": "TerrifierTruck"}))
-    # Truck details
+    # Truck roof (red stripe)
     parts.append(make_part("TruckRoof", 25, 6, 25, 5.2, 0.3, 10.2,
-                           color=(0.8, 0.2, 0.2), material=256))
+                           color=(0.8, 0.15, 0.15), material=256))
+    # Truck cabin (front)
+    parts.append(make_part("TruckCabin", 25, 3, 19.5, 5, 4, 2,
+                           color=(0.85, 0.85, 0.9), material=256))
+    # Windshield (dark, can't see inside)
+    parts.append(make_part("TruckWindshield", 25, 4.5, 18.3, 4, 2, 0.1,
+                           color=(0.05, 0.05, 0.1), material=256, transparency=0.2))
+    # Wheels
+    for wx, wz in [(22.8, 22), (27.2, 22), (22.8, 28), (27.2, 28)]:
+        parts.append(make_part(f"TruckWheel_{wx}_{wz}", wx, 0.8, wz, 0.5, 1.5, 1.5,
+                               color=(0.1, 0.1, 0.1), material=256, shape=2))
+    # Ice cream cone on top (creepy)
+    parts.append(make_part("IceCreamCone", 25, 7, 25, 1, 2, 1,
+                           color=(0.9, 0.7, 0.4), material=256))
+    parts.append(make_part("IceCreamScoop", 25, 8.5, 25, 1.2, 1.2, 1.2,
+                           color=(1, 0.6, 0.7), material=256, shape=2))
+    # Red stripe along side
+    parts.append(make_part("TruckStripe", 22.4, 3, 25, 0.1, 1, 9,
+                           color=(0.8, 0.1, 0.1), material=256))
+    parts.append(make_part("TruckStripe2", 27.6, 3, 25, 0.1, 1, 9,
+                           color=(0.8, 0.1, 0.1), material=256))
+    # Eerie red headlights
+    parts.append(make_part("TruckHeadlight1", 23.5, 3, 18.3, 0.8, 0.8, 0.1,
+                           color=(1, 0, 0), material=256, transparency=0.3,
+                           children=make_pointlight(0.8, (1, 0, 0), 25)))
+    parts.append(make_part("TruckHeadlight2", 26.5, 3, 18.3, 0.8, 0.8, 0.1,
+                           color=(1, 0, 0), material=256, transparency=0.3))
 
     # == BACK ROOM (Safe room for Night 5) ==
     parts.append(make_part("BackRoomDoor", 0, 4, -14.8, 3, 7, 0.3,
@@ -446,10 +473,62 @@ def build_restaurant():
                            transparency=1, cancollide=False,
                            attributes={"SafeRoom": True}))
 
-    # == NEON SIGN ==
-    parts.append(make_part("NeonSign", 0, 11, 15.5, 10, 2, 0.2,
-                           color=(1, 0.4, 0), material=256,
-                           children=make_pointlight(2, (1, 0.5, 0), 30)))
+    # == NEON SIGN with SurfaceGui text ==
+    neon_sign_ref = ref()
+    neon_surface_ref = ref()
+    neon_text_ref = ref()
+    neon_glow_ref = ref()
+    neon_sign_xml = f'''<Item class="Part" referent="{neon_sign_ref}">
+<Properties>
+{prop_string("Name", "NeonSign")}
+{prop_bool("Anchored", True)}
+{prop_bool("CanCollide", True)}
+{prop_cframe("CFrame", 0, 11, 15.5)}
+<Color3uint8 name="Color3uint8">{color_float_to_uint8(0.15, 0.05, 0.02)}</Color3uint8>
+{prop_token("Material", 256)}
+{prop_vector3("size", 14, 3, 0.3)}
+{prop_token("shape", 1)}
+{prop_float("Transparency", 0)}
+</Properties>
+{make_pointlight(2.5, (1, 0.5, 0), 35)}
+<Item class="SurfaceGui" referent="{neon_surface_ref}">
+<Properties>
+{prop_string("Name", "NeonText")}
+{prop_token("Face", 5)}
+{prop_bool("Active", False)}
+{prop_bool("ClipsDescendants", False)}
+</Properties>
+<Item class="TextLabel" referent="{neon_text_ref}">
+<Properties>
+{prop_string("Name", "SignText")}
+{prop_string("Text", "ROAD SIDE DOSA")}
+{prop_udim2("Position", 0, 0, 0, 0)}
+{prop_udim2("Size", 1, 0, 1, 0)}
+{prop_color3("TextColor3", 1, 0.5, 0)}
+{prop_float("BackgroundTransparency", 1)}
+{prop_token("Font", 8)}
+{prop_bool("TextScaled", True)}
+{prop_float("TextStrokeTransparency", 0.3)}
+{prop_color3("TextStrokeColor3", 0.8, 0.2, 0)}
+</Properties>
+</Item>
+</Item>
+<Item class="PointLight" referent="{neon_glow_ref}">
+<Properties>
+{prop_string("Name", "NeonGlow")}
+{prop_float("Brightness", 1.5)}
+{prop_color3("Color", 1, 0.3, 0)}
+{prop_float("Range", 20)}
+{prop_bool("Enabled", True)}
+</Properties>
+</Item>
+</Item>'''
+    parts.append(neon_sign_xml)
+
+    # Sub-sign: "OPEN 24 HRS" (eerie because it's nighttime)
+    parts.append(make_part("SubSign", 0, 9.5, 15.5, 5, 0.8, 0.2,
+                           color=(0.8, 0.1, 0.1), material=256,
+                           children=make_pointlight(0.5, (1, 0.1, 0.1), 10)))
 
     # == INTERIOR LIGHTS ==
     light_positions = [(-8, 11, 0), (0, 11, 0), (8, 11, 0), (0, 11, -8)]
@@ -558,9 +637,44 @@ def build_restaurant():
     parts.append(make_part("FanBlade2", 0, 11.3, 3, 0.5, 0.1, 4,
                            color=(0.35, 0.25, 0.15), material=256))
 
-    # Blood stain on floor (subtle horror detail, appears Night 3+)
+    # Blood stain on floor (subtle horror detail)
     parts.append(make_part("BloodStain", -6, 0.52, 8, 2, 0.01, 1.5,
                            color=(0.3, 0.05, 0.05), material=256, transparency=0.6))
+
+    # == CLEANUP ZONE (for naked guy event Night 2) ==
+    parts.append(make_part("MessZone", 3, 0.52, 10, 2.5, 0.01, 2,
+                           color=(0.4, 0.3, 0.1), material=256, transparency=1,
+                           attributes={"CleanupZone": True}))
+
+    # == MOP (near sink, player can pick up) ==
+    parts.append(make_part("Mop", 10, 2, -10, 0.15, 4, 0.15,
+                           color=(0.5, 0.35, 0.2), material=256))
+    parts.append(make_part("MopHead", 10, 0.5, -10, 0.8, 0.3, 0.5,
+                           color=(0.6, 0.6, 0.65), material=256))
+
+    # == COOKING VISUAL FEEDBACK ==
+    # Dosa on tawa (appears during cooking, initially hidden)
+    parts.append(make_part("DosaOnTawa", -5, 3.65, -8, 2, 0.1, 2,
+                           color=(0.85, 0.7, 0.4), material=256, transparency=1, shape=2,
+                           attributes={"CookingVisual": True}))
+
+    # == IMPROVED SAFE ROOM (Night 5) ==
+    # Hiding cabinet in safe room
+    parts.append(make_part("HidingCabinet", -3, 2, -24, 2, 4, 1.5,
+                           color=(0.3, 0.22, 0.12), material=256))
+    # Cabinet door
+    parts.append(make_part("CabinetDoor", -3, 2, -23.2, 1.8, 3.5, 0.15,
+                           color=(0.35, 0.25, 0.15), material=256))
+    # Old mattress on floor
+    parts.append(make_part("Mattress", 2, 0.7, -23, 3, 0.4, 2,
+                           color=(0.5, 0.45, 0.4), material=256))
+    # Flickering bulb in safe room
+    parts.append(make_part("SafeRoomBulb", 0, 7.5, -22, 0.3, 0.3, 0.3,
+                           color=(1, 0.9, 0.6), material=256,
+                           children=make_pointlight(0.2, (1, 0.85, 0.6), 12)))
+    # Creepy writing on wall
+    parts.append(make_part("WallWriting", 0, 4, -25.7, 4, 2, 0.1,
+                           color=(0.3, 0.05, 0.05), material=256, transparency=0.4))
 
     # == CCTV CAMERAS ==
     cctv_positions = [
@@ -721,14 +835,43 @@ def build_ui():
     nightstart = make_frame("NightStartUI", "0,0,0,0", "1,0,1,0", bg_color=(0,0,0),
                             visible=False, children=nightstart_children, zindex=9)
 
-    # --- Start Button (Lobby) ---
-    start_btn = make_textbutton("StartButton", "START SHIFT", "0.35,0,0.6,0", "0.3,0,0,60",
-                                bg_color=(0.6,0.3,0), text_color=(1,1,1),
-                                children=make_uicorner(10))
+    # --- Lobby / Title Screen ---
+    lobby_children = "\n".join([
+        # Dark overlay
+        make_frame("LobbyBG", "0,0,0,0", "1,0,1,0", bg_color=(0.02,0.01,0.03), bg_transparency=0.15),
+        # Title
+        make_textlabel("TitleLabel", "ROAD SIDE DOSA", "0.15,0,0.1,0", "0.7,0,0,80",
+                       text_color=(0.9,0.35,0.05), font=8),
+        # Subtitle
+        make_textlabel("SubtitleLabel", "A Psychological Horror Experience", "0.2,0,0.25,0", "0.6,0,0,30",
+                       text_color=(0.7,0.2,0.1), font=4),
+        # Tagline
+        make_textlabel("TaglineLabel", "5 Nights. 1 Dhaba. Infinite Terror.", "0.2,0,0.32,0", "0.6,0,0,22",
+                       text_color=(0.5,0.5,0.5), font=4),
+        # Instructions
+        make_textlabel("InstructionsLabel",
+                       "Cook dosa. Serve customers. Follow the rules. Survive.",
+                       "0.15,0,0.42,0", "0.7,0,0,20",
+                       text_color=(0.6,0.55,0.4), font=4),
+        # Start button
+        make_textbutton("StartButton", "START SHIFT", "0.35,0,0.55,0", "0.3,0,0,60",
+                        bg_color=(0.7,0.25,0.05), text_color=(1,1,1),
+                        children=make_uicorner(10)),
+        # Credits
+        make_textlabel("CreditsLabel", "v1.0", "0.85,0,0.92,0", "0.1,0,0,18",
+                       text_color=(0.3,0.3,0.3), font=4),
+        # Controls info
+        make_textlabel("ControlsInfo",
+                       "Controls: WASD Move | Shift Sprint | F Grab Batter | T Cook | C CCTV | L Lights | 1-2-3 Shutters",
+                       "0.1,0,0.7,0", "0.8,0,0,18",
+                       text_color=(0.4,0.4,0.4), font=4),
+    ])
+    lobby = make_frame("LobbyUI", "0,0,0,0", "1,0,1,0", bg_transparency=0, children=lobby_children)
 
     # Each overlay goes into its own ScreenGui with Enabled=false
     # This ensures they are truly hidden until scripts enable them
-    main_gui = make_screengui("MainUI", "\n".join([hud, start_btn]), enabled=True, display_order=1)
+    lobby_gui = make_screengui("LobbyScreenGui", lobby, enabled=True, display_order=0)
+    main_gui = make_screengui("MainUI", "\n".join([hud]), enabled=True, display_order=1)
     phone_gui = make_screengui("PhoneScreenGui", "\n".join([phone, dialogue]), enabled=False, display_order=5)
     cctv_gui = make_screengui("CCTVScreenGui", cctv, enabled=False, display_order=4)
     death_gui = make_screengui("DeathScreenGui", death, enabled=False, display_order=8)
@@ -736,7 +879,7 @@ def build_ui():
     jumpscare_gui = make_screengui("JumpscareScreenGui", jumpscare, enabled=False, display_order=10)
     nightstart_gui = make_screengui("NightStartScreenGui", nightstart, enabled=False, display_order=9)
 
-    return "\n".join([main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui])
+    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui])
 
 # === BUILD REMOTE EVENTS ===
 def build_remotes():
