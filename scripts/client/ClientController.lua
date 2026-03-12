@@ -53,6 +53,23 @@ local stamina = Config.MAX_STAMINA
 local isSprinting = false
 local menuItems = {}
 local selectedItem = nil
+local dialogueSkipRequested = false
+local phoneDialogueComplete = false
+
+-- Sound helper
+local function playSound(soundName)
+	local sound = SoundService:FindFirstChild(soundName)
+	if sound then sound:Play() end
+end
+
+local function stopSound(soundName)
+	local sound = SoundService:FindFirstChild(soundName)
+	if sound then sound:Stop() end
+end
+
+-- Forward declarations
+local showFloatingText
+local updateMenuButtons
 
 -- === HUD UPDATES ===
 local function updateHUD(data)
@@ -84,26 +101,34 @@ local function updateHUD(data)
 		end
 	end
 	if data.dosaReady then
-		-- Flash the serve button
+		-- Flash the serve button and play cooking done sound
+		playSound("CookingSound")
 		local serveBtn = hudFrame:FindFirstChild("ServeButton")
 		if serveBtn then
 			TweenService:Create(serveBtn, TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, 3, true), {BackgroundColor3 = Color3.fromRGB(255, 200, 0)}):Play()
 		end
+		showFloatingText("Dosa Ready!", Color3.fromRGB(255, 200, 0))
+	end
+	if data.cookingStarted then
+		-- Show cooking in progress
+		showFloatingText("Cooking...", Color3.fromRGB(200, 150, 50))
 	end
 	if data.serveSuccess then
 		-- Show success feedback
+		playSound("CookingSound")
 		showFloatingText("+$" .. Config.CURRENCY_PER_SALE, Color3.fromRGB(0, 255, 0))
 	end
 	if data.messCleared then
 		showFloatingText("Mess Cleaned!", Color3.fromRGB(100, 200, 255))
 	end
 	if data.batterSpilled then
-		showFloatingText("BATTER SPILLED! RUN!", Color3.fromRGB(255, 0, 0))
+		showFloatingText("BATTER SPILLED! TURN OFF LIGHTS & RUN!", Color3.fromRGB(255, 0, 0))
+		playSound("HeartbeatSound")
 	end
 end
 
 -- === FLOATING TEXT ===
-local function showFloatingText(text, color)
+showFloatingText = function(text, color)
 	local label = Instance.new("TextLabel")
 	label.Text = text
 	label.Size = UDim2.new(0, 200, 0, 50)
@@ -127,7 +152,7 @@ local function showFloatingText(text, color)
 end
 
 -- === MENU BUTTONS ===
-function updateMenuButtons()
+updateMenuButtons = function()
 	local menuContainer = hudFrame:FindFirstChild("MenuContainer")
 	if not menuContainer then return end
 
@@ -184,6 +209,7 @@ task.spawn(function()
 		prompt.Parent = fridge
 		prompt.Triggered:Connect(function()
 			Remotes:WaitForChild("GrabBatter"):FireServer()
+			playSound("DoorCreak")
 		end)
 	end
 
@@ -200,6 +226,7 @@ task.spawn(function()
 		prompt.Parent = tawa
 		prompt.Triggered:Connect(function()
 			Remotes:WaitForChild("CookDosa"):FireServer()
+			playSound("CookingSound")
 		end)
 	end
 
@@ -229,6 +256,9 @@ task.spawn(function()
 		prompt.MaxActivationDistance = 6
 		prompt.HoldDuration = 0
 		prompt.Parent = mop
+		prompt.Triggered:Connect(function()
+			showFloatingText("Mop equipped!", Color3.fromRGB(150, 200, 255))
+		end)
 	end
 end)
 
@@ -236,23 +266,15 @@ end)
 local function showPhone(active)
 	isPhoneActive = active
 	phoneScreenGui.Enabled = active
+	dialogueSkipRequested = false
+	phoneDialogueComplete = false
 	if active then
-		-- Also make sure dialogue frame is visible inside phone GUI
 		dialogueFrame.Visible = true
-		-- Phone ring animation
-		local phoneModel = workspace:FindFirstChild("Phone")
-		if phoneModel then
-			task.spawn(function()
-				for i = 1, 6 do
-					if not isPhoneActive then break end
-					local ringSound = phoneModel:FindFirstChild("RingSound")
-					if ringSound then ringSound:Play() end
-					task.wait(2)
-				end
-			end)
-		end
+		-- Phone ring sound
+		playSound("PhoneRing")
 	else
 		dialogueFrame.Visible = false
+		stopSound("PhoneRing")
 	end
 end
 
@@ -260,8 +282,10 @@ local function showDialogue(text, lineNum, totalLines)
 	-- Ensure phone screen is enabled and dialogue visible
 	phoneScreenGui.Enabled = true
 	dialogueFrame.Visible = true
+	dialogueSkipRequested = false
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
 	local progressLabel = dialogueFrame:FindFirstChild("ProgressLabel")
+	local skipHint = dialogueFrame:FindFirstChild("SkipHint")
 
 	if textLabel then
 		-- Typewriter effect
@@ -269,6 +293,12 @@ local function showDialogue(text, lineNum, totalLines)
 		task.spawn(function()
 			for i = 1, #text do
 				if not isPhoneActive then break end
+				if dialogueSkipRequested then
+					-- Skip to full text
+					textLabel.Text = text
+					dialogueSkipRequested = false
+					break
+				end
 				textLabel.Text = string.sub(text, 1, i)
 				task.wait(NightData.PhoneConfig.dialogueSpeed)
 			end
@@ -277,6 +307,11 @@ local function showDialogue(text, lineNum, totalLines)
 
 	if progressLabel then
 		progressLabel.Text = lineNum .. "/" .. totalLines
+	end
+
+	-- Show skip hint
+	if skipHint then
+		skipHint.Visible = true
 	end
 end
 
@@ -304,6 +339,11 @@ local function toggleCCTV()
 		if colorCorrection then
 			colorCorrection.Enabled = true
 		end
+		-- Camera label
+		local camLabel = cctvFrame:FindFirstChild("CameraLabel")
+		if camLabel then
+			camLabel.Text = "CAM " .. currentCamIndex
+		end
 	else
 		-- Return to normal camera
 		camera.CameraType = Enum.CameraType.Custom
@@ -321,7 +361,9 @@ local function switchCCTVCamera(direction)
 	if currentCamIndex < 1 then currentCamIndex = #cctvCameras end
 	if currentCamIndex > #cctvCameras then currentCamIndex = 1 end
 
-	camera.CFrame = cctvCameras[currentCamIndex].CFrame
+	-- Smooth transition
+	local targetCFrame = cctvCameras[currentCamIndex].CFrame
+	TweenService:Create(camera, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {CFrame = targetCFrame}):Play()
 
 	local camLabel = cctvFrame:FindFirstChild("CameraLabel")
 	if camLabel then
@@ -346,10 +388,7 @@ local function playJumpScare(scareType)
 	end)
 
 	-- Play scare sound
-	local scareSound = SoundService:FindFirstChild("JumpScareSound")
-	if scareSound then
-		scareSound:Play()
-	end
+	playSound("JumpScareSound")
 
 	-- Flash red
 	local scareImage = jumpscareFrame:FindFirstChild("ScareImage")
@@ -359,6 +398,13 @@ local function playJumpScare(scareType)
 		TweenService:Create(scareImage, TweenInfo.new(Config.JUMPSCARE_DURATION), {ImageTransparency = 1}):Play()
 	end
 
+	-- Red flash
+	local redFlash = jumpscareFrame:FindFirstChild("RedFlash")
+	if redFlash then
+		redFlash.BackgroundTransparency = 0
+		TweenService:Create(redFlash, TweenInfo.new(Config.JUMPSCARE_DURATION), {BackgroundTransparency = 1}):Play()
+	end
+
 	task.wait(Config.JUMPSCARE_DURATION)
 	jumpscareScreenGui.Enabled = false
 end
@@ -366,7 +412,16 @@ end
 -- === DEATH SCREEN ===
 local function showDeathScreen(data)
 	isAlive = false
+	stopSound("HeartbeatSound")
+	stopSound("AmbientHorror")
+
+	-- Fade-in death screen
 	deathScreenGui.Enabled = true
+	local deathBg = deathFrame
+	if deathBg then
+		deathBg.BackgroundTransparency = 1
+		TweenService:Create(deathBg, TweenInfo.new(1, Enum.EasingStyle.Sine), {BackgroundTransparency = 0.2}):Play()
+	end
 
 	local causeLabel = deathFrame:FindFirstChild("CauseLabel")
 	if causeLabel then
@@ -386,7 +441,6 @@ local function showDeathScreen(data)
 				causeText = "Suthan caught you..."
 			elseif string.find(data.cause, "friend_prank") then
 				causeText = "A friend pranked you! (Not a real death)"
-				-- This is just a prank from gamepass
 				task.wait(2)
 				deathScreenGui.Enabled = false
 				isAlive = true
@@ -408,6 +462,7 @@ local function showNightStart(nightNum)
 	local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
 	if titleLabel then
 		titleLabel.Text = "NIGHT " .. nightNum
+		titleLabel.TextColor3 = Color3.fromRGB(200, 50, 25)
 		titleLabel.TextTransparency = 1
 
 		-- Fade in
@@ -451,7 +506,6 @@ RunService.Heartbeat:Connect(function(dt)
 end)
 
 -- === GAZE SYSTEM ===
-local gazeTargets = {} -- objects that kill if stared at
 local gazeTimers = {} -- [object] = time spent gazing
 
 RunService.Heartbeat:Connect(function(dt)
@@ -471,9 +525,19 @@ RunService.Heartbeat:Connect(function(dt)
 	local result = workspace:Raycast(ray.Origin, ray.Direction * 200, raycastParams)
 
 	if result and result.Instance then
-		local model = result.Instance:FindFirstAncestorOfClass("Model") or result.Instance
+		local hitPart = result.Instance
+		local model = hitPart:FindFirstAncestorOfClass("Model") or hitPart
 
-		if model:GetAttribute("CursedObject") then
+		-- Check for CursedObject using BoolValue child
+		local cursedVal = hitPart:FindFirstChild("CursedObject") or model:FindFirstChild("CursedObject")
+		local isCursed = false
+		if cursedVal and cursedVal:IsA("BoolValue") then
+			isCursed = cursedVal.Value
+		elseif model:GetAttribute("CursedObject") then
+			isCursed = true
+		end
+
+		if isCursed then
 			gazeTimers[model] = (gazeTimers[model] or 0) + dt
 
 			-- Show warning UI
@@ -484,25 +548,38 @@ RunService.Heartbeat:Connect(function(dt)
 				gazeWarning.TextColor3 = Color3.fromRGB(255, math.max(0, 255 - gazeTimers[model] * 50), 0)
 			end
 
+			-- Play heartbeat when getting close to death
+			if gazeTimers[model] > Config.GAZE_DEATH_TIME * 0.5 then
+				local heartbeat = SoundService:FindFirstChild("HeartbeatSound")
+				if heartbeat and not heartbeat.IsPlaying then
+					heartbeat:Play()
+				end
+			end
+
 			if gazeTimers[model] >= Config.GAZE_DEATH_TIME then
 				Remotes:WaitForChild("GazeDeath"):FireServer(model.Name)
 				gazeTimers[model] = 0
 			end
 		else
-			-- Reset all gaze timers
+			-- Decay gaze timers
 			for obj, _ in pairs(gazeTimers) do
 				gazeTimers[obj] = math.max(0, (gazeTimers[obj] or 0) - dt * 2)
+				if gazeTimers[obj] <= 0 then
+					gazeTimers[obj] = nil
+				end
 			end
 			local gazeWarning = hudFrame:FindFirstChild("GazeWarning")
 			if gazeWarning then
 				gazeWarning.Visible = false
 			end
+			stopSound("HeartbeatSound")
 		end
 
 		-- Check if looking at Saree Woman's face
-		if model:GetAttribute("NPCType") == "SareeWoman" then
+		local npcType = model:GetAttribute("NPCType")
+		if npcType == "SareeWoman" then
 			local npcHead = model:FindFirstChild("Head")
-			if npcHead and result.Instance == npcHead then
+			if npcHead and hitPart == npcHead then
 				gazeTimers["SareeWomanFace"] = (gazeTimers["SareeWomanFace"] or 0) + dt
 				if gazeTimers["SareeWomanFace"] >= 1 then
 					Remotes:WaitForChild("LookedAtFace"):FireServer("SareeWoman")
@@ -513,11 +590,15 @@ RunService.Heartbeat:Connect(function(dt)
 	else
 		for obj, _ in pairs(gazeTimers) do
 			gazeTimers[obj] = math.max(0, (gazeTimers[obj] or 0) - dt * 2)
+			if gazeTimers[obj] <= 0 then
+				gazeTimers[obj] = nil
+			end
 		end
 		local gazeWarning = hudFrame:FindFirstChild("GazeWarning")
 		if gazeWarning then
 			gazeWarning.Visible = false
 		end
+		stopSound("HeartbeatSound")
 	end
 end)
 
@@ -537,7 +618,19 @@ UserInputService.InputBegan:Connect(function(input, processed)
 		if isCCTVActive then
 			switchCCTVCamera(1)
 		else
-			-- Interact with nearest interactable
+			-- E key cleanup when near mess
+			if messVisible then
+				local character = player.Character
+				if character and messZone then
+					local hrp = character:FindFirstChild("HumanoidRootPart")
+					if hrp and (hrp.Position - messZone.Position).Magnitude < 8 then
+						messVisible = false
+						messZone.Transparency = 1
+						Remotes:WaitForChild("CleanMess"):FireServer()
+						showFloatingText("Mess Cleaned!", Color3.fromRGB(100, 200, 255))
+					end
+				end
+			end
 		end
 	elseif input.KeyCode == Enum.KeyCode.F then
 		-- Grab batter from fridge (when near fridge)
@@ -548,6 +641,7 @@ UserInputService.InputBegan:Connect(function(input, processed)
 				local dist = (character.HumanoidRootPart.Position - fridge.Position).Magnitude
 				if dist < 8 then
 					Remotes:WaitForChild("GrabBatter"):FireServer()
+					playSound("DoorCreak")
 				end
 			end
 		end
@@ -560,6 +654,7 @@ UserInputService.InputBegan:Connect(function(input, processed)
 				local dist = (character.HumanoidRootPart.Position - tawa.Position).Magnitude
 				if dist < 8 then
 					Remotes:WaitForChild("CookDosa"):FireServer()
+					playSound("CookingSound")
 				end
 			end
 		end
@@ -567,10 +662,13 @@ UserInputService.InputBegan:Connect(function(input, processed)
 		Remotes:WaitForChild("ToggleLights"):FireServer()
 	elseif input.KeyCode == Enum.KeyCode.One then
 		Remotes:WaitForChild("ToggleShutter"):FireServer("front")
+		playSound("ShutterSound")
 	elseif input.KeyCode == Enum.KeyCode.Two then
 		Remotes:WaitForChild("ToggleShutter"):FireServer("left")
+		playSound("ShutterSound")
 	elseif input.KeyCode == Enum.KeyCode.Three then
 		Remotes:WaitForChild("ToggleShutter"):FireServer("right")
+		playSound("ShutterSound")
 	elseif input.KeyCode == Enum.KeyCode.P then
 		-- Pick up phone
 		showPhone(true)
@@ -579,6 +677,13 @@ UserInputService.InputBegan:Connect(function(input, processed)
 		if currentNight == 5 then
 			Remotes:WaitForChild("SpillBatter"):FireServer()
 		end
+	end
+end)
+
+-- Click to skip dialogue
+UserInputService.InputBegan:Connect(function(input, processed)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 and isPhoneActive then
+		dialogueSkipRequested = true
 	end
 end)
 
@@ -602,15 +707,24 @@ local function onProximityPromptTriggered(prompt)
 	if selectedItem then
 		Remotes:WaitForChild("ServeCustomer"):FireServer(npcType, selectedItem)
 		selectedItem = nil
+		-- Reset menu button highlights
+		local menuContainer = hudFrame:FindFirstChild("MenuContainer")
+		if menuContainer then
+			for _, sibling in ipairs(menuContainer:GetChildren()) do
+				if sibling:IsA("TextButton") then
+					sibling.BackgroundColor3 = Color3.fromRGB(80, 60, 40)
+				end
+			end
+		end
 	else
 		-- Show menu selection UI
 		menuScreenGui.Enabled = true
 	end
 end
 
--- Connect to all proximity prompts
+-- Connect to all proximity prompts (current and future)
 workspace.DescendantAdded:Connect(function(descendant)
-	if descendant:IsA("ProximityPrompt") then
+	if descendant:IsA("ProximityPrompt") and descendant.Name == "ServePrompt" then
 		descendant.Triggered:Connect(function()
 			onProximityPromptTriggered(descendant)
 		end)
@@ -636,11 +750,16 @@ Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nigh
 	currentNight = nightNum
 	isAlive = true
 	deathScreenGui.Enabled = false
+	phoneScreenGui.Enabled = false
+	menuScreenGui.Enabled = false
 	showNightStart(nightNum)
 end)
 
 Remotes:WaitForChild("EndNight").OnClientEvent:Connect(function(data)
+	stopSound("AmbientHorror")
+	stopSound("HeartbeatSound")
 	if data.survived then
+		playSound("VictorySound")
 		showFloatingText("NIGHT " .. data.night .. " SURVIVED!", Color3.fromRGB(0, 255, 0))
 		task.wait(3)
 		if data.nextNight and data.nextNight <= 5 then
@@ -651,13 +770,21 @@ end)
 
 Remotes:WaitForChild("PhoneRing").OnClientEvent:Connect(function()
 	showPhone(true)
-	local ringSound = SoundService:FindFirstChild("PhoneRing")
-	if ringSound then ringSound:Play() end
 end)
 
 Remotes:WaitForChild("PhoneDialogue").OnClientEvent:Connect(function(text, lineNum, totalLines)
 	showDialogue(text, lineNum, totalLines)
 end)
+
+-- Phone dialogue end: close phone UI
+local phoneDialogueEnd = Remotes:FindFirstChild("PhoneDialogueEnd")
+if phoneDialogueEnd then
+	phoneDialogueEnd.OnClientEvent:Connect(function()
+		phoneDialogueComplete = true
+		task.wait(1)
+		showPhone(false)
+	end)
+end
 
 Remotes:WaitForChild("PlayerDeath").OnClientEvent:Connect(function(data)
 	showDeathScreen(data)
@@ -671,6 +798,9 @@ end)
 Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	if result == "victory" then
 		-- Victory screen
+		stopSound("AmbientHorror")
+		stopSound("HeartbeatSound")
+		playSound("VictorySound")
 		deathScreenGui.Enabled = false
 		nightStartScreenGui.Enabled = true
 		local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
@@ -683,12 +813,14 @@ Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	end
 end)
 
--- UpdateHUD and TriggerEvent handlers are below with cooking/cleanup mechanics
-
 Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue)
 	-- Show NPC dialogue
 	if dialogue then
 		showFloatingText(dialogue, Color3.fromRGB(255, 255, 200))
+	end
+	-- Whisper sound when anomaly spawns
+	if npcType ~= "NormalCustomer" then
+		playSound("WhisperSound")
 	end
 end)
 
@@ -729,6 +861,19 @@ Remotes:WaitForChild("UpdateHUD").OnClientEvent:Connect(function(data)
 	updateHUD(data)
 
 	-- Show dosa cooking on tawa
+	if data.cookingStarted and dosaVisual then
+		dosaVisual.Transparency = 0.3
+		-- Gradually make it more visible (cooking animation)
+		task.spawn(function()
+			for i = 1, 10 do
+				task.wait(Config.COOKING_TIME / 10)
+				if dosaVisual then
+					dosaVisual.Transparency = 0.3 - (i * 0.03)
+				end
+			end
+		end)
+	end
+
 	if data.dosaReady and dosaVisual then
 		dosaVisual.Transparency = 0
 		task.delay(3, function()
@@ -738,8 +883,8 @@ Remotes:WaitForChild("UpdateHUD").OnClientEvent:Connect(function(data)
 end)
 
 -- === CLEANUP MECHANIC (Night 2) ===
-local messVisible = false
-local messZone = workspace:FindFirstChild("MessZone")
+messVisible = false
+messZone = workspace:FindFirstChild("MessZone")
 
 Remotes:WaitForChild("TriggerEvent").OnClientEvent:Connect(function(eventType, eventData)
 	if eventType == "naked_guy_throw" then
@@ -752,18 +897,23 @@ Remotes:WaitForChild("TriggerEvent").OnClientEvent:Connect(function(eventType, e
 		showFloatingText("What the--?! Clean that up! [E near mess]", Color3.fromRGB(255, 150, 0))
 	elseif eventType == "lights_flicker" then
 		flickerLights(3)
-	elseif eventType == "terrifier_truck" or eventType == "terrifier_truck_aggressive" then
-		showFloatingText("Something is outside...", Color3.fromRGB(255, 0, 0))
-		if eventData and eventData.requiresShutters then
-			task.wait(1)
-			showFloatingText("CLOSE THE SHUTTERS! [1] [2] [3]", Color3.fromRGB(255, 0, 0))
-		end
+		playSound("WhisperSound")
+	elseif eventType == "terrifier_truck" then
+		showFloatingText("Something is outside... DON'T LOOK!", Color3.fromRGB(255, 0, 0))
+		playSound("TruckEngine")
+	elseif eventType == "terrifier_truck_aggressive" then
+		showFloatingText("THE TRUCK IS BACK!", Color3.fromRGB(255, 0, 0))
+		playSound("TruckEngine")
+		task.wait(1)
+		showFloatingText("CLOSE ALL SHUTTERS! [1] [2] [3]", Color3.fromRGB(255, 0, 0))
 		if eventData and eventData.killIfOpen then
 			task.wait(2)
 			Remotes:WaitForChild("TruckArrival"):FireServer()
 		end
 	elseif eventType == "final_sequence" then
 		showFloatingText("He's here... Suthan...", Color3.fromRGB(200, 0, 0))
+		playSound("HeartbeatSound")
+		flickerLights(2)
 	end
 end)
 
@@ -781,23 +931,6 @@ RunService.Heartbeat:Connect(function()
 		local dist = (hrp.Position - safeTrigger.Position).Magnitude
 		if dist < 6 then
 			Remotes:WaitForChild("ReachedSafeRoom"):FireServer()
-		end
-	end
-end)
-
--- E key for cleanup when near mess
-UserInputService.InputBegan:Connect(function(input, processed)
-	if processed then return end
-	if input.KeyCode == Enum.KeyCode.E and messVisible then
-		local character = player.Character
-		if character and messZone then
-			local hrp = character:FindFirstChild("HumanoidRootPart")
-			if hrp and (hrp.Position - messZone.Position).Magnitude < 8 then
-				messVisible = false
-				messZone.Transparency = 1
-				Remotes:WaitForChild("CleanMess"):FireServer()
-				showFloatingText("Mess Cleaned!", Color3.fromRGB(100, 200, 255))
-			end
 		end
 	end
 end)

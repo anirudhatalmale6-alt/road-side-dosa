@@ -93,20 +93,41 @@ def prop_protected_string(name, code):
 def prop_binarystring(name, value=""):
     return f'<BinaryString name="{name}">{value}</BinaryString>'
 
+# === VALUE OBJECT BUILDERS (for proper attribute replacement) ===
+def make_bool_value(name, value):
+    """Create a BoolValue instance child (replaces BinaryString attributes)"""
+    r = ref()
+    return f'''<Item class="BoolValue" referent="{r}">
+<Properties>
+{prop_string("Name", name)}
+{prop_bool("Value", value)}
+</Properties>
+</Item>'''
+
+def make_string_value(name, value):
+    """Create a StringValue instance child (replaces BinaryString attributes)"""
+    r = ref()
+    return f'''<Item class="StringValue" referent="{r}">
+<Properties>
+{prop_string("Name", name)}
+{prop_string("Value", value)}
+</Properties>
+</Item>'''
+
 # === PART BUILDER ===
 def make_part(name, x, y, z, sx, sy, sz, color=(0.5,0.5,0.5), material=256,
               transparency=0, anchored=True, cancollide=True, children="", shape=1,
               attributes=None):
     r = ref()
-    attr_xml = ""
+
+    # Build attribute children using proper Value objects
+    attr_children = ""
     if attributes:
-        attr_items = ""
         for k, v in attributes.items():
             if isinstance(v, bool):
-                attr_items += f'<bool name="{k}">{"true" if v else "false"}</bool>'
+                attr_children += make_bool_value(k, v)
             elif isinstance(v, str):
-                attr_items += f'<string name="{k}">{escape(v)}</string>'
-        attr_xml = f'<BinaryString name="AttributesSerialize">{attr_items}</BinaryString>' if attr_items else ""
+                attr_children += make_string_value(k, v)
 
     # Convert float color (0-1) to uint8
     cr, cg, cb = int(color[0]*255), int(color[1]*255), int(color[2]*255)
@@ -123,25 +144,26 @@ def make_part(name, x, y, z, sx, sy, sz, color=(0.5,0.5,0.5), material=256,
 {prop_vector3("size", sx, sy, sz)}
 {prop_token("shape", shape)}
 {prop_float("Transparency", transparency)}
-{attr_xml}
 </Properties>
+{attr_children}
 {children}
 </Item>'''
 
 def make_pointlight(brightness=1, color=(1,1,0.9), range_val=20, enabled=True, controllable=False):
     r = ref()
-    # Controllable attribute for lights the player can toggle
-    attr = ""
+    # Use BoolValue child for controllable flag instead of attribute
+    ctrl_child = ""
     if controllable:
-        attr = f'\n{prop_bool("Controllable", True)}'
+        ctrl_child = make_bool_value("Controllable", True)
     return f'''<Item class="PointLight" referent="{r}">
 <Properties>
 {prop_string("Name", "PointLight")}
 {prop_float("Brightness", brightness)}
 {prop_color3("Color", color[0], color[1], color[2])}
 {prop_float("Range", range_val)}
-{prop_bool("Enabled", enabled)}{attr}
+{prop_bool("Enabled", enabled)}
 </Properties>
+{ctrl_child}
 </Item>'''
 
 def make_spotlight(brightness=1, color=(1,1,1), range_val=30, angle=90, face=1, enabled=True):
@@ -405,17 +427,17 @@ def build_restaurant():
         # Window glass
         parts.append(make_part(f"WindowGlass_{wname}", wx, 6, 15.1, 4.5, 4.5, 0.1,
                                color=(0.5, 0.7, 0.9), material=256, transparency=0.6))
-        # Shutter (mechanical)
-        parts.append(make_part(f"Shutter_{wname}", wx, 6, 15.3, 4.8, 4.8, 0.15,
-                               color=(0.5, 0.5, 0.5), material=272, transparency=0.8))
 
+    # == SHUTTERS (direct workspace children so GameManager can find them) ==
+    # Left window shutter
+    parts.append(make_part("Shutter_left", -5, 6, 15.3, 4.8, 4.8, 0.15,
+                           color=(0.5, 0.5, 0.5), material=272, transparency=0.8))
+    # Right window shutter
+    parts.append(make_part("Shutter_right", 5, 6, 15.3, 4.8, 4.8, 0.15,
+                           color=(0.5, 0.5, 0.5), material=272, transparency=0.8))
     # Front shutter (main entrance)
     parts.append(make_part("Shutter_front", 0, 5, 15.3, 9, 9, 0.15,
                            color=(0.5, 0.5, 0.5), material=272, transparency=0.8))
-
-    # Shutters folder marker
-    parts.append(make_part("Shutters_Marker", 0, -10, 0, 1, 1, 1,
-                           transparency=1, cancollide=False))
 
     # == PHONE ==
     parts.append(make_part("Phone", 6, 4.3, 5, 0.5, 0.3, 0.8,
@@ -438,12 +460,15 @@ def build_restaurant():
                            color=(0.25, 0.25, 0.25), material=256))
 
     # == TERRIFIER TRUCK (Cursed Object - Ice Cream Van style) ==
-    # Main body
-    truck_children = make_pointlight(0.4, (1, 0, 0), 18)
+    # Main body with BoolValue CursedObject and StringValue NPCType
+    truck_children = (
+        make_pointlight(0.4, (1, 0, 0), 18) +
+        make_bool_value("CursedObject", True) +
+        make_string_value("NPCType", "TerrifierTruck")
+    )
     parts.append(make_part("TerrifierTruck", 25, 3, 25, 5, 5, 10,
                            color=(0.95, 0.95, 0.98), material=256,
-                           children=truck_children,
-                           attributes={"CursedObject": True, "NPCType": "TerrifierTruck"}))
+                           children=truck_children))
     # Truck roof (red stripe)
     parts.append(make_part("TruckRoof", 25, 6, 25, 5.2, 0.3, 10.2,
                            color=(0.8, 0.15, 0.15), material=256))
@@ -485,10 +510,11 @@ def build_restaurant():
                            color=(0.3, 0.2, 0.15), material=256))
     parts.append(make_part("BackRoomWallBack", 0, 4, -26, 10, 8, 0.5,
                            color=(0.3, 0.2, 0.15), material=256))
-    # Safe room trigger
+    # Safe room trigger (using BoolValue instead of BinaryString attribute)
+    safe_children = make_bool_value("SafeRoom", True)
     parts.append(make_part("SafeRoomTrigger", 0, 2, -22, 8, 4, 6,
                            transparency=1, cancollide=False,
-                           attributes={"SafeRoom": True}))
+                           children=safe_children))
 
     # == NEON SIGN with SurfaceGui text ==
     neon_sign_ref = ref()
@@ -659,9 +685,10 @@ def build_restaurant():
                            color=(0.3, 0.05, 0.05), material=256, transparency=0.6))
 
     # == CLEANUP ZONE (for naked guy event Night 2) ==
+    cleanup_children = make_bool_value("CleanupZone", True)
     parts.append(make_part("MessZone", 3, 0.52, 10, 2.5, 0.01, 2,
                            color=(0.4, 0.3, 0.1), material=256, transparency=1,
-                           attributes={"CleanupZone": True}))
+                           children=cleanup_children))
 
     # == MOP (near sink, player can pick up) ==
     parts.append(make_part("Mop", 10, 2, -10, 0.15, 4, 0.15,
@@ -671,9 +698,10 @@ def build_restaurant():
 
     # == COOKING VISUAL FEEDBACK ==
     # Dosa on tawa (appears during cooking, initially hidden)
+    cooking_children = make_bool_value("CookingVisual", True)
     parts.append(make_part("DosaOnTawa", -5, 3.65, -8, 2, 0.1, 2,
                            color=(0.85, 0.7, 0.4), material=256, transparency=1, shape=2,
-                           attributes={"CookingVisual": True}))
+                           children=cooking_children))
 
     # == IMPROVED SAFE ROOM (Night 5) ==
     # Hiding cabinet in safe room
@@ -793,6 +821,9 @@ def build_ui():
                                       text_color=(0.9,0.9,0.9), font=4, text_scaled=True),
                        make_textlabel("ProgressLabel", "1/1", "0.85,0,0.05,0", "0.1,0,0,20",
                                       text_color=(0.5,0.5,0.5), font=4),
+                       # Skip hint
+                       make_textlabel("SkipHint", "[Click to skip]", "0.3,0,0.85,0", "0.4,0,0,15",
+                                      text_color=(0.4,0.4,0.4), font=4, visible=True),
                    ])),
     ])
     dialogue = make_frame("DialogueUI", "0,0,0,0", "1,0,1,0", bg_transparency=1,
@@ -875,7 +906,7 @@ def build_ui():
                         bg_color=(0.7,0.25,0.05), text_color=(1,1,1),
                         children=make_uicorner(10)),
         # Credits
-        make_textlabel("CreditsLabel", "v1.0", "0.85,0,0.92,0", "0.1,0,0,18",
+        make_textlabel("CreditsLabel", "v2.0", "0.85,0,0.92,0", "0.1,0,0,18",
                        text_color=(0.3,0.3,0.3), font=4),
         # Controls info
         make_textlabel("ControlsInfo",
@@ -886,7 +917,6 @@ def build_ui():
     lobby = make_frame("LobbyUI", "0,0,0,0", "1,0,1,0", bg_transparency=0, children=lobby_children)
 
     # Each overlay goes into its own ScreenGui with Enabled=false
-    # This ensures they are truly hidden until scripts enable them
     lobby_gui = make_screengui("LobbyScreenGui", lobby, enabled=True, display_order=0)
     main_gui = make_screengui("MainUI", "\n".join([hud]), enabled=True, display_order=1)
     phone_gui = make_screengui("PhoneScreenGui", "\n".join([phone, dialogue]), enabled=False, display_order=5)
@@ -901,7 +931,7 @@ def build_ui():
 # === BUILD REMOTE EVENTS ===
 def build_remotes():
     remote_names = [
-        "StartNight", "EndNight", "PhoneRing", "PhoneDialogue",
+        "StartNight", "EndNight", "PhoneRing", "PhoneDialogue", "PhoneDialogueEnd",
         "PlayerDeath", "NightComplete", "TriggerEvent", "UpdateHUD",
         "JumpScare", "SpawnNPC", "NPCDialogue", "NPCLeave",
         "RequestStartNight", "RequestRetry",
@@ -1040,9 +1070,6 @@ def generate():
 
 <!-- CCTV Cameras -->
 {make_folder("CCTVCameras", cctv_parts)}
-
-<!-- Shutters Group -->
-{make_folder("Shutters")}
 
 <!-- Spawn Location -->
 {spawn_loc}

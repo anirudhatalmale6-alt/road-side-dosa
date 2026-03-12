@@ -4,6 +4,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
+local RunService = game:GetService("RunService")
 
 local Config = require(ReplicatedStorage:WaitForChild("Config"))
 local NightData = require(ReplicatedStorage:WaitForChild("NightData"))
@@ -97,7 +98,6 @@ local NPCTemplates = {
 }
 
 -- Random face decal IDs (Roblox default faces)
--- These are built-in Roblox face asset IDs
 local RandomFaces = {
 	"rbxasset://textures/face.png",              -- Default smile
 	"rbxassetid://7699174",                       -- Worried
@@ -129,6 +129,11 @@ local SkinTones = {
 
 -- Active NPCs tracking
 local activeNPCs = {} -- [npcModel] = {type, player, spawnTime}
+
+-- NPCManager's own night tracking (independent of GameManager's local state)
+local nightActivePerPlayer = {} -- [player] = bool
+local nightTimerPerPlayer = {} -- [player] = elapsed seconds
+local nightNumPerPlayer = {} -- [player] = night number
 
 -- NPC Spawn points
 local function getSpawnPoint()
@@ -188,14 +193,6 @@ local function createNPCModel(npcType, template)
 		face.Texture = faceId or RandomFaces[math.random(1, #RandomFaces)]
 		face.Face = Enum.NormalId.Front
 		face.Parent = headPart
-	end
-
-	-- Apply random skin tone
-	local function applySkinTone(parts)
-		local tone = SkinTones[math.random(1, #SkinTones)]
-		for _, p in ipairs(parts) do
-			p.BrickColor = tone
-		end
 	end
 
 	-- Add arms and legs for more realistic look
@@ -294,9 +291,8 @@ local function createNPCModel(npcType, template)
 		head.BrickColor = suthanSkin
 		leftArm.BrickColor = suthanSkin
 		rightArm.BrickColor = suthanSkin
-		-- White striped shirt
 		torso.BrickColor = BrickColor.new("Institutional white")
-		leftLeg.BrickColor = BrickColor.new("Dark stone grey") -- dark pants
+		leftLeg.BrickColor = BrickColor.new("Dark stone grey")
 		rightLeg.BrickColor = BrickColor.new("Dark stone grey")
 
 		-- Styled dark hair (swept up)
@@ -324,10 +320,9 @@ local function createNPCModel(npcType, template)
 		hairFrontWeld.Part1 = hairFront
 		hairFrontWeld.Parent = hairFront
 
-		-- Menacing face for Suthan
 		addFace(head, "rbxasset://textures/face.png")
 
-		-- Shirt stripe details (billboard)
+		-- Shirt label billboard
 		local billboard = Instance.new("BillboardGui")
 		billboard.Name = "ShirtLabel"
 		billboard.Size = UDim2.new(3, 0, 1.5, 0)
@@ -346,11 +341,6 @@ local function createNPCModel(npcType, template)
 		label.TextStrokeTransparency = 0.5
 		label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 		label.Parent = billboard
-
-		-- NOTE: To use the actual reference photo as Suthan's face:
-		-- 1. Upload the photo to Roblox as a Decal (Create > Decals on roblox.com)
-		-- 2. Copy the asset ID
-		-- 3. Replace the face Decal's Texture with "rbxassetid://YOUR_ID_HERE"
 
 	elseif npcType == "NakedGuy" then
 		local skinTone = BrickColor.new("Light orange")
@@ -413,16 +403,18 @@ local function createNPCModel(npcType, template)
 
 	model.PrimaryPart = humanoidRootPart
 
-	-- Proximity prompt for interaction
-	local prompt = Instance.new("ProximityPrompt")
-	prompt.Name = "ServePrompt"
-	prompt.ActionText = "Serve"
-	prompt.ObjectText = template.name
-	prompt.MaxActivationDistance = 8
-	prompt.HoldDuration = 0
-	prompt.Parent = humanoidRootPart
+	-- Proximity prompt for interaction (except NakedGuy who can't be served)
+	if npcType ~= "NakedGuy" then
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "ServePrompt"
+		prompt.ActionText = "Serve"
+		prompt.ObjectText = template.name
+		prompt.MaxActivationDistance = 8
+		prompt.HoldDuration = 0
+		prompt.Parent = humanoidRootPart
+	end
 
-	-- NPC type attribute
+	-- NPC type attribute (runtime SetAttribute works fine in Luau)
 	model:SetAttribute("NPCType", npcType)
 	model:SetAttribute("IsAnomaly", template.isAnomaly)
 
@@ -454,7 +446,9 @@ local function spawnNPC(npcType, targetPlayer)
 	}
 
 	-- Notify client
-	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, template.dialogue.enter[math.random(1, #template.dialogue.enter)])
+	local enterDialogue = template.dialogue.enter
+	local dialogueLine = enterDialogue[math.random(1, #enterDialogue)]
+	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine)
 
 	-- NPC walks to counter
 	local humanoid = model:FindFirstChildOfClass("Humanoid")
@@ -487,6 +481,8 @@ local function spawnNPC(npcType, targetPlayer)
 			task.wait(Config.SERVING_TIMEOUT)
 			if activeNPCs[model] then
 				NPCLeaveEvent:FireClient(targetPlayer, npcType, "timeout")
+				NPCDialogueEvent:FireClient(targetPlayer, npcType,
+					template.dialogue.angry[math.random(1, #template.dialogue.angry)])
 				task.wait(3)
 				if model and model.Parent then
 					model:Destroy()
@@ -499,7 +495,14 @@ local function spawnNPC(npcType, targetPlayer)
 	-- Dancing Guy special: leaves after ignoring for 20 seconds
 	if npcType == "DancingGuy" then
 		task.spawn(function()
-			task.wait(20)
+			-- Send intermediate dialogue at 10 seconds
+			task.wait(10)
+			if activeNPCs[model] then
+				local ignoredDialogue = template.dialogue.ignored
+				NPCDialogueEvent:FireClient(targetPlayer, npcType,
+					ignoredDialogue[math.random(1, #ignoredDialogue)])
+			end
+			task.wait(10)
 			if activeNPCs[model] then
 				NPCDialogueEvent:FireClient(targetPlayer, npcType,
 					template.dialogue.leaves[1])
@@ -515,7 +518,7 @@ local function spawnNPC(npcType, targetPlayer)
 	return model
 end
 
--- NPC Spawning loop per player per night
+-- NPC Spawning loop per player per night (uses NPCManager's own state)
 local function nightNPCLoop(player, nightNum)
 	local nightInfo = NightData.Nights[nightNum]
 	if not nightInfo then return end
@@ -526,24 +529,42 @@ local function nightNPCLoop(player, nightNum)
 	-- Spawn anomaly NPCs based on night rules
 	local anomalySpawned = {}
 
-	while GameState and GameState.nightActive and GameState.nightActive[player] do
-		task.wait(Config.NPC_SPAWN_INTERVAL + math.random(-3, 5))
+	-- Track elapsed time ourselves
+	local elapsed = 0
 
-		if not GameState.nightActive[player] then break end
+	while nightActivePerPlayer[player] do
+		local waitTime = Config.NPC_SPAWN_INTERVAL + math.random(-3, 5)
+		task.wait(waitTime)
+		elapsed = elapsed + waitTime
+
+		if not nightActivePerPlayer[player] then break end
 		if spawnCount >= maxSpawns then break end
 
 		-- Decide what to spawn
 		local npcType = "NormalCustomer"
+		local progress = elapsed / Config.NIGHT_DURATION
 
 		-- Check if we should spawn an anomaly
 		for _, rule in ipairs(nightInfo.rules or {}) do
 			if not anomalySpawned[rule.npcType] then
 				-- Spawn anomaly NPC with higher chance as night progresses
-				local elapsed = GameState.nightTimers[player] or 0
-				local progress = elapsed / Config.NIGHT_DURATION
 				if progress > 0.2 and math.random() < 0.5 then
 					npcType = rule.npcType
 					anomalySpawned[rule.npcType] = true
+					break
+				end
+			end
+		end
+
+		-- Also check anomalies list for non-rule anomalies
+		if npcType == "NormalCustomer" and nightInfo.anomalies then
+			for _, anomalyType in ipairs(nightInfo.anomalies) do
+				if not anomalySpawned[anomalyType] and NPCTemplates[anomalyType] then
+					if progress > 0.3 and math.random() < 0.3 then
+						npcType = anomalyType
+						anomalySpawned[anomalyType] = true
+						break
+					end
 				end
 			end
 		end
@@ -553,37 +574,76 @@ local function nightNPCLoop(player, nightNum)
 	end
 end
 
--- Listen for night start to begin NPC spawning
-Remotes:WaitForChild("StartNight").OnClientEvent = nil -- Server doesn't listen to OnClientEvent
--- Instead, we hook into the StartNight fire from GameManager by attribute
-
 -- We use a BindableEvent to communicate between server scripts
-local nightStartBindable = ServerStorage:FindFirstChild("NightStartBindable")
-if not nightStartBindable then
-	nightStartBindable = Instance.new("BindableEvent")
-	nightStartBindable.Name = "NightStartBindable"
-	nightStartBindable.Parent = ServerStorage
-end
+local nightStartBindable = ServerStorage:WaitForChild("NightStartBindable")
 
--- GameManager will fire this when a night starts
+-- GameManager fires this when a night starts
 nightStartBindable.Event:Connect(function(player, nightNum)
+	nightActivePerPlayer[player] = true
+	nightNumPerPlayer[player] = nightNum
+	nightTimerPerPlayer[player] = 0
+
 	task.spawn(function()
 		nightNPCLoop(player, nightNum)
 	end)
 end)
 
--- Also handle NPC interaction via proximity prompt
--- This is handled by client sending ServeCustomer remote
-
 -- Clean up NPCs when night ends
-Remotes:WaitForChild("EndNight").OnServerEvent:Connect(function(player)
-	-- Remove all NPCs
+Remotes:WaitForChild("EndNight").OnClientEvent = nil -- Server doesn't listen to OnClientEvent
+
+-- Listen for EndNight sent from client (night survived or death)
+-- We need to stop NPC spawning and clean up
+local function cleanupNPCsForPlayer(player)
+	nightActivePerPlayer[player] = nil
+	nightNumPerPlayer[player] = nil
+	nightTimerPerPlayer[player] = nil
+
 	local npcsFolder = workspace:FindFirstChild("NPCs")
 	if npcsFolder then
 		for _, npc in ipairs(npcsFolder:GetChildren()) do
 			if activeNPCs[npc] and activeNPCs[npc].player == player then
 				npc:Destroy()
 				activeNPCs[npc] = nil
+			end
+		end
+	end
+end
+
+-- When StartNight fires to client, we already started spawning.
+-- When EndNight fires from server, we should stop spawning.
+-- Listen for EndNight remote (server→client, but we intercept the server-side trigger)
+Remotes:WaitForChild("EndNight").OnServerEvent:Connect(function(player)
+	cleanupNPCsForPlayer(player)
+end)
+
+-- Also clean up if player leaves
+Players.PlayerRemoving:Connect(function(player)
+	cleanupNPCsForPlayer(player)
+end)
+
+-- Handle serve success: remove NPC from active tracking
+Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npcId, itemName)
+	-- Find the NPC model that was served
+	local npcsFolder = workspace:FindFirstChild("NPCs")
+	if npcsFolder then
+		for _, npc in ipairs(npcsFolder:GetChildren()) do
+			if activeNPCs[npc] and activeNPCs[npc].type == npcId and activeNPCs[npc].player == player then
+				-- NPC was served, have them leave after a moment
+				task.spawn(function()
+					-- Show served dialogue
+					local template = activeNPCs[npc] and activeNPCs[npc].template
+					if template and template.dialogue.served then
+						local servedDialogue = template.dialogue.served
+						NPCDialogueEvent:FireClient(player, npcId,
+							servedDialogue[math.random(1, #servedDialogue)])
+					end
+					task.wait(2)
+					if npc and npc.Parent then
+						npc:Destroy()
+						activeNPCs[npc] = nil
+					end
+				end)
+				break
 			end
 		end
 	end

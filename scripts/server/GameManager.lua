@@ -5,6 +5,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 local Lighting = game:GetService("Lighting")
+local SoundService = game:GetService("SoundService")
 
 local Config = require(ReplicatedStorage:WaitForChild("Config"))
 local NightData = require(ReplicatedStorage:WaitForChild("NightData"))
@@ -20,6 +21,9 @@ local NightCompleteEvent = Remotes:WaitForChild("NightComplete")
 local TriggerEventRemote = Remotes:WaitForChild("TriggerEvent")
 local UpdateHUDEvent = Remotes:WaitForChild("UpdateHUD")
 local JumpScareEvent = Remotes:WaitForChild("JumpScare")
+
+-- BindableEvent to notify NPCManager when a night starts
+local NightStartBindable = ServerStorage:WaitForChild("NightStartBindable")
 
 -- Game State
 local GameState = {
@@ -39,7 +43,8 @@ local function initPlayer(player)
 		batter = 0,
 		currentOrder = nil,
 		shuttersOpen = {front = true, left = true, right = true},
-		lightsOn = true
+		lightsOn = true,
+		isCooking = false
 	}
 	GameState.activeNight[player] = 0
 	GameState.nightActive[player] = false
@@ -87,21 +92,10 @@ local function startPhoneCall(player, nightNum)
 		waitTime = waitTime + NightData.PhoneConfig.dialoguePause
 		task.wait(waitTime)
 	end
-end
 
--- Trigger night events based on progression
-local function processNightEvents(player, nightNum, progress)
-	local nightInfo = NightData.Nights[nightNum]
-	if not nightInfo or not nightInfo.events then return end
-
-	for _, event in ipairs(nightInfo.events) do
-		if event.triggerTime and progress >= event.triggerTime then
-			-- Check probability
-			if event.probability and math.random() > event.probability then
-				continue
-			end
-			TriggerEventRemote:FireClient(player, event.type, event)
-		end
+	-- Close phone after all dialogue
+	if GameState.nightActive[player] then
+		Remotes:WaitForChild("PhoneDialogueEnd"):FireClient(player)
 	end
 end
 
@@ -122,11 +116,30 @@ local function startNight(player)
 	GameState.nightTimers[player] = 0
 	pData.alive = true
 	pData.batter = 0
+	pData.isCooking = false
 	pData.shuttersOpen = {front = true, left = true, right = true}
 	pData.lightsOn = true
 
 	-- Set atmosphere
 	setNightAtmosphere(nightNum)
+
+	-- Reset shutters visually (all open = transparent)
+	for _, shutterName in ipairs({"Shutter_front", "Shutter_left", "Shutter_right"}) do
+		local shutterPart = workspace:FindFirstChild(shutterName)
+		if shutterPart then
+			shutterPart.Transparency = 0.8
+		end
+	end
+
+	-- Reset lights
+	for _, light in ipairs(workspace:GetDescendants()) do
+		if (light:IsA("PointLight") or light:IsA("SpotLight")) then
+			local ctrl = light:FindFirstChild("Controllable")
+			if ctrl and ctrl:IsA("BoolValue") and ctrl.Value then
+				light.Enabled = true
+			end
+		end
+	end
 
 	-- Notify client
 	StartNightEvent:FireClient(player, nightNum, NightData.Nights[nightNum])
@@ -134,14 +147,23 @@ local function startNight(player)
 		night = nightNum,
 		currency = pData.currency,
 		alive = true,
-		menuItems = Config.MENU_UNLOCK[nightNum]
+		menuItems = Config.MENU_UNLOCK[nightNum],
+		lightsOn = true,
+		shutters = pData.shuttersOpen
 	})
+
+	-- CRITICAL: Fire NightStartBindable to tell NPCManager to begin spawning NPCs
+	NightStartBindable:Fire(player, nightNum)
 
 	-- Start phone call in separate thread
 	task.spawn(function()
 		task.wait(2)
 		startPhoneCall(player, nightNum)
 	end)
+
+	-- Play ambient horror sound
+	local ambientSound = SoundService:FindFirstChild("AmbientHorror")
+	if ambientSound then ambientSound:Play() end
 
 	-- Night loop
 	local eventsFired = {}
@@ -172,6 +194,9 @@ local function startNight(player)
 			GameState.nightActive[player] = false
 			pData.night = nightNum + 1
 
+			-- Stop ambient sound
+			if ambientSound then ambientSound:Stop() end
+
 			-- Night survived!
 			EndNightEvent:FireClient(player, {
 				survived = true,
@@ -180,12 +205,23 @@ local function startNight(player)
 				nextNight = pData.night
 			})
 
+			-- Sync to DataManager
+			Remotes:WaitForChild("UpdateCurrency"):FireServer(pData.currency)
+			Remotes:WaitForChild("UpdateNightProgress"):FireServer(pData.night)
+
+			-- Play victory sound for surviving
+			local victorySound = SoundService:FindFirstChild("VictorySound")
+			if victorySound then victorySound:Play() end
+
 			if pData.night > 5 then
 				task.wait(3)
 				NightCompleteEvent:FireClient(player, "victory")
 			end
 		end
 	end
+
+	-- Stop ambient on death/exit too
+	if ambientSound then ambientSound:Stop() end
 end
 
 -- Handle player death
@@ -195,6 +231,10 @@ local function killPlayer(player, cause)
 
 	pData.alive = false
 	GameState.nightActive[player] = false
+
+	-- Stop ambient sound
+	local ambientSound = SoundService:FindFirstChild("AmbientHorror")
+	if ambientSound then ambientSound:Stop() end
 
 	-- Trigger death effects
 	JumpScareEvent:FireClient(player, cause or "generic")
@@ -238,11 +278,15 @@ end)
 Remotes:WaitForChild("CookDosa").OnServerEvent:Connect(function(player)
 	local pData = GameState.players[player]
 	if not pData or not pData.alive then return end
+	if pData.isCooking then return end -- Prevent double-cooking
 
 	if pData.batter > 0 then
+		pData.isCooking = true
 		pData.batter = pData.batter - 1
+		UpdateHUDEvent:FireClient(player, {batter = pData.batter, cookingStarted = true})
 		-- Cooking takes time
 		task.wait(Config.COOKING_TIME)
+		pData.isCooking = false
 		if pData.alive then
 			UpdateHUDEvent:FireClient(player, {
 				batter = pData.batter,
@@ -289,6 +333,8 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 			serveSuccess = true,
 			npcId = npcId
 		})
+		-- Sync to DataManager
+		Remotes:WaitForChild("RecordServe"):FireServer(itemName)
 	end
 end)
 
@@ -302,7 +348,8 @@ Remotes:WaitForChild("ToggleShutter").OnServerEvent:Connect(function(player, shu
 		UpdateHUDEvent:FireClient(player, {shutters = pData.shuttersOpen})
 
 		-- Replicate shutter state to workspace
-		local shutterPart = workspace:FindFirstChild("Shutters") and workspace.Shutters:FindFirstChild(shutterName)
+		-- Shutters are direct children of workspace: Shutter_front, Shutter_left, Shutter_right
+		local shutterPart = workspace:FindFirstChild("Shutter_" .. shutterName)
 		if shutterPart then
 			shutterPart.Transparency = pData.shuttersOpen[shutterName] and 0.8 or 0
 		end
@@ -316,10 +363,11 @@ Remotes:WaitForChild("ToggleLights").OnServerEvent:Connect(function(player)
 	pData.lightsOn = not pData.lightsOn
 	UpdateHUDEvent:FireClient(player, {lightsOn = pData.lightsOn})
 
-	-- Update actual lights in workspace
+	-- Update actual lights in workspace (using BoolValue children instead of attributes)
 	for _, light in ipairs(workspace:GetDescendants()) do
 		if light:IsA("PointLight") or light:IsA("SpotLight") then
-			if light:GetAttribute("Controllable") then
+			local ctrl = light:FindFirstChild("Controllable")
+			if ctrl and ctrl:IsA("BoolValue") and ctrl.Value then
 				light.Enabled = pData.lightsOn
 			end
 		end
@@ -337,11 +385,19 @@ Remotes:WaitForChild("TruckArrival").OnServerEvent:Connect(function(player)
 	if not pData or not pData.alive then return end
 
 	-- Check if any shutters are open
+	local anyOpen = false
 	for name, isOpen in pairs(pData.shuttersOpen) do
 		if isOpen then
-			task.wait(3) -- Give player a moment
-			-- Re-check
-			if pData.shuttersOpen[name] then
+			anyOpen = true
+			break
+		end
+	end
+
+	if anyOpen then
+		task.wait(3) -- Give player a moment
+		-- Re-check all shutters
+		for name, isOpen in pairs(pData.shuttersOpen) do
+			if isOpen then
 				killPlayer(player, "truck_open_shutter")
 				return
 			end
@@ -379,6 +435,10 @@ Remotes:WaitForChild("ReachedSafeRoom").OnServerEvent:Connect(function(player)
 		GameState.nightActive[player] = false
 		pData.night = 6
 		NightCompleteEvent:FireClient(player, "victory")
+
+		-- Play victory sound
+		local victorySound = SoundService:FindFirstChild("VictorySound")
+		if victorySound then victorySound:Play() end
 	end
 end)
 
@@ -410,6 +470,7 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
+	GameState.nightActive[player] = false -- Stop any running night loop
 	cleanupPlayer(player)
 end)
 
