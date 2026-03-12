@@ -894,7 +894,7 @@ def build_ui():
                         bg_color=(0.8,0.2,0.2), text_color=(1,1,1)),
         # Controls hint
         make_textlabel("ControlsHint",
-                       "[F] Grab Batter  [T] Cook  [E] Interact  [C] CCTV  [L] Lights  [1/2/3] Shutters  [Shift] Sprint  [G] Spill Batter (Night 5)",
+                       "[F] Batter  [T] Cook  [E] Interact  [C] CCTV  [L] Lights  [1/2/3] Shutters  [Shift] Sprint  [B] Shop  [Tab] Leaderboard",
                        "0,0,0.96,0", "1,0,0,25", text_color=(0.6,0.6,0.6), font=4,
                        text_scaled=True),
     ])
@@ -940,6 +940,9 @@ def build_ui():
                        text_color=(1,0,0), font=8),
         make_textlabel("CCTVHint", "[Q/E] Switch Camera  [C] Exit CCTV", "0.3,0,0.95,0", "0.4,0,0,20",
                        text_color=(0.8,0.8,0.8), font=4),
+        # Anomaly warning (GamePass: Anomaly Identifier)
+        make_textlabel("AnomalyWarning", "", "0.2,0,0.08,0", "0.6,0,0,30",
+                       text_color=(1,0,0), font=8, visible=False),
     ])
     cctv = make_frame("CCTVUI", "0,0,0,0", "1,0,1,0", bg_transparency=1,
                       visible=False, children=cctv_children, zindex=4)
@@ -1008,15 +1011,80 @@ def build_ui():
                         bg_color=(0.7,0.25,0.05), text_color=(1,1,1),
                         children=make_uicorner(10)),
         # Credits
-        make_textlabel("CreditsLabel", "v2.0", "0.85,0,0.92,0", "0.1,0,0,18",
+        make_textlabel("CreditsLabel", "v3.0", "0.85,0,0.92,0", "0.1,0,0,18",
                        text_color=(0.3,0.3,0.3), font=4),
         # Controls info
         make_textlabel("ControlsInfo",
-                       "Controls: WASD Move | Shift Sprint | F Grab Batter | T Cook | C CCTV | L Lights | 1-2-3 Shutters",
+                       "Controls: WASD Move | Shift Sprint | F Batter | T Cook | C CCTV | L Lights | 1-2-3 Shutters | B Shop | Tab Leaderboard",
                        "0.1,0,0.7,0", "0.8,0,0,18",
                        text_color=(0.4,0.4,0.4), font=4),
     ])
     lobby = make_frame("LobbyUI", "0,0,0,0", "1,0,1,0", bg_transparency=0, children=lobby_children)
+
+    # --- GamePass Shop UI ---
+    gamepass_children = "\n".join([
+        make_frame("ShopBG", "0.2,0,0.15,0", "0.6,0,0.7,0", bg_color=(0.05,0.03,0.08),
+                   children="\n".join([
+                       make_uicorner(12),
+                       make_textlabel("ShopTitle", "GAME PASSES", "0.1,0,0.02,0", "0.8,0,0,40",
+                                      text_color=(1,0.8,0.2), font=8),
+                       make_textlabel("ShopSubtitle", "[B] to close", "0.35,0,0.1,0", "0.3,0,0,18",
+                                      text_color=(0.5,0.5,0.5), font=4),
+                       # Pass 1: Anomaly Identifier
+                       make_textbutton("Pass_AnomalyIdentifier",
+                                       "Anomaly Identifier (250R$)\\nHighlights anomaly NPCs on CCTV",
+                                       "0.05,0,0.18,0", "0.9,0,0,55",
+                                       bg_color=(0.15,0.05,0.2), text_color=(0.9,0.7,1),
+                                       children=make_uicorner(8)),
+                       # Pass 2: Jumpscare Friend
+                       make_textbutton("Pass_JumpscareFriend",
+                                       "Jumpscare Friend (100R$)\\nPrank nearby players [J key]",
+                                       "0.05,0,0.33,0", "0.9,0,0,55",
+                                       bg_color=(0.2,0.05,0.1), text_color=(1,0.7,0.8),
+                                       children=make_uicorner(8)),
+                       # Pass 3: The Gun
+                       make_textbutton("Pass_TheGun",
+                                       "The Gun (350R$)\\nDefend against threats [R key]",
+                                       "0.05,0,0.48,0", "0.9,0,0,55",
+                                       bg_color=(0.15,0.1,0.05), text_color=(1,0.85,0.5),
+                                       children=make_uicorner(8)),
+                       # Pass 4: Humanity Serum
+                       make_textbutton("Pass_HumanitySerum",
+                                       "Humanity Serum (500R$)\\nTransform anomaly NPCs [H key]",
+                                       "0.05,0,0.63,0", "0.9,0,0,55",
+                                       bg_color=(0.05,0.15,0.1), text_color=(0.5,1,0.8),
+                                       children=make_uicorner(8)),
+                       # Controls hint
+                       make_textlabel("PassControls",
+                                      "Purchase passes in Roblox Store to activate",
+                                      "0.1,0,0.82,0", "0.8,0,0,20",
+                                      text_color=(0.4,0.4,0.4), font=4),
+                   ])),
+    ])
+    gamepass = make_frame("GamePassUI", "0,0,0,0", "1,0,1,0", bg_color=(0,0,0),
+                          bg_transparency=0.4, visible=True, children=gamepass_children, zindex=6)
+
+    # --- Leaderboard UI ---
+    leaderboard_children = "\n".join([
+        make_frame("LeaderboardBG", "0.25,0,0.1,0", "0.5,0,0.8,0", bg_color=(0.05,0.05,0.08),
+                   children="\n".join([
+                       make_uicorner(12),
+                       make_textlabel("LeaderboardTitle", "TOP CHEFS", "0.1,0,0.02,0", "0.8,0,0,40",
+                                      text_color=(1,0.85,0), font=8),
+                       make_textlabel("LeaderboardSubtitle", "[Tab] to close", "0.35,0,0.1,0", "0.3,0,0,18",
+                                      text_color=(0.5,0.5,0.5), font=4),
+                       # Leaderboard list container
+                       make_frame("LeaderboardList", "0.05,0,0.15,0", "0.9,0,0.8,0",
+                                  bg_color=(0.03,0.03,0.05), bg_transparency=0.5,
+                                  children="\n".join([
+                                      make_textlabel("HeaderLabel", "#  Player  Earnings",
+                                                     "0,5,0,3", "1,-10,0,25",
+                                                     text_color=(0.7,0.7,0.7), font=8),
+                                  ])),
+                   ])),
+    ])
+    leaderboard = make_frame("LeaderboardUI", "0,0,0,0", "1,0,1,0", bg_color=(0,0,0),
+                             bg_transparency=0.4, visible=True, children=leaderboard_children, zindex=6)
 
     # Each overlay goes into its own ScreenGui with Enabled=false
     lobby_gui = make_screengui("LobbyScreenGui", lobby, enabled=True, display_order=0)
@@ -1027,8 +1095,10 @@ def build_ui():
     menu_gui = make_screengui("MenuScreenGui", menu, enabled=False, display_order=7)
     jumpscare_gui = make_screengui("JumpscareScreenGui", jumpscare, enabled=False, display_order=10)
     nightstart_gui = make_screengui("NightStartScreenGui", nightstart, enabled=False, display_order=9)
+    gamepass_gui = make_screengui("GamePassScreenGui", gamepass, enabled=False, display_order=6)
+    leaderboard_gui = make_screengui("LeaderboardScreenGui", leaderboard, enabled=False, display_order=6)
 
-    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui])
+    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui, gamepass_gui, leaderboard_gui])
 
 # === BUILD REMOTE EVENTS ===
 def build_remotes():

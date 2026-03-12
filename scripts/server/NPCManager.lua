@@ -500,7 +500,7 @@ local function spawnNPC(npcType, targetPlayer)
 		end)
 	end
 
-	-- Timeout - NPC leaves if not served
+	-- Timeout - NPC leaves if not served (walks out angrily)
 	if npcType ~= "NakedGuy" and npcType ~= "DancingGuy" then
 		task.spawn(function()
 			task.wait(Config.SERVING_TIMEOUT)
@@ -508,15 +508,8 @@ local function spawnNPC(npcType, targetPlayer)
 				NPCLeaveEvent:FireClient(targetPlayer, npcType, "timeout")
 				NPCDialogueEvent:FireClient(targetPlayer, npcType,
 					template.dialogue.angry[math.random(1, #template.dialogue.angry)])
-				task.wait(3)
-				if model and model.Parent then
-					model:Destroy()
-					activeNPCs[model] = nil
-				end
-				-- Decrement active customer count
-				if activeCustomerCountPerPlayer[targetPlayer] then
-					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
-				end
+				task.wait(2)
+				walkNPCOut(model, targetPlayer)
 			end
 		end)
 	end
@@ -535,15 +528,8 @@ local function spawnNPC(npcType, targetPlayer)
 			if activeNPCs[model] then
 				NPCDialogueEvent:FireClient(targetPlayer, npcType,
 					template.dialogue.leaves[1])
-				task.wait(3)
-				if model and model.Parent then
-					model:Destroy()
-					activeNPCs[model] = nil
-				end
-				-- Decrement active customer count
-				if activeCustomerCountPerPlayer[targetPlayer] then
-					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
-				end
+				task.wait(2)
+				walkNPCOut(model, targetPlayer)
 			end
 		end)
 	end
@@ -667,13 +653,48 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 -- Handle serve success: remove NPC from active tracking
+-- Walk NPC out through door then destroy
+local function walkNPCOut(npc, targetPlayer)
+	local humanoid = npc:FindFirstChildOfClass("Humanoid")
+	if humanoid and npc.Parent then
+		-- Walk to door first
+		local doorPos = Vector3.new(0, 1, 14)
+		humanoid:MoveTo(doorPos)
+		humanoid.MoveToFinished:Connect(function(reached)
+			if reached and npc and npc.Parent then
+				-- Walk outside
+				local exitPos = Vector3.new(0, 1, 22)
+				humanoid:MoveTo(exitPos)
+				humanoid.MoveToFinished:Connect(function()
+					if npc and npc.Parent then
+						npc:Destroy()
+						activeNPCs[npc] = nil
+					end
+					if activeCustomerCountPerPlayer[targetPlayer] then
+						activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+					end
+				end)
+			end
+		end)
+	else
+		-- Fallback: just destroy
+		if npc and npc.Parent then
+			npc:Destroy()
+			activeNPCs[npc] = nil
+		end
+		if activeCustomerCountPerPlayer[targetPlayer] then
+			activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+		end
+	end
+end
+
 Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npcId, itemName)
 	-- Find the NPC model that was served
 	local npcsFolder = workspace:FindFirstChild("NPCs")
 	if npcsFolder then
 		for _, npc in ipairs(npcsFolder:GetChildren()) do
 			if activeNPCs[npc] and activeNPCs[npc].type == npcId and activeNPCs[npc].player == player then
-				-- NPC was served, have them leave after a moment
+				-- NPC was served, have them walk out
 				task.spawn(function()
 					-- Show served dialogue
 					local template = activeNPCs[npc] and activeNPCs[npc].template
@@ -683,14 +704,7 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 							servedDialogue[math.random(1, #servedDialogue)])
 					end
 					task.wait(2)
-					if npc and npc.Parent then
-						npc:Destroy()
-						activeNPCs[npc] = nil
-					end
-					-- Decrement active customer count
-					if activeCustomerCountPerPlayer[player] then
-						activeCustomerCountPerPlayer[player] = math.max(0, activeCustomerCountPerPlayer[player] - 1)
-					end
+					walkNPCOut(npc, player)
 				end)
 				break
 			end

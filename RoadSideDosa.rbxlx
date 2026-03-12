@@ -5,7 +5,7 @@
 <External>nil</External>
 
 <!-- === WORKSPACE === -->
-<Item class="Workspace" referent="RBX0000015B">
+<Item class="Workspace" referent="RBX00000173">
 <Properties>
 <string name="Name">Workspace</string>
 </Properties>
@@ -3810,7 +3810,7 @@
 </Item>
 
 <!-- NPC Spawn Points -->
-<Item class="Folder" referent="RBX00000162">
+<Item class="Folder" referent="RBX0000017A">
 <Properties>
 <string name="Name">NPCSpawns</string>
 </Properties>
@@ -3877,7 +3877,7 @@
 </Item>
 
 <!-- NPCs Folder -->
-<Item class="Folder" referent="RBX00000163">
+<Item class="Folder" referent="RBX0000017B">
 <Properties>
 <string name="Name">NPCs</string>
 </Properties>
@@ -3885,7 +3885,7 @@
 </Item>
 
 <!-- CCTV Cameras -->
-<Item class="Folder" referent="RBX00000164">
+<Item class="Folder" referent="RBX0000017C">
 <Properties>
 <string name="Name">CCTVCameras</string>
 </Properties>
@@ -3990,7 +3990,7 @@
 </Item>
 
 <!-- Camera -->
-<Item class="Camera" referent="RBX00000165">
+<Item class="Camera" referent="RBX0000017D">
 <Properties>
 <string name="Name">Camera</string>
 <CoordinateFrame name="CFrame">
@@ -4005,7 +4005,7 @@
 </Item>
 
 <!-- === LIGHTING === -->
-<Item class="Lighting" referent="RBX00000147">
+<Item class="Lighting" referent="RBX0000015F">
 <Properties>
 <string name="Name">Lighting</string>
 <float name="Brightness">0.3</float>
@@ -4019,7 +4019,7 @@
 <float name="EnvironmentSpecularScale">0.2</float>
 <bool name="GlobalShadows">true</bool>
 </Properties>
-<Item class="Atmosphere" referent="RBX00000148">
+<Item class="Atmosphere" referent="RBX00000160">
 <Properties>
 <string name="Name">NightAtmosphere</string>
 <float name="Density">0.35</float>
@@ -4030,7 +4030,7 @@
 <float name="Haze">3</float>
 </Properties>
 </Item>
-<Item class="BloomEffect" referent="RBX00000149">
+<Item class="BloomEffect" referent="RBX00000161">
 <Properties>
 <string name="Name">HorrorBloom</string>
 <float name="Intensity">0.4</float>
@@ -4038,7 +4038,7 @@
 <float name="Threshold">1.5</float>
 </Properties>
 </Item>
-<Item class="ColorCorrectionEffect" referent="RBX0000014A">
+<Item class="ColorCorrectionEffect" referent="RBX00000162">
 <Properties>
 <string name="Name">HorrorColor</string>
 <float name="Brightness">-0.05</float>
@@ -4047,7 +4047,7 @@
 <Color3 name="TintColor"><R>0.9</R><G>0.85</G><B>1</B></Color3>
 </Properties>
 </Item>
-<Item class="ColorCorrectionEffect" referent="RBX0000014B">
+<Item class="ColorCorrectionEffect" referent="RBX00000163">
 <Properties>
 <string name="Name">CCTVFilter</string>
 <float name="Brightness">-0.1</float>
@@ -4060,11 +4060,11 @@
 </Item>
 
 <!-- === SERVER SCRIPT SERVICE === -->
-<Item class="ServerScriptService" referent="RBX0000015C">
+<Item class="ServerScriptService" referent="RBX00000174">
 <Properties>
 <string name="Name">ServerScriptService</string>
 </Properties>
-<Item class="Script" referent="RBX00000166">
+<Item class="Script" referent="RBX0000017E">
 <Properties>
 <string name="Name">GameManager</string>
 <ProtectedString name="Source"><![CDATA[-- GameManager: Main server script controlling game flow and night progression
@@ -4548,7 +4548,7 @@ print("[GameManager] Road Side Dosa - Game Manager initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000167">
+<Item class="Script" referent="RBX0000017F">
 <Properties>
 <string name="Name">NPCManager</string>
 <ProtectedString name="Source"><![CDATA[-- NPCManager: Server script for NPC spawning, AI, and behavior
@@ -5053,7 +5053,7 @@ local function spawnNPC(npcType, targetPlayer)
 		end)
 	end
 
-	-- Timeout - NPC leaves if not served
+	-- Timeout - NPC leaves if not served (walks out angrily)
 	if npcType ~= "NakedGuy" and npcType ~= "DancingGuy" then
 		task.spawn(function()
 			task.wait(Config.SERVING_TIMEOUT)
@@ -5061,15 +5061,8 @@ local function spawnNPC(npcType, targetPlayer)
 				NPCLeaveEvent:FireClient(targetPlayer, npcType, "timeout")
 				NPCDialogueEvent:FireClient(targetPlayer, npcType,
 					template.dialogue.angry[math.random(1, #template.dialogue.angry)])
-				task.wait(3)
-				if model and model.Parent then
-					model:Destroy()
-					activeNPCs[model] = nil
-				end
-				-- Decrement active customer count
-				if activeCustomerCountPerPlayer[targetPlayer] then
-					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
-				end
+				task.wait(2)
+				walkNPCOut(model, targetPlayer)
 			end
 		end)
 	end
@@ -5088,15 +5081,8 @@ local function spawnNPC(npcType, targetPlayer)
 			if activeNPCs[model] then
 				NPCDialogueEvent:FireClient(targetPlayer, npcType,
 					template.dialogue.leaves[1])
-				task.wait(3)
-				if model and model.Parent then
-					model:Destroy()
-					activeNPCs[model] = nil
-				end
-				-- Decrement active customer count
-				if activeCustomerCountPerPlayer[targetPlayer] then
-					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
-				end
+				task.wait(2)
+				walkNPCOut(model, targetPlayer)
 			end
 		end)
 	end
@@ -5220,13 +5206,48 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 -- Handle serve success: remove NPC from active tracking
+-- Walk NPC out through door then destroy
+local function walkNPCOut(npc, targetPlayer)
+	local humanoid = npc:FindFirstChildOfClass("Humanoid")
+	if humanoid and npc.Parent then
+		-- Walk to door first
+		local doorPos = Vector3.new(0, 1, 14)
+		humanoid:MoveTo(doorPos)
+		humanoid.MoveToFinished:Connect(function(reached)
+			if reached and npc and npc.Parent then
+				-- Walk outside
+				local exitPos = Vector3.new(0, 1, 22)
+				humanoid:MoveTo(exitPos)
+				humanoid.MoveToFinished:Connect(function()
+					if npc and npc.Parent then
+						npc:Destroy()
+						activeNPCs[npc] = nil
+					end
+					if activeCustomerCountPerPlayer[targetPlayer] then
+						activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+					end
+				end)
+			end
+		end)
+	else
+		-- Fallback: just destroy
+		if npc and npc.Parent then
+			npc:Destroy()
+			activeNPCs[npc] = nil
+		end
+		if activeCustomerCountPerPlayer[targetPlayer] then
+			activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+		end
+	end
+end
+
 Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npcId, itemName)
 	-- Find the NPC model that was served
 	local npcsFolder = workspace:FindFirstChild("NPCs")
 	if npcsFolder then
 		for _, npc in ipairs(npcsFolder:GetChildren()) do
 			if activeNPCs[npc] and activeNPCs[npc].type == npcId and activeNPCs[npc].player == player then
-				-- NPC was served, have them leave after a moment
+				-- NPC was served, have them walk out
 				task.spawn(function()
 					-- Show served dialogue
 					local template = activeNPCs[npc] and activeNPCs[npc].template
@@ -5236,14 +5257,7 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 							servedDialogue[math.random(1, #servedDialogue)])
 					end
 					task.wait(2)
-					if npc and npc.Parent then
-						npc:Destroy()
-						activeNPCs[npc] = nil
-					end
-					-- Decrement active customer count
-					if activeCustomerCountPerPlayer[player] then
-						activeCustomerCountPerPlayer[player] = math.max(0, activeCustomerCountPerPlayer[player] - 1)
-					end
+					walkNPCOut(npc, player)
 				end)
 				break
 			end
@@ -5256,7 +5270,7 @@ print("[NPCManager] NPC system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000168">
+<Item class="Script" referent="RBX00000180">
 <Properties>
 <string name="Name">DataManager</string>
 <ProtectedString name="Source"><![CDATA[-- DataManager: Server script for DataStore saving/loading, leaderboard, and trading
@@ -5543,7 +5557,7 @@ print("[DataManager] Data system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000169">
+<Item class="Script" referent="RBX00000181">
 <Properties>
 <string name="Name">GamePassManager</string>
 <ProtectedString name="Source"><![CDATA[-- GamePassManager: Handles gamepass purchases and effects
@@ -5686,11 +5700,11 @@ print("[GamePassManager] GamePass system initialized")
 </Item>
 
 <!-- === REPLICATED STORAGE === -->
-<Item class="ReplicatedStorage" referent="RBX0000015D">
+<Item class="ReplicatedStorage" referent="RBX00000175">
 <Properties>
 <string name="Name">ReplicatedStorage</string>
 </Properties>
-<Item class="ModuleScript" referent="RBX0000016A">
+<Item class="ModuleScript" referent="RBX00000182">
 <Properties>
 <string name="Name">Config</string>
 <ProtectedString name="Source"><![CDATA[-- Config Module: All game configuration values
@@ -5782,7 +5796,7 @@ return Config
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="ModuleScript" referent="RBX0000016B">
+<Item class="ModuleScript" referent="RBX00000183">
 <Properties>
 <string name="Name">NightData</string>
 <ProtectedString name="Source"><![CDATA[-- NightData Module: All 5 nights' rules, events, and phone dialogues
@@ -5976,221 +5990,221 @@ return NightData
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Folder" referent="RBX00000146">
+<Item class="Folder" referent="RBX0000015E">
 <Properties>
 <string name="Name">Remotes</string>
 </Properties>
-<Item class="RemoteEvent" referent="RBX0000011B">
+<Item class="RemoteEvent" referent="RBX00000133">
 <Properties>
 <string name="Name">StartNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011C">
+<Item class="RemoteEvent" referent="RBX00000134">
 <Properties>
 <string name="Name">EndNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011D">
+<Item class="RemoteEvent" referent="RBX00000135">
 <Properties>
 <string name="Name">PhoneRing</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011E">
+<Item class="RemoteEvent" referent="RBX00000136">
 <Properties>
 <string name="Name">PhoneDialogue</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011F">
+<Item class="RemoteEvent" referent="RBX00000137">
 <Properties>
 <string name="Name">PhoneDialogueEnd</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000120">
+<Item class="RemoteEvent" referent="RBX00000138">
 <Properties>
 <string name="Name">PlayerDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000121">
+<Item class="RemoteEvent" referent="RBX00000139">
 <Properties>
 <string name="Name">NightComplete</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000122">
+<Item class="RemoteEvent" referent="RBX0000013A">
 <Properties>
 <string name="Name">TriggerEvent</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000123">
+<Item class="RemoteEvent" referent="RBX0000013B">
 <Properties>
 <string name="Name">UpdateHUD</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000124">
+<Item class="RemoteEvent" referent="RBX0000013C">
 <Properties>
 <string name="Name">JumpScare</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000125">
+<Item class="RemoteEvent" referent="RBX0000013D">
 <Properties>
 <string name="Name">SpawnNPC</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000126">
+<Item class="RemoteEvent" referent="RBX0000013E">
 <Properties>
 <string name="Name">NPCDialogue</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000127">
+<Item class="RemoteEvent" referent="RBX0000013F">
 <Properties>
 <string name="Name">NPCLeave</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000128">
+<Item class="RemoteEvent" referent="RBX00000140">
 <Properties>
 <string name="Name">RequestStartNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000129">
+<Item class="RemoteEvent" referent="RBX00000141">
 <Properties>
 <string name="Name">RequestRetry</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012A">
+<Item class="RemoteEvent" referent="RBX00000142">
 <Properties>
 <string name="Name">GrabBatter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012B">
+<Item class="RemoteEvent" referent="RBX00000143">
 <Properties>
 <string name="Name">CookDosa</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012C">
+<Item class="RemoteEvent" referent="RBX00000144">
 <Properties>
 <string name="Name">ServeCustomer</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012D">
+<Item class="RemoteEvent" referent="RBX00000145">
 <Properties>
 <string name="Name">ToggleShutter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012E">
+<Item class="RemoteEvent" referent="RBX00000146">
 <Properties>
 <string name="Name">ToggleLights</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012F">
+<Item class="RemoteEvent" referent="RBX00000147">
 <Properties>
 <string name="Name">GazeDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000130">
+<Item class="RemoteEvent" referent="RBX00000148">
 <Properties>
 <string name="Name">TruckArrival</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000131">
+<Item class="RemoteEvent" referent="RBX00000149">
 <Properties>
 <string name="Name">SpillBatter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000132">
+<Item class="RemoteEvent" referent="RBX0000014A">
 <Properties>
 <string name="Name">ReachedSafeRoom</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000133">
+<Item class="RemoteEvent" referent="RBX0000014B">
 <Properties>
 <string name="Name">CleanMess</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000134">
+<Item class="RemoteEvent" referent="RBX0000014C">
 <Properties>
 <string name="Name">LookedAtFace</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000135">
+<Item class="RemoteEvent" referent="RBX0000014D">
 <Properties>
 <string name="Name">UpdateCurrency</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000136">
+<Item class="RemoteEvent" referent="RBX0000014E">
 <Properties>
 <string name="Name">UpdateNightProgress</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000137">
+<Item class="RemoteEvent" referent="RBX0000014F">
 <Properties>
 <string name="Name">RecordDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000138">
+<Item class="RemoteEvent" referent="RBX00000150">
 <Properties>
 <string name="Name">RecordServe</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000139">
+<Item class="RemoteEvent" referent="RBX00000151">
 <Properties>
 <string name="Name">GameCompleted</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013A">
+<Item class="RemoteEvent" referent="RBX00000152">
 <Properties>
 <string name="Name">LoadPlayerData</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013B">
+<Item class="RemoteEvent" referent="RBX00000153">
 <Properties>
 <string name="Name">UpdateLeaderboard</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013C">
+<Item class="RemoteEvent" referent="RBX00000154">
 <Properties>
 <string name="Name">TradeRequest</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013D">
+<Item class="RemoteEvent" referent="RBX00000155">
 <Properties>
 <string name="Name">TradeRequestReceived</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013E">
+<Item class="RemoteEvent" referent="RBX00000156">
 <Properties>
 <string name="Name">TradeAccept</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013F">
+<Item class="RemoteEvent" referent="RBX00000157">
 <Properties>
 <string name="Name">TradeComplete</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000140">
+<Item class="RemoteEvent" referent="RBX00000158">
 <Properties>
 <string name="Name">GamePassOwned</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000141">
+<Item class="RemoteEvent" referent="RBX00000159">
 <Properties>
 <string name="Name">CheckGamePass</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000142">
+<Item class="RemoteEvent" referent="RBX0000015A">
 <Properties>
 <string name="Name">GamePassCheckResult</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000143">
+<Item class="RemoteEvent" referent="RBX0000015B">
 <Properties>
 <string name="Name">UseJumpscareFriend</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000144">
+<Item class="RemoteEvent" referent="RBX0000015C">
 <Properties>
 <string name="Name">UseHumanitySerum</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000145">
+<Item class="RemoteEvent" referent="RBX0000015D">
 <Properties>
 <string name="Name">NPCTransformed</string>
 </Properties>
@@ -6199,11 +6213,11 @@ return NightData
 </Item>
 
 <!-- === SERVER STORAGE === -->
-<Item class="ServerStorage" referent="RBX0000015E">
+<Item class="ServerStorage" referent="RBX00000176">
 <Properties>
 <string name="Name">ServerStorage</string>
 </Properties>
-<Item class="BindableEvent" referent="RBX0000016C">
+<Item class="BindableEvent" referent="RBX00000184">
 <Properties>
 <string name="Name">NightStartBindable</string>
 </Properties>
@@ -6211,18 +6225,18 @@ return NightData
 </Item>
 
 <!-- === STARTER GUI === -->
-<Item class="StarterGui" referent="RBX0000015F">
+<Item class="StarterGui" referent="RBX00000177">
 <Properties>
 <string name="Name">StarterGui</string>
 </Properties>
-<Item class="ScreenGui" referent="RBX00000113">
+<Item class="ScreenGui" referent="RBX00000129">
 <Properties>
 <string name="Name">LobbyScreenGui</string>
 <bool name="Enabled">true</bool>
 <int name="DisplayOrder">0</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000112">
+<Item class="Frame" referent="RBX00000113">
 <Properties>
 <string name="Name">LobbyUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6232,7 +6246,7 @@ return NightData
 <bool name="Visible">true</bool>
 <int name="ZIndex">1</int>
 </Properties>
-<Item class="Frame" referent="RBX00000109">
+<Item class="Frame" referent="RBX0000010A">
 <Properties>
 <string name="Name">LobbyBG</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6244,7 +6258,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextLabel" referent="RBX0000010A">
+<Item class="TextLabel" referent="RBX0000010B">
 <Properties>
 <string name="Name">TitleLabel</string>
 <string name="Text">ROAD SIDE DOSA</string>
@@ -6258,7 +6272,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX0000010B">
+<Item class="TextLabel" referent="RBX0000010C">
 <Properties>
 <string name="Name">SubtitleLabel</string>
 <string name="Text">A Psychological Horror Experience</string>
@@ -6272,7 +6286,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX0000010C">
+<Item class="TextLabel" referent="RBX0000010D">
 <Properties>
 <string name="Name">TaglineLabel</string>
 <string name="Text">5 Nights. 1 Dhaba. Infinite Terror.</string>
@@ -6286,7 +6300,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX0000010D">
+<Item class="TextLabel" referent="RBX0000010E">
 <Properties>
 <string name="Name">InstructionsLabel</string>
 <string name="Text">Cook dosa. Serve customers. Follow the rules. Survive.</string>
@@ -6300,7 +6314,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextButton" referent="RBX0000010F">
+<Item class="TextButton" referent="RBX00000110">
 <Properties>
 <string name="Name">StartButton</string>
 <string name="Text">START SHIFT</string>
@@ -6311,16 +6325,16 @@ return NightData
 <token name="Font">4</token>
 <bool name="TextScaled">true</bool>
 </Properties>
-<Item class="UICorner" referent="RBX0000010E">
+<Item class="UICorner" referent="RBX0000010F">
 <Properties>
 <UDim name="CornerRadius"><S>0</S><O>10</O></UDim>
 </Properties>
 </Item>
 </Item>
-<Item class="TextLabel" referent="RBX00000110">
+<Item class="TextLabel" referent="RBX00000111">
 <Properties>
 <string name="Name">CreditsLabel</string>
-<string name="Text">v2.0</string>
+<string name="Text">v3.0</string>
 <UDim2 name="Position"><XS>0.85</XS><XO>0</XO><YS>0.92</YS><YO>0</YO></UDim2>
 <UDim2 name="Size"><XS>0.1</XS><XO>0</XO><YS>0.0</YS><YO>18</YO></UDim2>
 <Color3 name="TextColor3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
@@ -6331,10 +6345,10 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX00000111">
+<Item class="TextLabel" referent="RBX00000112">
 <Properties>
 <string name="Name">ControlsInfo</string>
-<string name="Text">Controls: WASD Move | Shift Sprint | F Grab Batter | T Cook | C CCTV | L Lights | 1-2-3 Shutters</string>
+<string name="Text">Controls: WASD Move | Shift Sprint | F Batter | T Cook | C CCTV | L Lights | 1-2-3 Shutters | B Shop | Tab Leaderboard</string>
 <UDim2 name="Position"><XS>0.1</XS><XO>0</XO><YS>0.7</YS><YO>0</YO></UDim2>
 <UDim2 name="Size"><XS>0.8</XS><XO>0</XO><YS>0.0</YS><YO>18</YO></UDim2>
 <Color3 name="TextColor3"><R>0.4</R><G>0.4</G><B>0.4</B></Color3>
@@ -6347,7 +6361,7 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000114">
+<Item class="ScreenGui" referent="RBX0000012A">
 <Properties>
 <string name="Name">MainUI</string>
 <bool name="Enabled">true</bool>
@@ -6511,7 +6525,7 @@ return NightData
 <Item class="TextLabel" referent="RBX000000E9">
 <Properties>
 <string name="Name">ControlsHint</string>
-<string name="Text">[F] Grab Batter  [T] Cook  [E] Interact  [C] CCTV  [L] Lights  [1/2/3] Shutters  [Shift] Sprint  [G] Spill Batter (Night 5)</string>
+<string name="Text">[F] Batter  [T] Cook  [E] Interact  [C] CCTV  [L] Lights  [1/2/3] Shutters  [Shift] Sprint  [B] Shop  [Tab] Leaderboard</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.96</YS><YO>0</YO></UDim2>
 <UDim2 name="Size"><XS>1.0</XS><XO>0</XO><YS>0.0</YS><YO>25</YO></UDim2>
 <Color3 name="TextColor3"><R>0.6</R><G>0.6</G><B>0.6</B></Color3>
@@ -6524,7 +6538,7 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000115">
+<Item class="ScreenGui" referent="RBX0000012B">
 <Properties>
 <string name="Name">PhoneScreenGui</string>
 <bool name="Enabled">false</bool>
@@ -6656,14 +6670,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000116">
+<Item class="ScreenGui" referent="RBX0000012C">
 <Properties>
 <string name="Name">CCTVScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">4</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX000000FA">
+<Item class="Frame" referent="RBX000000FB">
 <Properties>
 <string name="Name">CCTVUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6727,16 +6741,30 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
+<Item class="TextLabel" referent="RBX000000FA">
+<Properties>
+<string name="Name">AnomalyWarning</string>
+<string name="Text"></string>
+<UDim2 name="Position"><XS>0.2</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.6</XS><XO>0</XO><YS>0.0</YS><YO>30</YO></UDim2>
+<Color3 name="TextColor3"><R>1</R><G>0</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">8</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">false</bool>
+</Properties>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000117">
+</Item>
+<Item class="ScreenGui" referent="RBX0000012D">
 <Properties>
 <string name="Name">DeathScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">8</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000100">
+<Item class="Frame" referent="RBX00000101">
 <Properties>
 <string name="Name">DeathUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6746,7 +6774,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">8</int>
 </Properties>
-<Item class="TextLabel" referent="RBX000000FB">
+<Item class="TextLabel" referent="RBX000000FC">
 <Properties>
 <string name="Name">YouDiedLabel</string>
 <string name="Text">YOU DIED</string>
@@ -6760,7 +6788,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000FC">
+<Item class="TextLabel" referent="RBX000000FD">
 <Properties>
 <string name="Name">CauseLabel</string>
 <string name="Text"></string>
@@ -6774,7 +6802,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000FD">
+<Item class="TextLabel" referent="RBX000000FE">
 <Properties>
 <string name="Name">NightLabel</string>
 <string name="Text">Night 1</string>
@@ -6788,7 +6816,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextButton" referent="RBX000000FF">
+<Item class="TextButton" referent="RBX00000100">
 <Properties>
 <string name="Name">RetryButton</string>
 <string name="Text">RETRY</string>
@@ -6799,7 +6827,7 @@ return NightData
 <token name="Font">4</token>
 <bool name="TextScaled">true</bool>
 </Properties>
-<Item class="UICorner" referent="RBX000000FE">
+<Item class="UICorner" referent="RBX000000FF">
 <Properties>
 <UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
 </Properties>
@@ -6807,14 +6835,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000118">
+<Item class="ScreenGui" referent="RBX0000012E">
 <Properties>
 <string name="Name">MenuScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">7</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000103">
+<Item class="Frame" referent="RBX00000104">
 <Properties>
 <string name="Name">MenuUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6824,7 +6852,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">7</int>
 </Properties>
-<Item class="TextLabel" referent="RBX00000101">
+<Item class="TextLabel" referent="RBX00000102">
 <Properties>
 <string name="Name">MenuTitle</string>
 <string name="Text">Select Item to Serve</string>
@@ -6838,7 +6866,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="Frame" referent="RBX00000102">
+<Item class="Frame" referent="RBX00000103">
 <Properties>
 <string name="Name">ItemButtons</string>
 <UDim2 name="Position"><XS>0.2</XS><XO>0</XO><YS>0.4</YS><YO>0</YO></UDim2>
@@ -6852,14 +6880,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000119">
+<Item class="ScreenGui" referent="RBX0000012F">
 <Properties>
 <string name="Name">JumpscareScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">10</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000106">
+<Item class="Frame" referent="RBX00000107">
 <Properties>
 <string name="Name">JumpscareUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6869,7 +6897,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">10</int>
 </Properties>
-<Item class="ImageLabel" referent="RBX00000104">
+<Item class="ImageLabel" referent="RBX00000105">
 <Properties>
 <string name="Name">ScareImage</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6880,7 +6908,7 @@ return NightData
 <bool name="Visible">false</bool>
 </Properties>
 </Item>
-<Item class="Frame" referent="RBX00000105">
+<Item class="Frame" referent="RBX00000106">
 <Properties>
 <string name="Name">RedFlash</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6894,14 +6922,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX0000011A">
+<Item class="ScreenGui" referent="RBX00000130">
 <Properties>
 <string name="Name">NightStartScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">9</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000108">
+<Item class="Frame" referent="RBX00000109">
 <Properties>
 <string name="Name">NightStartUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6911,7 +6939,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">9</int>
 </Properties>
-<Item class="TextLabel" referent="RBX00000107">
+<Item class="TextLabel" referent="RBX00000108">
 <Properties>
 <string name="Name">TitleLabel</string>
 <string name="Text">NIGHT 1</string>
@@ -6927,18 +6955,251 @@ return NightData
 </Item>
 </Item>
 </Item>
+<Item class="ScreenGui" referent="RBX00000131">
+<Properties>
+<string name="Name">GamePassScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">6</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
+<Item class="Frame" referent="RBX00000121">
+<Properties>
+<string name="Name">GamePassUI</string>
+<UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1.0</XS><XO>0</XO><YS>1.0</YS><YO>0</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0</R><G>0</G><B>0</B></Color3>
+<float name="BackgroundTransparency">0.4</float>
+<bool name="Visible">true</bool>
+<int name="ZIndex">6</int>
+</Properties>
+<Item class="Frame" referent="RBX00000120">
+<Properties>
+<string name="Name">ShopBG</string>
+<UDim2 name="Position"><XS>0.2</XS><XO>0</XO><YS>0.15</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.6</XS><XO>0</XO><YS>0.7</YS><YO>0</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.05</R><G>0.03</G><B>0.08</B></Color3>
+<float name="BackgroundTransparency">0</float>
+<bool name="Visible">true</bool>
+<int name="ZIndex">1</int>
+</Properties>
+<Item class="UICorner" referent="RBX00000114">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>12</O></UDim>
+</Properties>
+</Item>
+<Item class="TextLabel" referent="RBX00000115">
+<Properties>
+<string name="Name">ShopTitle</string>
+<string name="Text">GAME PASSES</string>
+<UDim2 name="Position"><XS>0.1</XS><XO>0</XO><YS>0.02</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.8</XS><XO>0</XO><YS>0.0</YS><YO>40</YO></UDim2>
+<Color3 name="TextColor3"><R>1</R><G>0.8</G><B>0.2</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">8</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">true</bool>
+</Properties>
+</Item>
+<Item class="TextLabel" referent="RBX00000116">
+<Properties>
+<string name="Name">ShopSubtitle</string>
+<string name="Text">[B] to close</string>
+<UDim2 name="Position"><XS>0.35</XS><XO>0</XO><YS>0.1</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.3</XS><XO>0</XO><YS>0.0</YS><YO>18</YO></UDim2>
+<Color3 name="TextColor3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">true</bool>
+</Properties>
+</Item>
+<Item class="TextButton" referent="RBX00000118">
+<Properties>
+<string name="Name">Pass_AnomalyIdentifier</string>
+<string name="Text">Anomaly Identifier (250R$)\nHighlights anomaly NPCs on CCTV</string>
+<UDim2 name="Position"><XS>0.05</XS><XO>0</XO><YS>0.18</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.9</XS><XO>0</XO><YS>0.0</YS><YO>55</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.15</R><G>0.05</G><B>0.2</B></Color3>
+<Color3 name="TextColor3"><R>0.9</R><G>0.7</G><B>1</B></Color3>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+<Item class="UICorner" referent="RBX00000117">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
+</Properties>
+</Item>
+</Item>
+<Item class="TextButton" referent="RBX0000011A">
+<Properties>
+<string name="Name">Pass_JumpscareFriend</string>
+<string name="Text">Jumpscare Friend (100R$)\nPrank nearby players [J key]</string>
+<UDim2 name="Position"><XS>0.05</XS><XO>0</XO><YS>0.33</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.9</XS><XO>0</XO><YS>0.0</YS><YO>55</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.2</R><G>0.05</G><B>0.1</B></Color3>
+<Color3 name="TextColor3"><R>1</R><G>0.7</G><B>0.8</B></Color3>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+<Item class="UICorner" referent="RBX00000119">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
+</Properties>
+</Item>
+</Item>
+<Item class="TextButton" referent="RBX0000011C">
+<Properties>
+<string name="Name">Pass_TheGun</string>
+<string name="Text">The Gun (350R$)\nDefend against threats [R key]</string>
+<UDim2 name="Position"><XS>0.05</XS><XO>0</XO><YS>0.48</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.9</XS><XO>0</XO><YS>0.0</YS><YO>55</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.15</R><G>0.1</G><B>0.05</B></Color3>
+<Color3 name="TextColor3"><R>1</R><G>0.85</G><B>0.5</B></Color3>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+<Item class="UICorner" referent="RBX0000011B">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
+</Properties>
+</Item>
+</Item>
+<Item class="TextButton" referent="RBX0000011E">
+<Properties>
+<string name="Name">Pass_HumanitySerum</string>
+<string name="Text">Humanity Serum (500R$)\nTransform anomaly NPCs [H key]</string>
+<UDim2 name="Position"><XS>0.05</XS><XO>0</XO><YS>0.63</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.9</XS><XO>0</XO><YS>0.0</YS><YO>55</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.05</R><G>0.15</G><B>0.1</B></Color3>
+<Color3 name="TextColor3"><R>0.5</R><G>1</G><B>0.8</B></Color3>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+<Item class="UICorner" referent="RBX0000011D">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
+</Properties>
+</Item>
+</Item>
+<Item class="TextLabel" referent="RBX0000011F">
+<Properties>
+<string name="Name">PassControls</string>
+<string name="Text">Purchase passes in Roblox Store to activate</string>
+<UDim2 name="Position"><XS>0.1</XS><XO>0</XO><YS>0.82</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.8</XS><XO>0</XO><YS>0.0</YS><YO>20</YO></UDim2>
+<Color3 name="TextColor3"><R>0.4</R><G>0.4</G><B>0.4</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+</Item>
+<Item class="ScreenGui" referent="RBX00000132">
+<Properties>
+<string name="Name">LeaderboardScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">6</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
+<Item class="Frame" referent="RBX00000128">
+<Properties>
+<string name="Name">LeaderboardUI</string>
+<UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1.0</XS><XO>0</XO><YS>1.0</YS><YO>0</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0</R><G>0</G><B>0</B></Color3>
+<float name="BackgroundTransparency">0.4</float>
+<bool name="Visible">true</bool>
+<int name="ZIndex">6</int>
+</Properties>
+<Item class="Frame" referent="RBX00000127">
+<Properties>
+<string name="Name">LeaderboardBG</string>
+<UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.1</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.8</YS><YO>0</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.05</R><G>0.05</G><B>0.08</B></Color3>
+<float name="BackgroundTransparency">0</float>
+<bool name="Visible">true</bool>
+<int name="ZIndex">1</int>
+</Properties>
+<Item class="UICorner" referent="RBX00000122">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>12</O></UDim>
+</Properties>
+</Item>
+<Item class="TextLabel" referent="RBX00000123">
+<Properties>
+<string name="Name">LeaderboardTitle</string>
+<string name="Text">TOP CHEFS</string>
+<UDim2 name="Position"><XS>0.1</XS><XO>0</XO><YS>0.02</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.8</XS><XO>0</XO><YS>0.0</YS><YO>40</YO></UDim2>
+<Color3 name="TextColor3"><R>1</R><G>0.85</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">8</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">true</bool>
+</Properties>
+</Item>
+<Item class="TextLabel" referent="RBX00000124">
+<Properties>
+<string name="Name">LeaderboardSubtitle</string>
+<string name="Text">[Tab] to close</string>
+<UDim2 name="Position"><XS>0.35</XS><XO>0</XO><YS>0.1</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.3</XS><XO>0</XO><YS>0.0</YS><YO>18</YO></UDim2>
+<Color3 name="TextColor3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">true</bool>
+</Properties>
+</Item>
+<Item class="Frame" referent="RBX00000126">
+<Properties>
+<string name="Name">LeaderboardList</string>
+<UDim2 name="Position"><XS>0.05</XS><XO>0</XO><YS>0.15</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.9</XS><XO>0</XO><YS>0.8</YS><YO>0</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.03</R><G>0.03</G><B>0.05</B></Color3>
+<float name="BackgroundTransparency">0.5</float>
+<bool name="Visible">true</bool>
+<int name="ZIndex">1</int>
+</Properties>
+<Item class="TextLabel" referent="RBX00000125">
+<Properties>
+<string name="Name">HeaderLabel</string>
+<string name="Text">#  Player  Earnings</string>
+<UDim2 name="Position"><XS>0.0</XS><XO>5</XO><YS>0.0</YS><YO>3</YO></UDim2>
+<UDim2 name="Size"><XS>1.0</XS><XO>-10</XO><YS>0.0</YS><YO>25</YO></UDim2>
+<Color3 name="TextColor3"><R>0.7</R><G>0.7</G><B>0.7</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">8</token>
+<bool name="TextScaled">true</bool>
+<int name="ZIndex">1</int>
+<bool name="Visible">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+</Item>
+</Item>
 </Item>
 
 <!-- === STARTER PLAYER SCRIPTS === -->
-<Item class="StarterPlayer" referent="RBX0000016D">
+<Item class="StarterPlayer" referent="RBX00000185">
 <Properties>
 <string name="Name">StarterPlayer</string>
 </Properties>
-<Item class="StarterPlayerScripts" referent="RBX00000160">
+<Item class="StarterPlayerScripts" referent="RBX00000178">
 <Properties>
 <string name="Name">StarterPlayerScripts</string>
 </Properties>
-<Item class="LocalScript" referent="RBX0000016E">
+<Item class="LocalScript" referent="RBX00000186">
 <Properties>
 <string name="Name">ClientController</string>
 <ProtectedString name="Source"><![CDATA[-- ClientController: Main client script handling UI, input, and game interaction
@@ -8016,6 +8277,272 @@ RunService.Heartbeat:Connect(function()
 	end
 end)
 
+-- === GAMEPASS SYSTEM (Client Side) ===
+local ownedPasses = {} -- {passName = true}
+local gamePassScreenGui = playerGui:WaitForChild("GamePassScreenGui")
+local gamePassFrame = gamePassScreenGui:WaitForChild("GamePassUI")
+
+-- Toggle game pass shop with B key
+local gamePassShopOpen = false
+local function toggleGamePassShop()
+	gamePassShopOpen = not gamePassShopOpen
+	gamePassScreenGui.Enabled = gamePassShopOpen
+end
+
+-- Handle owned pass notification from server
+Remotes:WaitForChild("GamePassOwned").OnClientEvent:Connect(function(passName)
+	ownedPasses[passName] = true
+	showFloatingText("GamePass: " .. passName .. " Active!", Color3.fromRGB(255, 215, 0))
+
+	-- Update shop button if visible
+	local btn = gamePassFrame:FindFirstChild("Pass_" .. passName)
+	if btn then
+		btn.Text = passName .. " [OWNED]"
+		btn.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
+	end
+end)
+
+-- Anomaly Identifier: Show red glow on CCTV when anomaly present
+local anomalyWarningActive = false
+Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue, orderedItem)
+	-- If player owns Anomaly Identifier and NPC is anomaly, show warning
+	if ownedPasses["AnomalyIdentifier"] and npcType ~= "NormalCustomer" then
+		anomalyWarningActive = true
+		local warningLabel = cctvFrame:FindFirstChild("AnomalyWarning")
+		if warningLabel then
+			warningLabel.Visible = true
+			warningLabel.Text = "⚠ ANOMALY DETECTED: " .. npcType .. " ⚠"
+		end
+		-- Also add red glow to NPC model
+		if npcModel then
+			local highlight = Instance.new("Highlight")
+			highlight.Name = "AnomalyHighlight"
+			highlight.FillColor = Color3.fromRGB(255, 0, 0)
+			highlight.FillTransparency = 0.7
+			highlight.OutlineColor = Color3.fromRGB(255, 0, 0)
+			highlight.OutlineTransparency = 0.3
+			highlight.Parent = npcModel
+		end
+	end
+end)
+
+-- Clear anomaly warning when NPC leaves
+Remotes:WaitForChild("NPCLeave").OnClientEvent:Connect(function(npcType, reason)
+	anomalyWarningActive = false
+	local warningLabel = cctvFrame:FindFirstChild("AnomalyWarning")
+	if warningLabel then
+		warningLabel.Visible = false
+	end
+end)
+
+-- GamePass check result
+Remotes:WaitForChild("GamePassCheckResult").OnClientEvent:Connect(function(passName, owns)
+	if owns then
+		ownedPasses[passName] = true
+	end
+end)
+
+-- NPC Transformed (Humanity Serum)
+Remotes:WaitForChild("NPCTransformed").OnClientEvent:Connect(function(npcModel)
+	showFloatingText("Anomaly transformed to human!", Color3.fromRGB(0, 255, 100))
+	playSound("VictorySound")
+	-- Remove highlight if exists
+	if npcModel then
+		local highlight = npcModel:FindFirstChild("AnomalyHighlight")
+		if highlight then highlight:Destroy() end
+	end
+end)
+
+-- === LEADERBOARD UI ===
+local leaderboardScreenGui = playerGui:WaitForChild("LeaderboardScreenGui")
+local leaderboardFrame = leaderboardScreenGui:WaitForChild("LeaderboardUI")
+local leaderboardOpen = false
+
+local function toggleLeaderboard()
+	leaderboardOpen = not leaderboardOpen
+	leaderboardScreenGui.Enabled = leaderboardOpen
+end
+
+-- Receive leaderboard data from server
+Remotes:WaitForChild("UpdateLeaderboard").OnClientEvent:Connect(function(leaderboardData)
+	local listFrame = leaderboardFrame:FindFirstChild("LeaderboardList")
+	if not listFrame then return end
+
+	-- Clear old entries
+	for _, child in ipairs(listFrame:GetChildren()) do
+		if child:IsA("TextLabel") and child.Name ~= "HeaderLabel" then
+			child:Destroy()
+		end
+	end
+
+	-- Populate new entries
+	for i, entry in ipairs(leaderboardData) do
+		if i > 10 then break end -- Show top 10
+
+		local label = Instance.new("TextLabel")
+		label.Name = "Entry_" .. i
+		label.Size = UDim2.new(1, -10, 0, 25)
+		label.Position = UDim2.new(0, 5, 0, 30 + (i * 28))
+		label.BackgroundTransparency = 0.5
+		label.BackgroundColor3 = i <= 3 and Color3.fromRGB(60, 40, 10) or Color3.fromRGB(30, 30, 30)
+		label.TextColor3 = i == 1 and Color3.fromRGB(255, 215, 0) or
+						   i == 2 and Color3.fromRGB(200, 200, 200) or
+						   i == 3 and Color3.fromRGB(180, 120, 60) or
+						   Color3.fromRGB(180, 180, 180)
+		label.Font = Enum.Font.GothamBold
+		label.TextScaled = true
+		label.Text = "#" .. entry.rank .. "  " .. tostring(entry.key):gsub("Player_", "") .. "  $" .. entry.value
+		label.Parent = listFrame
+	end
+end)
+
+-- === GUN TOOL (GamePass) ===
+local hasGun = false
+local gunCooldown = false
+
+local function useGun()
+	if not ownedPasses["TheGun"] or gunCooldown then return end
+	if not isAlive then return end
+
+	gunCooldown = true
+	playSound("JumpScareSound") -- Bang sound
+
+	-- Show muzzle flash effect
+	showFloatingText("BANG!", Color3.fromRGB(255, 200, 0))
+
+	-- Raycast from camera to find NPC target
+	local ray = camera:ViewportPointToRay(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+	local raycastParams = RaycastParams.new()
+	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+	local character = player.Character
+	if character then
+		raycastParams.FilterDescendantsInstances = {character}
+	end
+
+	local result = workspace:Raycast(ray.Origin, ray.Direction * 100, raycastParams)
+	if result and result.Instance then
+		local model = result.Instance:FindFirstAncestorOfClass("Model") or result.Instance
+		local npcType = model:GetAttribute("NPCType")
+		if npcType then
+			-- Gun can stun anomaly NPCs (they leave faster)
+			showFloatingText("Hit " .. npcType .. "!", Color3.fromRGB(255, 100, 0))
+			-- Visual: make NPC flash red
+			for _, part in ipairs(model:GetDescendants()) do
+				if part:IsA("BasePart") then
+					local original = part.BrickColor
+					part.BrickColor = BrickColor.new("Really red")
+					task.delay(0.3, function()
+						if part and part.Parent then
+							part.BrickColor = original
+						end
+					end)
+				end
+			end
+		end
+	end
+
+	-- Cooldown 2 seconds
+	task.delay(2, function()
+		gunCooldown = false
+	end)
+end
+
+-- === HUMANITY SERUM (GamePass) ===
+local function useHumanitySerum()
+	if not ownedPasses["HumanitySerum"] then return end
+	if not isAlive then return end
+
+	-- Find closest anomaly NPC
+	local character = player.Character
+	if not character then return end
+	local hrp = character:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+
+	local npcsFolder = workspace:FindFirstChild("NPCs")
+	if not npcsFolder then return end
+
+	local closest = nil
+	local closestDist = 15
+
+	for _, npc in ipairs(npcsFolder:GetChildren()) do
+		if npc:GetAttribute("IsAnomaly") then
+			local npcHRP = npc:FindFirstChild("HumanoidRootPart")
+			if npcHRP then
+				local dist = (hrp.Position - npcHRP.Position).Magnitude
+				if dist < closestDist then
+					closest = npc
+					closestDist = dist
+				end
+			end
+		end
+	end
+
+	if closest then
+		Remotes:WaitForChild("UseHumanitySerum"):FireServer(closest)
+	else
+		showFloatingText("No anomaly nearby!", Color3.fromRGB(255, 100, 0))
+	end
+end
+
+-- === EXTRA INPUT HANDLING (GamePasses + Leaderboard) ===
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed then return end
+
+	if input.KeyCode == Enum.KeyCode.B then
+		toggleGamePassShop()
+	elseif input.KeyCode == Enum.KeyCode.Tab then
+		toggleLeaderboard()
+	elseif input.KeyCode == Enum.KeyCode.R then
+		-- Gun shoot
+		if ownedPasses["TheGun"] then
+			useGun()
+		end
+	elseif input.KeyCode == Enum.KeyCode.H then
+		-- Humanity Serum
+		if ownedPasses["HumanitySerum"] then
+			useHumanitySerum()
+		end
+	elseif input.KeyCode == Enum.KeyCode.J then
+		-- Jumpscare Friend - target nearest other player
+		if ownedPasses["JumpscareFriend"] then
+			local character = player.Character
+			if character then
+				local hrp = character:FindFirstChild("HumanoidRootPart")
+				if hrp then
+					local closestPlayer = nil
+					local closestDist = 50
+					for _, otherPlayer in ipairs(Players:GetPlayers()) do
+						if otherPlayer ~= player and otherPlayer.Character then
+							local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+							if otherHRP then
+								local dist = (hrp.Position - otherHRP.Position).Magnitude
+								if dist < closestDist then
+									closestPlayer = otherPlayer
+									closestDist = dist
+								end
+							end
+						end
+					end
+					if closestPlayer then
+						Remotes:WaitForChild("UseJumpscareFriend"):FireServer(closestPlayer)
+						showFloatingText("Pranked " .. closestPlayer.Name .. "!", Color3.fromRGB(255, 100, 255))
+					else
+						showFloatingText("No players nearby to prank!", Color3.fromRGB(255, 100, 0))
+					end
+				end
+			end
+		end
+	end
+end)
+
+-- Check owned passes on load
+task.spawn(function()
+	task.wait(2)
+	for _, passName in ipairs({"AnomalyIdentifier", "JumpscareFriend", "TheGun", "HumanitySerum"}) do
+		Remotes:WaitForChild("CheckGamePass"):FireServer(passName)
+	end
+end)
+
 -- Initialize CCTV
 initCCTV()
 
@@ -8028,18 +8555,18 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === STARTER PACK === -->
-<Item class="StarterPack" referent="RBX00000161">
+<Item class="StarterPack" referent="RBX00000179">
 <Properties>
 <string name="Name">StarterPack</string>
 </Properties>
 </Item>
 
 <!-- === SOUND SERVICE === -->
-<Item class="SoundService" referent="RBX0000014C">
+<Item class="SoundService" referent="RBX00000164">
 <Properties>
 <string name="Name">SoundService</string>
 </Properties>
-<Item class="Sound" referent="RBX0000014D">
+<Item class="Sound" referent="RBX00000165">
 <Properties>
 <string name="Name">AmbientHorror</string>
 <Content name="SoundId"><url>rbxassetid://9112854440</url></Content>
@@ -8047,7 +8574,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">true</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014E">
+<Item class="Sound" referent="RBX00000166">
 <Properties>
 <string name="Name">JumpScareSound</string>
 <Content name="SoundId"><url>rbxassetid://9114265792</url></Content>
@@ -8055,7 +8582,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014F">
+<Item class="Sound" referent="RBX00000167">
 <Properties>
 <string name="Name">PhoneRing</string>
 <Content name="SoundId"><url>rbxassetid://9114220987</url></Content>
@@ -8063,7 +8590,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000150">
+<Item class="Sound" referent="RBX00000168">
 <Properties>
 <string name="Name">CookingSound</string>
 <Content name="SoundId"><url>rbxassetid://9114248953</url></Content>
@@ -8071,7 +8598,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000151">
+<Item class="Sound" referent="RBX00000169">
 <Properties>
 <string name="Name">ShutterSound</string>
 <Content name="SoundId"><url>rbxassetid://9114254790</url></Content>
@@ -8079,7 +8606,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000152">
+<Item class="Sound" referent="RBX0000016A">
 <Properties>
 <string name="Name">HeartbeatSound</string>
 <Content name="SoundId"><url>rbxassetid://9113655458</url></Content>
@@ -8087,7 +8614,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">true</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000153">
+<Item class="Sound" referent="RBX0000016B">
 <Properties>
 <string name="Name">FootstepSound</string>
 <Content name="SoundId"><url>rbxassetid://9114267993</url></Content>
@@ -8095,7 +8622,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000154">
+<Item class="Sound" referent="RBX0000016C">
 <Properties>
 <string name="Name">VictorySound</string>
 <Content name="SoundId"><url>rbxassetid://9114854738</url></Content>
@@ -8103,7 +8630,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000155">
+<Item class="Sound" referent="RBX0000016D">
 <Properties>
 <string name="Name">DoorCreak</string>
 <Content name="SoundId"><url>rbxassetid://9114263621</url></Content>
@@ -8111,7 +8638,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000156">
+<Item class="Sound" referent="RBX0000016E">
 <Properties>
 <string name="Name">WhisperSound</string>
 <Content name="SoundId"><url>rbxassetid://9113489604</url></Content>
@@ -8119,7 +8646,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000157">
+<Item class="Sound" referent="RBX0000016F">
 <Properties>
 <string name="Name">TruckEngine</string>
 <Content name="SoundId"><url>rbxassetid://9114229867</url></Content>
@@ -8127,7 +8654,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000158">
+<Item class="Sound" referent="RBX00000170">
 <Properties>
 <string name="Name">ManagerVoice</string>
 <Content name="SoundId"><url>rbxassetid://9114220987</url></Content>
@@ -8135,7 +8662,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000159">
+<Item class="Sound" referent="RBX00000171">
 <Properties>
 <string name="Name">CustomerVoice</string>
 <Content name="SoundId"><url>rbxassetid://9114248953</url></Content>
@@ -8143,7 +8670,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000015A">
+<Item class="Sound" referent="RBX00000172">
 <Properties>
 <string name="Name">DialogueTick</string>
 <Content name="SoundId"><url>rbxassetid://9114267993</url></Content>
@@ -8154,7 +8681,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === TEAMS === -->
-<Item class="Teams" referent="RBX0000016F">
+<Item class="Teams" referent="RBX00000187">
 <Properties>
 <string name="Name">Teams</string>
 </Properties>

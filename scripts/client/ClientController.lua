@@ -1073,6 +1073,272 @@ RunService.Heartbeat:Connect(function()
 	end
 end)
 
+-- === GAMEPASS SYSTEM (Client Side) ===
+local ownedPasses = {} -- {passName = true}
+local gamePassScreenGui = playerGui:WaitForChild("GamePassScreenGui")
+local gamePassFrame = gamePassScreenGui:WaitForChild("GamePassUI")
+
+-- Toggle game pass shop with B key
+local gamePassShopOpen = false
+local function toggleGamePassShop()
+	gamePassShopOpen = not gamePassShopOpen
+	gamePassScreenGui.Enabled = gamePassShopOpen
+end
+
+-- Handle owned pass notification from server
+Remotes:WaitForChild("GamePassOwned").OnClientEvent:Connect(function(passName)
+	ownedPasses[passName] = true
+	showFloatingText("GamePass: " .. passName .. " Active!", Color3.fromRGB(255, 215, 0))
+
+	-- Update shop button if visible
+	local btn = gamePassFrame:FindFirstChild("Pass_" .. passName)
+	if btn then
+		btn.Text = passName .. " [OWNED]"
+		btn.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
+	end
+end)
+
+-- Anomaly Identifier: Show red glow on CCTV when anomaly present
+local anomalyWarningActive = false
+Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue, orderedItem)
+	-- If player owns Anomaly Identifier and NPC is anomaly, show warning
+	if ownedPasses["AnomalyIdentifier"] and npcType ~= "NormalCustomer" then
+		anomalyWarningActive = true
+		local warningLabel = cctvFrame:FindFirstChild("AnomalyWarning")
+		if warningLabel then
+			warningLabel.Visible = true
+			warningLabel.Text = "⚠ ANOMALY DETECTED: " .. npcType .. " ⚠"
+		end
+		-- Also add red glow to NPC model
+		if npcModel then
+			local highlight = Instance.new("Highlight")
+			highlight.Name = "AnomalyHighlight"
+			highlight.FillColor = Color3.fromRGB(255, 0, 0)
+			highlight.FillTransparency = 0.7
+			highlight.OutlineColor = Color3.fromRGB(255, 0, 0)
+			highlight.OutlineTransparency = 0.3
+			highlight.Parent = npcModel
+		end
+	end
+end)
+
+-- Clear anomaly warning when NPC leaves
+Remotes:WaitForChild("NPCLeave").OnClientEvent:Connect(function(npcType, reason)
+	anomalyWarningActive = false
+	local warningLabel = cctvFrame:FindFirstChild("AnomalyWarning")
+	if warningLabel then
+		warningLabel.Visible = false
+	end
+end)
+
+-- GamePass check result
+Remotes:WaitForChild("GamePassCheckResult").OnClientEvent:Connect(function(passName, owns)
+	if owns then
+		ownedPasses[passName] = true
+	end
+end)
+
+-- NPC Transformed (Humanity Serum)
+Remotes:WaitForChild("NPCTransformed").OnClientEvent:Connect(function(npcModel)
+	showFloatingText("Anomaly transformed to human!", Color3.fromRGB(0, 255, 100))
+	playSound("VictorySound")
+	-- Remove highlight if exists
+	if npcModel then
+		local highlight = npcModel:FindFirstChild("AnomalyHighlight")
+		if highlight then highlight:Destroy() end
+	end
+end)
+
+-- === LEADERBOARD UI ===
+local leaderboardScreenGui = playerGui:WaitForChild("LeaderboardScreenGui")
+local leaderboardFrame = leaderboardScreenGui:WaitForChild("LeaderboardUI")
+local leaderboardOpen = false
+
+local function toggleLeaderboard()
+	leaderboardOpen = not leaderboardOpen
+	leaderboardScreenGui.Enabled = leaderboardOpen
+end
+
+-- Receive leaderboard data from server
+Remotes:WaitForChild("UpdateLeaderboard").OnClientEvent:Connect(function(leaderboardData)
+	local listFrame = leaderboardFrame:FindFirstChild("LeaderboardList")
+	if not listFrame then return end
+
+	-- Clear old entries
+	for _, child in ipairs(listFrame:GetChildren()) do
+		if child:IsA("TextLabel") and child.Name ~= "HeaderLabel" then
+			child:Destroy()
+		end
+	end
+
+	-- Populate new entries
+	for i, entry in ipairs(leaderboardData) do
+		if i > 10 then break end -- Show top 10
+
+		local label = Instance.new("TextLabel")
+		label.Name = "Entry_" .. i
+		label.Size = UDim2.new(1, -10, 0, 25)
+		label.Position = UDim2.new(0, 5, 0, 30 + (i * 28))
+		label.BackgroundTransparency = 0.5
+		label.BackgroundColor3 = i <= 3 and Color3.fromRGB(60, 40, 10) or Color3.fromRGB(30, 30, 30)
+		label.TextColor3 = i == 1 and Color3.fromRGB(255, 215, 0) or
+						   i == 2 and Color3.fromRGB(200, 200, 200) or
+						   i == 3 and Color3.fromRGB(180, 120, 60) or
+						   Color3.fromRGB(180, 180, 180)
+		label.Font = Enum.Font.GothamBold
+		label.TextScaled = true
+		label.Text = "#" .. entry.rank .. "  " .. tostring(entry.key):gsub("Player_", "") .. "  $" .. entry.value
+		label.Parent = listFrame
+	end
+end)
+
+-- === GUN TOOL (GamePass) ===
+local hasGun = false
+local gunCooldown = false
+
+local function useGun()
+	if not ownedPasses["TheGun"] or gunCooldown then return end
+	if not isAlive then return end
+
+	gunCooldown = true
+	playSound("JumpScareSound") -- Bang sound
+
+	-- Show muzzle flash effect
+	showFloatingText("BANG!", Color3.fromRGB(255, 200, 0))
+
+	-- Raycast from camera to find NPC target
+	local ray = camera:ViewportPointToRay(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+	local raycastParams = RaycastParams.new()
+	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+	local character = player.Character
+	if character then
+		raycastParams.FilterDescendantsInstances = {character}
+	end
+
+	local result = workspace:Raycast(ray.Origin, ray.Direction * 100, raycastParams)
+	if result and result.Instance then
+		local model = result.Instance:FindFirstAncestorOfClass("Model") or result.Instance
+		local npcType = model:GetAttribute("NPCType")
+		if npcType then
+			-- Gun can stun anomaly NPCs (they leave faster)
+			showFloatingText("Hit " .. npcType .. "!", Color3.fromRGB(255, 100, 0))
+			-- Visual: make NPC flash red
+			for _, part in ipairs(model:GetDescendants()) do
+				if part:IsA("BasePart") then
+					local original = part.BrickColor
+					part.BrickColor = BrickColor.new("Really red")
+					task.delay(0.3, function()
+						if part and part.Parent then
+							part.BrickColor = original
+						end
+					end)
+				end
+			end
+		end
+	end
+
+	-- Cooldown 2 seconds
+	task.delay(2, function()
+		gunCooldown = false
+	end)
+end
+
+-- === HUMANITY SERUM (GamePass) ===
+local function useHumanitySerum()
+	if not ownedPasses["HumanitySerum"] then return end
+	if not isAlive then return end
+
+	-- Find closest anomaly NPC
+	local character = player.Character
+	if not character then return end
+	local hrp = character:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+
+	local npcsFolder = workspace:FindFirstChild("NPCs")
+	if not npcsFolder then return end
+
+	local closest = nil
+	local closestDist = 15
+
+	for _, npc in ipairs(npcsFolder:GetChildren()) do
+		if npc:GetAttribute("IsAnomaly") then
+			local npcHRP = npc:FindFirstChild("HumanoidRootPart")
+			if npcHRP then
+				local dist = (hrp.Position - npcHRP.Position).Magnitude
+				if dist < closestDist then
+					closest = npc
+					closestDist = dist
+				end
+			end
+		end
+	end
+
+	if closest then
+		Remotes:WaitForChild("UseHumanitySerum"):FireServer(closest)
+	else
+		showFloatingText("No anomaly nearby!", Color3.fromRGB(255, 100, 0))
+	end
+end
+
+-- === EXTRA INPUT HANDLING (GamePasses + Leaderboard) ===
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed then return end
+
+	if input.KeyCode == Enum.KeyCode.B then
+		toggleGamePassShop()
+	elseif input.KeyCode == Enum.KeyCode.Tab then
+		toggleLeaderboard()
+	elseif input.KeyCode == Enum.KeyCode.R then
+		-- Gun shoot
+		if ownedPasses["TheGun"] then
+			useGun()
+		end
+	elseif input.KeyCode == Enum.KeyCode.H then
+		-- Humanity Serum
+		if ownedPasses["HumanitySerum"] then
+			useHumanitySerum()
+		end
+	elseif input.KeyCode == Enum.KeyCode.J then
+		-- Jumpscare Friend - target nearest other player
+		if ownedPasses["JumpscareFriend"] then
+			local character = player.Character
+			if character then
+				local hrp = character:FindFirstChild("HumanoidRootPart")
+				if hrp then
+					local closestPlayer = nil
+					local closestDist = 50
+					for _, otherPlayer in ipairs(Players:GetPlayers()) do
+						if otherPlayer ~= player and otherPlayer.Character then
+							local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+							if otherHRP then
+								local dist = (hrp.Position - otherHRP.Position).Magnitude
+								if dist < closestDist then
+									closestPlayer = otherPlayer
+									closestDist = dist
+								end
+							end
+						end
+					end
+					if closestPlayer then
+						Remotes:WaitForChild("UseJumpscareFriend"):FireServer(closestPlayer)
+						showFloatingText("Pranked " .. closestPlayer.Name .. "!", Color3.fromRGB(255, 100, 255))
+					else
+						showFloatingText("No players nearby to prank!", Color3.fromRGB(255, 100, 0))
+					end
+				end
+			end
+		end
+	end
+end)
+
+-- Check owned passes on load
+task.spawn(function()
+	task.wait(2)
+	for _, passName in ipairs({"AnomalyIdentifier", "JumpscareFriend", "TheGun", "HumanitySerum"}) do
+		Remotes:WaitForChild("CheckGamePass"):FireServer(passName)
+	end
+end)
+
 -- Initialize CCTV
 initCCTV()
 
