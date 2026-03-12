@@ -726,9 +726,17 @@ def build_ui():
                                 bg_color=(0.6,0.3,0), text_color=(1,1,1),
                                 children=make_uicorner(10))
 
-    # Combine all into ScreenGui
-    all_ui = "\n".join([hud, phone, dialogue, cctv, death, menu, jumpscare, nightstart, start_btn])
-    return make_screengui("MainUI", all_ui, display_order=1)
+    # Each overlay goes into its own ScreenGui with Enabled=false
+    # This ensures they are truly hidden until scripts enable them
+    main_gui = make_screengui("MainUI", "\n".join([hud, start_btn]), enabled=True, display_order=1)
+    phone_gui = make_screengui("PhoneScreenGui", "\n".join([phone, dialogue]), enabled=False, display_order=5)
+    cctv_gui = make_screengui("CCTVScreenGui", cctv, enabled=False, display_order=4)
+    death_gui = make_screengui("DeathScreenGui", death, enabled=False, display_order=8)
+    menu_gui = make_screengui("MenuScreenGui", menu, enabled=False, display_order=7)
+    jumpscare_gui = make_screengui("JumpscareScreenGui", jumpscare, enabled=False, display_order=10)
+    nightstart_gui = make_screengui("NightStartScreenGui", nightstart, enabled=False, display_order=9)
+
+    return "\n".join([main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui])
 
 # === BUILD REMOTE EVENTS ===
 def build_remotes():

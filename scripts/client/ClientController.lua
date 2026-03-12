@@ -17,17 +17,32 @@ local NightData = require(ReplicatedStorage:WaitForChild("NightData"))
 
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 
--- UI References
+-- UI References (each overlay is in its own ScreenGui for clean visibility control)
 local playerGui = player:WaitForChild("PlayerGui")
+
+-- Main HUD (always visible)
 local mainUI = playerGui:WaitForChild("MainUI")
 local hudFrame = mainUI:WaitForChild("HUD")
-local phoneFrame = mainUI:WaitForChild("PhoneUI")
-local cctvFrame = mainUI:WaitForChild("CCTVUI")
-local deathFrame = mainUI:WaitForChild("DeathUI")
-local menuFrame = mainUI:WaitForChild("MenuUI")
-local jumpscareFrame = mainUI:WaitForChild("JumpscareUI")
-local nightStartFrame = mainUI:WaitForChild("NightStartUI")
-local dialogueFrame = mainUI:WaitForChild("DialogueUI")
+
+-- Overlay ScreenGuis (start disabled, enabled by scripts when needed)
+local phoneScreenGui = playerGui:WaitForChild("PhoneScreenGui")
+local phoneFrame = phoneScreenGui:WaitForChild("PhoneUI")
+local dialogueFrame = phoneScreenGui:WaitForChild("DialogueUI")
+
+local cctvScreenGui = playerGui:WaitForChild("CCTVScreenGui")
+local cctvFrame = cctvScreenGui:WaitForChild("CCTVUI")
+
+local deathScreenGui = playerGui:WaitForChild("DeathScreenGui")
+local deathFrame = deathScreenGui:WaitForChild("DeathUI")
+
+local menuScreenGui = playerGui:WaitForChild("MenuScreenGui")
+local menuFrame = menuScreenGui:WaitForChild("MenuUI")
+
+local jumpscareScreenGui = playerGui:WaitForChild("JumpscareScreenGui")
+local jumpscareFrame = jumpscareScreenGui:WaitForChild("JumpscareUI")
+
+local nightStartScreenGui = playerGui:WaitForChild("NightStartScreenGui")
+local nightStartFrame = nightStartScreenGui:WaitForChild("NightStartUI")
 
 -- State
 local currentNight = 0
@@ -156,7 +171,7 @@ end
 -- === PHONE SYSTEM ===
 local function showPhone(active)
 	isPhoneActive = active
-	phoneFrame.Visible = active
+	phoneScreenGui.Enabled = active
 	if active then
 		-- Phone ring animation
 		local phoneModel = workspace:FindFirstChild("Phone")
@@ -176,6 +191,7 @@ local function showPhone(active)
 end
 
 local function showDialogue(text, lineNum, totalLines)
+	phoneScreenGui.Enabled = true
 	dialogueFrame.Visible = true
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
 	local progressLabel = dialogueFrame:FindFirstChild("ProgressLabel")
@@ -210,7 +226,7 @@ end
 
 local function toggleCCTV()
 	isCCTVActive = not isCCTVActive
-	cctvFrame.Visible = isCCTVActive
+	cctvScreenGui.Enabled = isCCTVActive
 
 	if isCCTVActive and #cctvCameras > 0 then
 		-- Switch camera to CCTV view
@@ -248,7 +264,7 @@ end
 
 -- === JUMP SCARE SYSTEM ===
 local function playJumpScare(scareType)
-	jumpscareFrame.Visible = true
+	jumpscareScreenGui.Enabled = true
 
 	-- Screen shake
 	task.spawn(function()
@@ -277,13 +293,13 @@ local function playJumpScare(scareType)
 	end
 
 	task.wait(Config.JUMPSCARE_DURATION)
-	jumpscareFrame.Visible = false
+	jumpscareScreenGui.Enabled = false
 end
 
 -- === DEATH SCREEN ===
 local function showDeathScreen(data)
 	isAlive = false
-	deathFrame.Visible = true
+	deathScreenGui.Enabled = true
 
 	local causeLabel = deathFrame:FindFirstChild("CauseLabel")
 	if causeLabel then
@@ -305,7 +321,7 @@ local function showDeathScreen(data)
 				causeText = "A friend pranked you! (Not a real death)"
 				-- This is just a prank from gamepass
 				task.wait(2)
-				deathFrame.Visible = false
+				deathScreenGui.Enabled = false
 				isAlive = true
 				return
 			end
@@ -321,7 +337,7 @@ end
 
 -- === NIGHT START SCREEN ===
 local function showNightStart(nightNum)
-	nightStartFrame.Visible = true
+	nightStartScreenGui.Enabled = true
 	local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
 	if titleLabel then
 		titleLabel.Text = "NIGHT " .. nightNum
@@ -332,7 +348,7 @@ local function showNightStart(nightNum)
 		task.wait(2)
 		TweenService:Create(titleLabel, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
 		task.wait(0.5)
-		nightStartFrame.Visible = false
+		nightStartScreenGui.Enabled = false
 	end
 end
 
@@ -521,7 +537,7 @@ local function onProximityPromptTriggered(prompt)
 		selectedItem = nil
 	else
 		-- Show menu selection UI
-		menuFrame.Visible = true
+		menuScreenGui.Enabled = true
 	end
 end
 
@@ -552,7 +568,7 @@ end
 Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nightInfo)
 	currentNight = nightNum
 	isAlive = true
-	deathFrame.Visible = false
+	deathScreenGui.Enabled = false
 	showNightStart(nightNum)
 end)
 
@@ -588,8 +604,8 @@ end)
 Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	if result == "victory" then
 		-- Victory screen
-		deathFrame.Visible = false
-		nightStartFrame.Visible = true
+		deathScreenGui.Enabled = false
+		nightStartScreenGui.Enabled = true
 		local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
 		if titleLabel then
 			titleLabel.Text = "YOU SURVIVED ALL 5 NIGHTS!"
@@ -646,7 +662,7 @@ end)
 local retryBtn = deathFrame:FindFirstChild("RetryButton")
 if retryBtn then
 	retryBtn.MouseButton1Click:Connect(function()
-		deathFrame.Visible = false
+		deathScreenGui.Enabled = false
 		Remotes:WaitForChild("RequestRetry"):FireServer()
 	end)
 end

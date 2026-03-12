@@ -5,7 +5,7 @@
 <External>nil</External>
 
 <!-- === WORKSPACE === -->
-<Item class="Workspace" referent="RBX000000DF">
+<Item class="Workspace" referent="RBX000000E5">
 <Properties>
 <string name="Name">Workspace</string>
 </Properties>
@@ -2053,7 +2053,7 @@
 </Item>
 
 <!-- NPC Spawn Points -->
-<Item class="Folder" referent="RBX000000E6">
+<Item class="Folder" referent="RBX000000EC">
 <Properties>
 <string name="Name">NPCSpawns</string>
 </Properties>
@@ -2120,7 +2120,7 @@
 </Item>
 
 <!-- NPCs Folder -->
-<Item class="Folder" referent="RBX000000E7">
+<Item class="Folder" referent="RBX000000ED">
 <Properties>
 <string name="Name">NPCs</string>
 </Properties>
@@ -2128,7 +2128,7 @@
 </Item>
 
 <!-- CCTV Cameras -->
-<Item class="Folder" referent="RBX000000E8">
+<Item class="Folder" referent="RBX000000EE">
 <Properties>
 <string name="Name">CCTVCameras</string>
 </Properties>
@@ -2215,7 +2215,7 @@
 </Item>
 
 <!-- Shutters Group -->
-<Item class="Folder" referent="RBX000000E9">
+<Item class="Folder" referent="RBX000000EF">
 <Properties>
 <string name="Name">Shutters</string>
 </Properties>
@@ -2241,7 +2241,7 @@
 </Item>
 
 <!-- Camera -->
-<Item class="Camera" referent="RBX000000EA">
+<Item class="Camera" referent="RBX000000F0">
 <Properties>
 <string name="Name">Camera</string>
 <CoordinateFrame name="CFrame">
@@ -2256,7 +2256,7 @@
 </Item>
 
 <!-- === LIGHTING === -->
-<Item class="Lighting" referent="RBX000000CE">
+<Item class="Lighting" referent="RBX000000D4">
 <Properties>
 <string name="Name">Lighting</string>
 <float name="Brightness">0.3</float>
@@ -2270,7 +2270,7 @@
 <float name="EnvironmentSpecularScale">0.2</float>
 <bool name="GlobalShadows">true</bool>
 </Properties>
-<Item class="Atmosphere" referent="RBX000000CF">
+<Item class="Atmosphere" referent="RBX000000D5">
 <Properties>
 <string name="Name">NightAtmosphere</string>
 <float name="Density">0.35</float>
@@ -2281,7 +2281,7 @@
 <float name="Haze">3</float>
 </Properties>
 </Item>
-<Item class="BloomEffect" referent="RBX000000D0">
+<Item class="BloomEffect" referent="RBX000000D6">
 <Properties>
 <string name="Name">HorrorBloom</string>
 <float name="Intensity">0.4</float>
@@ -2289,7 +2289,7 @@
 <float name="Threshold">1.5</float>
 </Properties>
 </Item>
-<Item class="ColorCorrectionEffect" referent="RBX000000D1">
+<Item class="ColorCorrectionEffect" referent="RBX000000D7">
 <Properties>
 <string name="Name">HorrorColor</string>
 <float name="Brightness">-0.05</float>
@@ -2298,7 +2298,7 @@
 <Color3 name="TintColor"><R>0.9</R><G>0.85</G><B>1</B></Color3>
 </Properties>
 </Item>
-<Item class="ColorCorrectionEffect" referent="RBX000000D2">
+<Item class="ColorCorrectionEffect" referent="RBX000000D8">
 <Properties>
 <string name="Name">CCTVFilter</string>
 <float name="Brightness">-0.1</float>
@@ -2311,11 +2311,11 @@
 </Item>
 
 <!-- === SERVER SCRIPT SERVICE === -->
-<Item class="ServerScriptService" referent="RBX000000E0">
+<Item class="ServerScriptService" referent="RBX000000E6">
 <Properties>
 <string name="Name">ServerScriptService</string>
 </Properties>
-<Item class="Script" referent="RBX000000EB">
+<Item class="Script" referent="RBX000000F1">
 <Properties>
 <string name="Name">GameManager</string>
 <ProtectedString name="Source"><![CDATA[-- GameManager: Main server script controlling game flow and night progression
@@ -2738,7 +2738,7 @@ print("[GameManager] Road Side Dosa - Game Manager initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX000000EC">
+<Item class="Script" referent="RBX000000F2">
 <Properties>
 <string name="Name">NPCManager</string>
 <ProtectedString name="Source"><![CDATA[-- NPCManager: Server script for NPC spawning, AI, and behavior
@@ -3337,7 +3337,7 @@ print("[NPCManager] NPC system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX000000ED">
+<Item class="Script" referent="RBX000000F3">
 <Properties>
 <string name="Name">DataManager</string>
 <ProtectedString name="Source"><![CDATA[-- DataManager: Server script for DataStore saving/loading, leaderboard, and trading
@@ -3624,7 +3624,7 @@ print("[DataManager] Data system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX000000EE">
+<Item class="Script" referent="RBX000000F4">
 <Properties>
 <string name="Name">GamePassManager</string>
 <ProtectedString name="Source"><![CDATA[-- GamePassManager: Handles gamepass purchases and effects
@@ -3767,11 +3767,11 @@ print("[GamePassManager] GamePass system initialized")
 </Item>
 
 <!-- === REPLICATED STORAGE === -->
-<Item class="ReplicatedStorage" referent="RBX000000E1">
+<Item class="ReplicatedStorage" referent="RBX000000E7">
 <Properties>
 <string name="Name">ReplicatedStorage</string>
 </Properties>
-<Item class="ModuleScript" referent="RBX000000EF">
+<Item class="ModuleScript" referent="RBX000000F5">
 <Properties>
 <string name="Name">Config</string>
 <ProtectedString name="Source"><![CDATA[-- Config Module: All game configuration values
@@ -3863,7 +3863,7 @@ return Config
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="ModuleScript" referent="RBX000000F0">
+<Item class="ModuleScript" referent="RBX000000F6">
 <Properties>
 <string name="Name">NightData</string>
 <ProtectedString name="Source"><![CDATA[-- NightData Module: All 5 nights' rules, events, and phone dialogues
@@ -4057,216 +4057,216 @@ return NightData
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Folder" referent="RBX000000CD">
+<Item class="Folder" referent="RBX000000D3">
 <Properties>
 <string name="Name">Remotes</string>
 </Properties>
-<Item class="RemoteEvent" referent="RBX000000A3">
+<Item class="RemoteEvent" referent="RBX000000A9">
 <Properties>
 <string name="Name">StartNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000A4">
+<Item class="RemoteEvent" referent="RBX000000AA">
 <Properties>
 <string name="Name">EndNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000A5">
+<Item class="RemoteEvent" referent="RBX000000AB">
 <Properties>
 <string name="Name">PhoneRing</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000A6">
+<Item class="RemoteEvent" referent="RBX000000AC">
 <Properties>
 <string name="Name">PhoneDialogue</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000A7">
+<Item class="RemoteEvent" referent="RBX000000AD">
 <Properties>
 <string name="Name">PlayerDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000A8">
+<Item class="RemoteEvent" referent="RBX000000AE">
 <Properties>
 <string name="Name">NightComplete</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000A9">
+<Item class="RemoteEvent" referent="RBX000000AF">
 <Properties>
 <string name="Name">TriggerEvent</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000AA">
+<Item class="RemoteEvent" referent="RBX000000B0">
 <Properties>
 <string name="Name">UpdateHUD</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000AB">
+<Item class="RemoteEvent" referent="RBX000000B1">
 <Properties>
 <string name="Name">JumpScare</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000AC">
+<Item class="RemoteEvent" referent="RBX000000B2">
 <Properties>
 <string name="Name">SpawnNPC</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000AD">
+<Item class="RemoteEvent" referent="RBX000000B3">
 <Properties>
 <string name="Name">NPCDialogue</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000AE">
+<Item class="RemoteEvent" referent="RBX000000B4">
 <Properties>
 <string name="Name">NPCLeave</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000AF">
+<Item class="RemoteEvent" referent="RBX000000B5">
 <Properties>
 <string name="Name">RequestStartNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B0">
+<Item class="RemoteEvent" referent="RBX000000B6">
 <Properties>
 <string name="Name">RequestRetry</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B1">
+<Item class="RemoteEvent" referent="RBX000000B7">
 <Properties>
 <string name="Name">GrabBatter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B2">
+<Item class="RemoteEvent" referent="RBX000000B8">
 <Properties>
 <string name="Name">CookDosa</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B3">
+<Item class="RemoteEvent" referent="RBX000000B9">
 <Properties>
 <string name="Name">ServeCustomer</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B4">
+<Item class="RemoteEvent" referent="RBX000000BA">
 <Properties>
 <string name="Name">ToggleShutter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B5">
+<Item class="RemoteEvent" referent="RBX000000BB">
 <Properties>
 <string name="Name">ToggleLights</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B6">
+<Item class="RemoteEvent" referent="RBX000000BC">
 <Properties>
 <string name="Name">GazeDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B7">
+<Item class="RemoteEvent" referent="RBX000000BD">
 <Properties>
 <string name="Name">TruckArrival</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B8">
+<Item class="RemoteEvent" referent="RBX000000BE">
 <Properties>
 <string name="Name">SpillBatter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000B9">
+<Item class="RemoteEvent" referent="RBX000000BF">
 <Properties>
 <string name="Name">ReachedSafeRoom</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000BA">
+<Item class="RemoteEvent" referent="RBX000000C0">
 <Properties>
 <string name="Name">CleanMess</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000BB">
+<Item class="RemoteEvent" referent="RBX000000C1">
 <Properties>
 <string name="Name">LookedAtFace</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000BC">
+<Item class="RemoteEvent" referent="RBX000000C2">
 <Properties>
 <string name="Name">UpdateCurrency</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000BD">
+<Item class="RemoteEvent" referent="RBX000000C3">
 <Properties>
 <string name="Name">UpdateNightProgress</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000BE">
+<Item class="RemoteEvent" referent="RBX000000C4">
 <Properties>
 <string name="Name">RecordDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000BF">
+<Item class="RemoteEvent" referent="RBX000000C5">
 <Properties>
 <string name="Name">RecordServe</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C0">
+<Item class="RemoteEvent" referent="RBX000000C6">
 <Properties>
 <string name="Name">GameCompleted</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C1">
+<Item class="RemoteEvent" referent="RBX000000C7">
 <Properties>
 <string name="Name">LoadPlayerData</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C2">
+<Item class="RemoteEvent" referent="RBX000000C8">
 <Properties>
 <string name="Name">UpdateLeaderboard</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C3">
+<Item class="RemoteEvent" referent="RBX000000C9">
 <Properties>
 <string name="Name">TradeRequest</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C4">
+<Item class="RemoteEvent" referent="RBX000000CA">
 <Properties>
 <string name="Name">TradeRequestReceived</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C5">
+<Item class="RemoteEvent" referent="RBX000000CB">
 <Properties>
 <string name="Name">TradeAccept</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C6">
+<Item class="RemoteEvent" referent="RBX000000CC">
 <Properties>
 <string name="Name">TradeComplete</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C7">
+<Item class="RemoteEvent" referent="RBX000000CD">
 <Properties>
 <string name="Name">GamePassOwned</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C8">
+<Item class="RemoteEvent" referent="RBX000000CE">
 <Properties>
 <string name="Name">CheckGamePass</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000C9">
+<Item class="RemoteEvent" referent="RBX000000CF">
 <Properties>
 <string name="Name">GamePassCheckResult</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000CA">
+<Item class="RemoteEvent" referent="RBX000000D0">
 <Properties>
 <string name="Name">UseJumpscareFriend</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000CB">
+<Item class="RemoteEvent" referent="RBX000000D1">
 <Properties>
 <string name="Name">UseHumanitySerum</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX000000CC">
+<Item class="RemoteEvent" referent="RBX000000D2">
 <Properties>
 <string name="Name">NPCTransformed</string>
 </Properties>
@@ -4275,11 +4275,11 @@ return NightData
 </Item>
 
 <!-- === SERVER STORAGE === -->
-<Item class="ServerStorage" referent="RBX000000E2">
+<Item class="ServerStorage" referent="RBX000000E8">
 <Properties>
 <string name="Name">ServerStorage</string>
 </Properties>
-<Item class="BindableEvent" referent="RBX000000F1">
+<Item class="BindableEvent" referent="RBX000000F7">
 <Properties>
 <string name="Name">NightStartBindable</string>
 </Properties>
@@ -4287,7 +4287,7 @@ return NightData
 </Item>
 
 <!-- === STARTER GUI === -->
-<Item class="StarterGui" referent="RBX000000E3">
+<Item class="StarterGui" referent="RBX000000E9">
 <Properties>
 <string name="Name">StarterGui</string>
 </Properties>
@@ -4467,6 +4467,31 @@ return NightData
 </Properties>
 </Item>
 </Item>
+<Item class="TextButton" referent="RBX000000A1">
+<Properties>
+<string name="Name">StartButton</string>
+<string name="Text">START SHIFT</string>
+<UDim2 name="Position"><XS>0.35</XS><XO>0</XO><YS>0.6</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>0.3</XS><XO>0</XO><YS>0.0</YS><YO>60</YO></UDim2>
+<Color3 name="BackgroundColor3"><R>0.6</R><G>0.3</G><B>0</B></Color3>
+<Color3 name="TextColor3"><R>1</R><G>1</G><B>1</B></Color3>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+<Item class="UICorner" referent="RBX000000A0">
+<Properties>
+<UDim name="CornerRadius"><S>0</S><O>10</O></UDim>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="ScreenGui" referent="RBX000000A3">
+<Properties>
+<string name="Name">PhoneScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">5</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
 <Item class="Frame" referent="RBX00000087">
 <Properties>
 <string name="Name">PhoneUI</string>
@@ -4577,6 +4602,14 @@ return NightData
 </Item>
 </Item>
 </Item>
+</Item>
+<Item class="ScreenGui" referent="RBX000000A4">
+<Properties>
+<string name="Name">CCTVScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">4</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
 <Item class="Frame" referent="RBX00000091">
 <Properties>
 <string name="Name">CCTVUI</string>
@@ -4642,6 +4675,14 @@ return NightData
 </Properties>
 </Item>
 </Item>
+</Item>
+<Item class="ScreenGui" referent="RBX000000A5">
+<Properties>
+<string name="Name">DeathScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">8</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
 <Item class="Frame" referent="RBX00000097">
 <Properties>
 <string name="Name">DeathUI</string>
@@ -4712,6 +4753,14 @@ return NightData
 </Item>
 </Item>
 </Item>
+</Item>
+<Item class="ScreenGui" referent="RBX000000A6">
+<Properties>
+<string name="Name">MenuScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">7</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
 <Item class="Frame" referent="RBX0000009A">
 <Properties>
 <string name="Name">MenuUI</string>
@@ -4749,6 +4798,14 @@ return NightData
 
 </Item>
 </Item>
+</Item>
+<Item class="ScreenGui" referent="RBX000000A7">
+<Properties>
+<string name="Name">JumpscareScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">10</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
 <Item class="Frame" referent="RBX0000009D">
 <Properties>
 <string name="Name">JumpscareUI</string>
@@ -4783,6 +4840,14 @@ return NightData
 
 </Item>
 </Item>
+</Item>
+<Item class="ScreenGui" referent="RBX000000A8">
+<Properties>
+<string name="Name">NightStartScreenGui</string>
+<bool name="Enabled">false</bool>
+<int name="DisplayOrder">9</int>
+<bool name="ResetOnSpawn">false</bool>
+</Properties>
 <Item class="Frame" referent="RBX0000009F">
 <Properties>
 <string name="Name">NightStartUI</string>
@@ -4808,36 +4873,19 @@ return NightData
 </Properties>
 </Item>
 </Item>
-<Item class="TextButton" referent="RBX000000A1">
-<Properties>
-<string name="Name">StartButton</string>
-<string name="Text">START SHIFT</string>
-<UDim2 name="Position"><XS>0.35</XS><XO>0</XO><YS>0.6</YS><YO>0</YO></UDim2>
-<UDim2 name="Size"><XS>0.3</XS><XO>0</XO><YS>0.0</YS><YO>60</YO></UDim2>
-<Color3 name="BackgroundColor3"><R>0.6</R><G>0.3</G><B>0</B></Color3>
-<Color3 name="TextColor3"><R>1</R><G>1</G><B>1</B></Color3>
-<token name="Font">4</token>
-<bool name="TextScaled">true</bool>
-</Properties>
-<Item class="UICorner" referent="RBX000000A0">
-<Properties>
-<UDim name="CornerRadius"><S>0</S><O>10</O></UDim>
-</Properties>
-</Item>
-</Item>
 </Item>
 </Item>
 
 <!-- === STARTER PLAYER SCRIPTS === -->
-<Item class="StarterPlayer" referent="RBX000000F2">
+<Item class="StarterPlayer" referent="RBX000000F8">
 <Properties>
 <string name="Name">StarterPlayer</string>
 </Properties>
-<Item class="StarterPlayerScripts" referent="RBX000000E4">
+<Item class="StarterPlayerScripts" referent="RBX000000EA">
 <Properties>
 <string name="Name">StarterPlayerScripts</string>
 </Properties>
-<Item class="LocalScript" referent="RBX000000F3">
+<Item class="LocalScript" referent="RBX000000F9">
 <Properties>
 <string name="Name">ClientController</string>
 <ProtectedString name="Source"><![CDATA[-- ClientController: Main client script handling UI, input, and game interaction
@@ -4859,17 +4907,32 @@ local NightData = require(ReplicatedStorage:WaitForChild("NightData"))
 
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 
--- UI References
+-- UI References (each overlay is in its own ScreenGui for clean visibility control)
 local playerGui = player:WaitForChild("PlayerGui")
+
+-- Main HUD (always visible)
 local mainUI = playerGui:WaitForChild("MainUI")
 local hudFrame = mainUI:WaitForChild("HUD")
-local phoneFrame = mainUI:WaitForChild("PhoneUI")
-local cctvFrame = mainUI:WaitForChild("CCTVUI")
-local deathFrame = mainUI:WaitForChild("DeathUI")
-local menuFrame = mainUI:WaitForChild("MenuUI")
-local jumpscareFrame = mainUI:WaitForChild("JumpscareUI")
-local nightStartFrame = mainUI:WaitForChild("NightStartUI")
-local dialogueFrame = mainUI:WaitForChild("DialogueUI")
+
+-- Overlay ScreenGuis (start disabled, enabled by scripts when needed)
+local phoneScreenGui = playerGui:WaitForChild("PhoneScreenGui")
+local phoneFrame = phoneScreenGui:WaitForChild("PhoneUI")
+local dialogueFrame = phoneScreenGui:WaitForChild("DialogueUI")
+
+local cctvScreenGui = playerGui:WaitForChild("CCTVScreenGui")
+local cctvFrame = cctvScreenGui:WaitForChild("CCTVUI")
+
+local deathScreenGui = playerGui:WaitForChild("DeathScreenGui")
+local deathFrame = deathScreenGui:WaitForChild("DeathUI")
+
+local menuScreenGui = playerGui:WaitForChild("MenuScreenGui")
+local menuFrame = menuScreenGui:WaitForChild("MenuUI")
+
+local jumpscareScreenGui = playerGui:WaitForChild("JumpscareScreenGui")
+local jumpscareFrame = jumpscareScreenGui:WaitForChild("JumpscareUI")
+
+local nightStartScreenGui = playerGui:WaitForChild("NightStartScreenGui")
+local nightStartFrame = nightStartScreenGui:WaitForChild("NightStartUI")
 
 -- State
 local currentNight = 0
@@ -4998,7 +5061,7 @@ end
 -- === PHONE SYSTEM ===
 local function showPhone(active)
 	isPhoneActive = active
-	phoneFrame.Visible = active
+	phoneScreenGui.Enabled = active
 	if active then
 		-- Phone ring animation
 		local phoneModel = workspace:FindFirstChild("Phone")
@@ -5018,6 +5081,7 @@ local function showPhone(active)
 end
 
 local function showDialogue(text, lineNum, totalLines)
+	phoneScreenGui.Enabled = true
 	dialogueFrame.Visible = true
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
 	local progressLabel = dialogueFrame:FindFirstChild("ProgressLabel")
@@ -5052,7 +5116,7 @@ end
 
 local function toggleCCTV()
 	isCCTVActive = not isCCTVActive
-	cctvFrame.Visible = isCCTVActive
+	cctvScreenGui.Enabled = isCCTVActive
 
 	if isCCTVActive and #cctvCameras > 0 then
 		-- Switch camera to CCTV view
@@ -5090,7 +5154,7 @@ end
 
 -- === JUMP SCARE SYSTEM ===
 local function playJumpScare(scareType)
-	jumpscareFrame.Visible = true
+	jumpscareScreenGui.Enabled = true
 
 	-- Screen shake
 	task.spawn(function()
@@ -5119,13 +5183,13 @@ local function playJumpScare(scareType)
 	end
 
 	task.wait(Config.JUMPSCARE_DURATION)
-	jumpscareFrame.Visible = false
+	jumpscareScreenGui.Enabled = false
 end
 
 -- === DEATH SCREEN ===
 local function showDeathScreen(data)
 	isAlive = false
-	deathFrame.Visible = true
+	deathScreenGui.Enabled = true
 
 	local causeLabel = deathFrame:FindFirstChild("CauseLabel")
 	if causeLabel then
@@ -5147,7 +5211,7 @@ local function showDeathScreen(data)
 				causeText = "A friend pranked you! (Not a real death)"
 				-- This is just a prank from gamepass
 				task.wait(2)
-				deathFrame.Visible = false
+				deathScreenGui.Enabled = false
 				isAlive = true
 				return
 			end
@@ -5163,7 +5227,7 @@ end
 
 -- === NIGHT START SCREEN ===
 local function showNightStart(nightNum)
-	nightStartFrame.Visible = true
+	nightStartScreenGui.Enabled = true
 	local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
 	if titleLabel then
 		titleLabel.Text = "NIGHT " .. nightNum
@@ -5174,7 +5238,7 @@ local function showNightStart(nightNum)
 		task.wait(2)
 		TweenService:Create(titleLabel, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
 		task.wait(0.5)
-		nightStartFrame.Visible = false
+		nightStartScreenGui.Enabled = false
 	end
 end
 
@@ -5363,7 +5427,7 @@ local function onProximityPromptTriggered(prompt)
 		selectedItem = nil
 	else
 		-- Show menu selection UI
-		menuFrame.Visible = true
+		menuScreenGui.Enabled = true
 	end
 end
 
@@ -5394,7 +5458,7 @@ end
 Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nightInfo)
 	currentNight = nightNum
 	isAlive = true
-	deathFrame.Visible = false
+	deathScreenGui.Enabled = false
 	showNightStart(nightNum)
 end)
 
@@ -5430,8 +5494,8 @@ end)
 Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	if result == "victory" then
 		-- Victory screen
-		deathFrame.Visible = false
-		nightStartFrame.Visible = true
+		deathScreenGui.Enabled = false
+		nightStartScreenGui.Enabled = true
 		local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
 		if titleLabel then
 			titleLabel.Text = "YOU SURVIVED ALL 5 NIGHTS!"
@@ -5488,7 +5552,7 @@ end)
 local retryBtn = deathFrame:FindFirstChild("RetryButton")
 if retryBtn then
 	retryBtn.MouseButton1Click:Connect(function()
-		deathFrame.Visible = false
+		deathScreenGui.Enabled = false
 		Remotes:WaitForChild("RequestRetry"):FireServer()
 	end)
 end
@@ -5514,18 +5578,18 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === STARTER PACK === -->
-<Item class="StarterPack" referent="RBX000000E5">
+<Item class="StarterPack" referent="RBX000000EB">
 <Properties>
 <string name="Name">StarterPack</string>
 </Properties>
 </Item>
 
 <!-- === SOUND SERVICE === -->
-<Item class="SoundService" referent="RBX000000D3">
+<Item class="SoundService" referent="RBX000000D9">
 <Properties>
 <string name="Name">SoundService</string>
 </Properties>
-<Item class="Sound" referent="RBX000000D4">
+<Item class="Sound" referent="RBX000000DA">
 <Properties>
 <string name="Name">AmbientHorror</string>
 <Content name="SoundId"><url>rbxassetid://9112854440</url></Content>
@@ -5533,7 +5597,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">true</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000D5">
+<Item class="Sound" referent="RBX000000DB">
 <Properties>
 <string name="Name">JumpScareSound</string>
 <Content name="SoundId"><url>rbxassetid://9114265792</url></Content>
@@ -5541,7 +5605,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000D6">
+<Item class="Sound" referent="RBX000000DC">
 <Properties>
 <string name="Name">PhoneRing</string>
 <Content name="SoundId"><url>rbxassetid://9114220987</url></Content>
@@ -5549,7 +5613,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000D7">
+<Item class="Sound" referent="RBX000000DD">
 <Properties>
 <string name="Name">CookingSound</string>
 <Content name="SoundId"><url>rbxassetid://9114248953</url></Content>
@@ -5557,7 +5621,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000D8">
+<Item class="Sound" referent="RBX000000DE">
 <Properties>
 <string name="Name">ShutterSound</string>
 <Content name="SoundId"><url>rbxassetid://9114254790</url></Content>
@@ -5565,7 +5629,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000D9">
+<Item class="Sound" referent="RBX000000DF">
 <Properties>
 <string name="Name">HeartbeatSound</string>
 <Content name="SoundId"><url>rbxassetid://9113655458</url></Content>
@@ -5573,7 +5637,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">true</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000DA">
+<Item class="Sound" referent="RBX000000E0">
 <Properties>
 <string name="Name">FootstepSound</string>
 <Content name="SoundId"><url>rbxassetid://9114267993</url></Content>
@@ -5581,7 +5645,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000DB">
+<Item class="Sound" referent="RBX000000E1">
 <Properties>
 <string name="Name">VictorySound</string>
 <Content name="SoundId"><url>rbxassetid://9114854738</url></Content>
@@ -5589,7 +5653,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000DC">
+<Item class="Sound" referent="RBX000000E2">
 <Properties>
 <string name="Name">DoorCreak</string>
 <Content name="SoundId"><url>rbxassetid://9114263621</url></Content>
@@ -5597,7 +5661,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000DD">
+<Item class="Sound" referent="RBX000000E3">
 <Properties>
 <string name="Name">WhisperSound</string>
 <Content name="SoundId"><url>rbxassetid://9113489604</url></Content>
@@ -5605,7 +5669,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX000000DE">
+<Item class="Sound" referent="RBX000000E4">
 <Properties>
 <string name="Name">TruckEngine</string>
 <Content name="SoundId"><url>rbxassetid://9114229867</url></Content>
@@ -5616,7 +5680,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === TEAMS === -->
-<Item class="Teams" referent="RBX000000F4">
+<Item class="Teams" referent="RBX000000FA">
 <Properties>
 <string name="Name">Teams</string>
 </Properties>
