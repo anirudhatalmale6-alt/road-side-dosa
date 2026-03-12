@@ -1010,11 +1010,15 @@ def build_ui():
                        "0.15,0,0.42,0", "0.7,0,0,20",
                        text_color=(0.6,0.55,0.4), font=4),
         # Start button
-        make_textbutton("StartButton", "START SHIFT", "0.35,0,0.55,0", "0.3,0,0,60",
+        make_textbutton("StartButton", "START SHIFT", "0.35,0,0.55,0", "0.3,0,0,50",
                         bg_color=(0.7,0.25,0.05), text_color=(1,1,1),
                         children=make_uicorner(10)),
+        # Continue button (visible only if saved progress exists)
+        make_textbutton("ContinueButton", "CONTINUE (Night ?)", "0.35,0,0.63,0", "0.3,0,0,40",
+                        bg_color=(0.15,0.4,0.15), text_color=(1,1,1),
+                        children=make_uicorner(10)),
         # Credits
-        make_textlabel("CreditsLabel", "v3.0", "0.85,0,0.92,0", "0.1,0,0,18",
+        make_textlabel("CreditsLabel", "v4.0", "0.85,0,0.92,0", "0.1,0,0,18",
                        text_color=(0.3,0.3,0.3), font=4),
         # Controls info
         make_textlabel("ControlsInfo",
@@ -1109,6 +1113,99 @@ def build_ui():
     victory = make_frame("VictoryUI", "0,0,0,0", "1,0,1,0", bg_transparency=0,
                           children=victory_children, zindex=11)
 
+    # --- Tutorial UI ---
+    tutorial_children = "\n".join([
+        make_frame("TutorialBG", "0,0,0,0", "1,0,1,0", bg_color=(0.02,0.01,0.03),
+                   bg_transparency=0.1),
+        make_textlabel("TutorialTitle", "HOW TO SURVIVE", "0.2,0,0.03,0", "0.6,0,0,50",
+                       text_color=(1,0.6,0), font=8),
+        # Step 1
+        make_textlabel("Step1", "1. GRAB BATTER from the fridge [F key]",
+                       "0.1,0,0.13,0", "0.8,0,0,28",
+                       text_color=(0.9,0.9,0.9), font=4),
+        # Step 2
+        make_textlabel("Step2", "2. COOK DOSA on the tawa [T key]",
+                       "0.1,0,0.19,0", "0.8,0,0,28",
+                       text_color=(0.9,0.9,0.9), font=4),
+        # Step 3
+        make_textlabel("Step3", "3. SERVE CUSTOMERS — select item then click on customer",
+                       "0.1,0,0.25,0", "0.8,0,0,28",
+                       text_color=(0.9,0.9,0.9), font=4),
+        # Step 4
+        make_textlabel("Step4", "4. ANSWER THE PHONE — the manager gives you rules EVERY night",
+                       "0.1,0,0.31,0", "0.8,0,0,28",
+                       text_color=(1,0.8,0.3), font=8),
+        # Step 5
+        make_textlabel("Step5", "5. FOLLOW THE RULES — breaking rules = DEATH",
+                       "0.1,0,0.37,0", "0.8,0,0,28",
+                       text_color=(1,0.3,0.3), font=8),
+        # Controls section
+        make_textlabel("ControlsTitle", "CONTROLS", "0.3,0,0.45,0", "0.4,0,0,30",
+                       text_color=(0.8,0.6,0.2), font=8),
+        make_textlabel("Controls1", "WASD — Move  |  Shift — Sprint  |  F — Grab Batter",
+                       "0.1,0,0.52,0", "0.8,0,0,22",
+                       text_color=(0.7,0.7,0.7), font=4),
+        make_textlabel("Controls2", "T — Cook  |  C — CCTV  |  L — Toggle Lights",
+                       "0.1,0,0.57,0", "0.8,0,0,22",
+                       text_color=(0.7,0.7,0.7), font=4),
+        make_textlabel("Controls3", "1/2/3 — Shutters  |  G — Spill Batter (Night 5)",
+                       "0.1,0,0.62,0", "0.8,0,0,22",
+                       text_color=(0.7,0.7,0.7), font=4),
+        make_textlabel("Controls4", "B — Shop  |  Tab — Leaderboard  |  P — Phone",
+                       "0.1,0,0.67,0", "0.8,0,0,22",
+                       text_color=(0.7,0.7,0.7), font=4),
+        # Warning
+        make_textlabel("TutorialWarning", "Not all customers are human. Trust the manager.",
+                       "0.15,0,0.75,0", "0.7,0,0,25",
+                       text_color=(0.6,0.2,0.2), font=4),
+        # Got it button
+        make_textbutton("TutorialDismissBtn", "I UNDERSTAND — START SHIFT", "0.25,0,0.83,0", "0.5,0,0,55",
+                        bg_color=(0.7,0.25,0.05), text_color=(1,1,1),
+                        children=make_uicorner(10)),
+    ])
+    tutorial = make_frame("TutorialUI", "0,0,0,0", "1,0,1,0", bg_transparency=0,
+                           children=tutorial_children, zindex=12)
+
+    # --- Mobile Touch Controls UI ---
+    mobile_children = "\n".join([
+        # Cook button (bottom-left area)
+        make_textbutton("MobileCookBtn", "COOK\\n[T]", "0,15,0.65,0", "0,75,0,75",
+                        bg_color=(0.6,0.3,0.05), text_color=(1,1,1),
+                        children=make_uicorner(38)),
+        # Batter button
+        make_textbutton("MobileBatterBtn", "BATTER\\n[F]", "0,100,0.65,0", "0,75,0,75",
+                        bg_color=(0.5,0.4,0.2), text_color=(1,1,1),
+                        children=make_uicorner(38)),
+        # CCTV button
+        make_textbutton("MobileCCTVBtn", "CCTV\\n[C]", "0,15,0.78,0", "0,65,0,65",
+                        bg_color=(0.2,0.2,0.3), text_color=(1,1,1),
+                        children=make_uicorner(33)),
+        # Lights button
+        make_textbutton("MobileLightsBtn", "LIGHTS\\n[L]", "0,90,0.78,0", "0,65,0,65",
+                        bg_color=(0.4,0.4,0.1), text_color=(1,1,1),
+                        children=make_uicorner(33)),
+        # Sprint button (right side)
+        make_textbutton("MobileSprintBtn", "SPRINT", "1,-90,0.65,0", "0,75,0,75",
+                        bg_color=(0.3,0.5,0.3), text_color=(1,1,1),
+                        children=make_uicorner(38)),
+        # Shutter buttons (right side, smaller)
+        make_textbutton("MobileShutter1Btn", "S1", "1,-90,0.78,0", "0,40,0,40",
+                        bg_color=(0.6,0.15,0.15), text_color=(1,1,1),
+                        children=make_uicorner(20)),
+        make_textbutton("MobileShutter2Btn", "S2", "1,-45,0.78,0", "0,40,0,40",
+                        bg_color=(0.6,0.15,0.15), text_color=(1,1,1),
+                        children=make_uicorner(20)),
+        make_textbutton("MobileShutter3Btn", "S3", "1,-90,0.84,0", "0,40,0,40",
+                        bg_color=(0.6,0.15,0.15), text_color=(1,1,1),
+                        children=make_uicorner(20)),
+        # Phone button
+        make_textbutton("MobilePhoneBtn", "PHONE\\n[P]", "1,-45,0.84,0", "0,40,0,40",
+                        bg_color=(0.1,0.4,0.1), text_color=(1,1,1),
+                        children=make_uicorner(20)),
+    ])
+    mobile = make_frame("MobileControls", "0,0,0,0", "1,0,1,0", bg_transparency=1,
+                         visible=True, children=mobile_children, zindex=2)
+
     # Each overlay goes into its own ScreenGui with Enabled=false
     victory_gui = make_screengui("VictoryScreenGui", victory, enabled=False, display_order=11)
     lobby_gui = make_screengui("LobbyScreenGui", lobby, enabled=True, display_order=0)
@@ -1121,8 +1218,10 @@ def build_ui():
     nightstart_gui = make_screengui("NightStartScreenGui", nightstart, enabled=False, display_order=9)
     gamepass_gui = make_screengui("GamePassScreenGui", gamepass, enabled=False, display_order=6)
     leaderboard_gui = make_screengui("LeaderboardScreenGui", leaderboard, enabled=False, display_order=6)
+    tutorial_gui = make_screengui("TutorialScreenGui", tutorial, enabled=False, display_order=12)
+    mobile_gui = make_screengui("MobileControlsGui", mobile, enabled=False, display_order=2)
 
-    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui, gamepass_gui, leaderboard_gui, victory_gui])
+    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui, gamepass_gui, leaderboard_gui, victory_gui, tutorial_gui, mobile_gui])
 
 # === BUILD REMOTE EVENTS ===
 def build_remotes():
@@ -1141,6 +1240,7 @@ def build_remotes():
         "TradeRequest", "TradeRequestReceived", "TradeAccept", "TradeComplete",
         "GamePassOwned", "CheckGamePass", "GamePassCheckResult",
         "UseJumpscareFriend", "UseHumanitySerum", "NPCTransformed",
+        "RequestContinueNight", "SavedProgressLoaded",
     ]
     events = "\n".join([make_remote_event(name) for name in remote_names])
     return make_folder("Remotes", events)
@@ -1228,6 +1328,15 @@ def build_sounds():
 {make_sound("ManagerVoice", "rbxassetid://9114220987", 0.6, False)}
 {make_sound("CustomerVoice", "rbxassetid://9114248953", 0.4, False)}
 {make_sound("DialogueTick", "rbxassetid://9114267993", 0.15, False)}
+{make_sound("SizzleSound", "rbxassetid://9114248953", 0.4, True)}
+{make_sound("FridgeHum", "rbxassetid://9113655458", 0.15, True)}
+{make_sound("CashRegisterSound", "rbxassetid://9114254790", 0.5, False)}
+{make_sound("NPCFootstep", "rbxassetid://9114267993", 0.2, False)}
+{make_sound("ScreamSound", "rbxassetid://9114265792", 0.9, False)}
+{make_sound("WindAmbient", "rbxassetid://9112854440", 0.15, True)}
+{make_sound("ClockTick", "rbxassetid://9114267993", 0.1, True)}
+{make_sound("PlateClatter", "rbxassetid://9114254790", 0.3, False)}
+{make_sound("BatterSplash", "rbxassetid://9114248953", 0.6, False)}
 </Item>'''
 
 # === ASSEMBLE FULL RBXLX ===

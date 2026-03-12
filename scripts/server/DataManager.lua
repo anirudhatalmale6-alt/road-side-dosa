@@ -127,8 +127,13 @@ Players.PlayerAdded:Connect(function(player)
 	night.Value = data.nightProgress
 	night.Parent = leaderstats
 
-	-- Send saved data to client
+	-- Send saved data to client (including night progress for continue button)
 	Remotes:WaitForChild("LoadPlayerData"):FireClient(player, data)
+
+	-- Notify client of saved progress so they can show Continue button
+	if data.nightProgress and data.nightProgress > 1 then
+		Remotes:WaitForChild("SavedProgressLoaded"):FireClient(player, data.nightProgress)
+	end
 end)
 
 Players.PlayerRemoving:Connect(function(player)

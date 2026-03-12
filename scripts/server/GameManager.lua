@@ -278,6 +278,18 @@ Remotes:WaitForChild("RequestRetry").OnServerEvent:Connect(function(player)
 	end
 end)
 
+-- Continue from saved night progress
+Remotes:WaitForChild("RequestContinueNight").OnServerEvent:Connect(function(player, savedNight)
+	local pData = GameState.players[player]
+	if pData and savedNight and savedNight > 1 and savedNight <= 5 then
+		pData.night = savedNight
+		pData.alive = true
+		task.spawn(function()
+			startNight(player)
+		end)
+	end
+end)
+
 -- Cooking events
 Remotes:WaitForChild("GrabBatter").OnServerEvent:Connect(function(player)
 	local pData = GameState.players[player]

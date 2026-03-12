@@ -1027,16 +1027,9 @@ if retryBtn then
 	end)
 end
 
--- Lobby screen
+-- Lobby screen (button handlers wired below in Tutorial section)
 local lobbyScreenGui = playerGui:WaitForChild("LobbyScreenGui")
 local lobbyUI = lobbyScreenGui:WaitForChild("LobbyUI")
-local startBtn = lobbyUI:FindFirstChild("StartButton")
-if startBtn then
-	startBtn.MouseButton1Click:Connect(function()
-		lobbyScreenGui.Enabled = false
-		Remotes:WaitForChild("RequestStartNight"):FireServer()
-	end)
-end
 
 -- === COOKING VISUAL FEEDBACK ===
 local dosaVisual = workspace:FindFirstChild("DosaOnTawa")
@@ -1434,7 +1427,290 @@ task.spawn(function()
 	end
 end)
 
+-- === TUTORIAL SYSTEM (first-time players) ===
+local tutorialScreenGui = playerGui:WaitForChild("TutorialScreenGui")
+local tutorialFrame = tutorialScreenGui:WaitForChild("TutorialUI")
+local tutorialShown = false
+local savedNightProgress = 1
+
+-- Show tutorial for first-time players (night 1 only)
+local function showTutorial()
+	if tutorialShown then return end
+	tutorialShown = true
+	tutorialScreenGui.Enabled = true
+
+	-- Wire dismiss button
+	local dismissBtn = tutorialFrame:FindFirstChild("TutorialDismissBtn")
+	if dismissBtn then
+		dismissBtn.MouseButton1Click:Connect(function()
+			tutorialScreenGui.Enabled = false
+			lobbyScreenGui.Enabled = false
+			Remotes:WaitForChild("RequestStartNight"):FireServer()
+		end)
+	end
+end
+
+-- Saved progress handler — update Continue button in lobby
+Remotes:WaitForChild("SavedProgressLoaded").OnClientEvent:Connect(function(nightProgress)
+	savedNightProgress = nightProgress
+	-- Update Continue button text
+	local continueBtn = lobbyUI:FindFirstChild("ContinueButton")
+	if continueBtn and nightProgress > 1 and nightProgress <= 5 then
+		continueBtn.Text = "CONTINUE (Night " .. nightProgress .. ")"
+		continueBtn.Visible = true
+	elseif continueBtn then
+		continueBtn.Visible = false
+	end
+end)
+
+-- Wire start button with tutorial check
+local startBtnLobby = lobbyUI:FindFirstChild("StartButton")
+if startBtnLobby then
+	startBtnLobby.MouseButton1Click:Connect(function()
+		if savedNightProgress <= 1 then
+			-- First time: show tutorial
+			showTutorial()
+		else
+			-- Returning player: start from night 1
+			lobbyScreenGui.Enabled = false
+			Remotes:WaitForChild("RequestStartNight"):FireServer()
+		end
+	end)
+end
+
+-- Wire Continue button
+local continueBtn = lobbyUI:FindFirstChild("ContinueButton")
+if continueBtn then
+	-- Hide by default until server confirms saved progress
+	continueBtn.Visible = false
+	continueBtn.MouseButton1Click:Connect(function()
+		lobbyScreenGui.Enabled = false
+		Remotes:WaitForChild("RequestContinueNight"):FireServer(savedNightProgress)
+	end)
+end
+
+-- === ENHANCED SOUND EFFECTS ===
+-- Footstep system: play footsteps when player walks
+local lastFootstepTime = 0
+local footstepInterval = 0.45
+
+RunService.Heartbeat:Connect(function()
+	if not isAlive then return end
+	local character = player.Character
+	if not character then return end
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if not humanoid then return end
+
+	if humanoid.MoveDirection.Magnitude > 0 then
+		local now = tick()
+		local interval = isSprinting and 0.3 or footstepInterval
+		if now - lastFootstepTime > interval then
+			playSound("FootstepSound")
+			lastFootstepTime = now
+		end
+	end
+end)
+
+-- Kitchen ambient: play sizzle sound when near tawa during cooking
+task.spawn(function()
+	while true do
+		task.wait(5)
+		if not isAlive or currentNight == 0 then continue end
+		local character = player.Character
+		if character then
+			local hrp = character:FindFirstChild("HumanoidRootPart")
+			local tawa = workspace:FindFirstChild("Tawa")
+			if hrp and tawa then
+				local dist = (hrp.Position - tawa.Position).Magnitude
+				if dist < 10 then
+					playSound("SizzleSound")
+				end
+			end
+		end
+	end
+end)
+
+-- Clock ticking in quiet moments
+task.spawn(function()
+	task.wait(10)
+	while true do
+		task.wait(30)
+		if not isAlive or currentNight == 0 then continue end
+		-- Only play if no other major sounds
+		local roll = math.random(1, 3)
+		if roll == 1 then
+			playSound("ClockTick")
+			task.wait(5)
+			stopSound("ClockTick")
+		end
+	end
+end)
+
+-- === MOBILE TOUCH CONTROLS ===
+local GuiService = game:GetService("GuiService")
+local mobileControlsGui = playerGui:WaitForChild("MobileControlsGui")
+
+-- Detect if player is on mobile/touch device
+local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+
+if isMobile then
+	mobileControlsGui.Enabled = true
+	local mobileFrame = mobileControlsGui:WaitForChild("MobileControls")
+
+	-- Cook button
+	local cookBtn = mobileFrame:FindFirstChild("MobileCookBtn")
+	if cookBtn then
+		cookBtn.MouseButton1Click:Connect(function()
+			local character = player.Character
+			if character then
+				local tawa = workspace:FindFirstChild("Tawa")
+				if tawa then
+					Remotes:WaitForChild("CookDosa"):FireServer()
+					playSound("CookingSound")
+				end
+			end
+		end)
+	end
+
+	-- Batter button
+	local batterBtn = mobileFrame:FindFirstChild("MobileBatterBtn")
+	if batterBtn then
+		batterBtn.MouseButton1Click:Connect(function()
+			Remotes:WaitForChild("GrabBatter"):FireServer()
+			playSound("DoorCreak")
+			animateFridgeOpen()
+		end)
+	end
+
+	-- CCTV button
+	local cctvBtn = mobileFrame:FindFirstChild("MobileCCTVBtn")
+	if cctvBtn then
+		cctvBtn.MouseButton1Click:Connect(function()
+			toggleCCTV()
+		end)
+	end
+
+	-- Lights button
+	local lightsBtn = mobileFrame:FindFirstChild("MobileLightsBtn")
+	if lightsBtn then
+		lightsBtn.MouseButton1Click:Connect(function()
+			Remotes:WaitForChild("ToggleLights"):FireServer()
+		end)
+	end
+
+	-- Sprint button (hold to sprint)
+	local sprintBtn = mobileFrame:FindFirstChild("MobileSprintBtn")
+	if sprintBtn then
+		sprintBtn.MouseButton1Down:Connect(function()
+			isSprinting = true
+		end)
+		sprintBtn.MouseButton1Up:Connect(function()
+			isSprinting = false
+		end)
+	end
+
+	-- Shutter buttons
+	local s1Btn = mobileFrame:FindFirstChild("MobileShutter1Btn")
+	if s1Btn then
+		s1Btn.MouseButton1Click:Connect(function()
+			Remotes:WaitForChild("ToggleShutter"):FireServer("front")
+			playSound("ShutterSound")
+		end)
+	end
+	local s2Btn = mobileFrame:FindFirstChild("MobileShutter2Btn")
+	if s2Btn then
+		s2Btn.MouseButton1Click:Connect(function()
+			Remotes:WaitForChild("ToggleShutter"):FireServer("left")
+			playSound("ShutterSound")
+		end)
+	end
+	local s3Btn = mobileFrame:FindFirstChild("MobileShutter3Btn")
+	if s3Btn then
+		s3Btn.MouseButton1Click:Connect(function()
+			Remotes:WaitForChild("ToggleShutter"):FireServer("right")
+			playSound("ShutterSound")
+		end)
+	end
+
+	-- Phone button
+	local phoneBtn = mobileFrame:FindFirstChild("MobilePhoneBtn")
+	if phoneBtn then
+		phoneBtn.MouseButton1Click:Connect(function()
+			showPhone(true)
+		end)
+	end
+else
+	mobileControlsGui.Enabled = false
+end
+
+-- === SERVE SOUND ENHANCEMENT ===
+-- Override serve success in UpdateHUD to play plate clatter + cash register
+local originalUpdateHUD = updateHUD
+updateHUD = function(data)
+	-- Call original
+	originalUpdateHUD(data)
+
+	-- Enhanced serve sounds
+	if data.serveSuccess then
+		playSound("PlateClatter")
+		task.delay(0.3, function()
+			playSound("CashRegisterSound")
+		end)
+	end
+
+	-- Enhanced cooking sounds
+	if data.cookingStarted then
+		playSound("SizzleSound")
+	end
+
+	-- Batter spill sound
+	if data.batterSpilled then
+		playSound("BatterSplash")
+	end
+end
+
+-- === VICTORY SCREEN PLAY AGAIN BUTTON ===
+task.spawn(function()
+	local victoryScreenGui = playerGui:WaitForChild("VictoryScreenGui", 10)
+	if victoryScreenGui then
+		local victoryFrame = victoryScreenGui:FindFirstChild("VictoryUI")
+		if victoryFrame then
+			local playAgainBtn = victoryFrame:FindFirstChild("PlayAgainButton")
+			if playAgainBtn then
+				playAgainBtn.MouseButton1Click:Connect(function()
+					victoryScreenGui.Enabled = false
+					lobbyScreenGui.Enabled = true
+				end)
+			end
+		end
+	end
+end)
+
+-- === WIND AMBIENT (outdoor sound when near windows/door) ===
+task.spawn(function()
+	while true do
+		task.wait(2)
+		if not isAlive or currentNight == 0 then
+			stopSound("WindAmbient")
+			continue
+		end
+		local character = player.Character
+		if character then
+			local hrp = character:FindFirstChild("HumanoidRootPart")
+			if hrp and hrp.Position.Z > 10 then
+				-- Near front of restaurant (windows/door area)
+				local wind = SoundService:FindFirstChild("WindAmbient")
+				if wind and not wind.IsPlaying then
+					wind:Play()
+				end
+			else
+				stopSound("WindAmbient")
+			end
+		end
+	end
+end)
+
 -- Initialize CCTV
 initCCTV()
 
-print("[ClientController] Client initialized for " .. player.Name)
+print("[ClientController] v4.0 — Client initialized for " .. player.Name)
