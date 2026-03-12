@@ -5,7 +5,7 @@
 <External>nil</External>
 
 <!-- === WORKSPACE === -->
-<Item class="Workspace" referent="RBX00000155">
+<Item class="Workspace" referent="RBX00000158">
 <Properties>
 <string name="Name">Workspace</string>
 </Properties>
@@ -217,7 +217,7 @@
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
 <CoordinateFrame name="CFrame">
-<X>0</X><Y>1</Y><Z>8</Z>
+<X>0</X><Y>1</Y><Z>7</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -232,6 +232,87 @@
 
 </Item>
 <Item class="Part" referent="RBX0000000C">
+<Properties>
+<string name="Name">OrderScreen</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>7.5</Y><Z>4</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4278979604</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>8</X><Y>4</Y><Z>0.3</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+<Item class="PointLight" referent="RBX00000010">
+<Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">0.6</float>
+<Color3 name="Color"><R>0.2</R><G>0.8</G><B>0.2</B></Color3>
+<float name="Range">10</float>
+<bool name="Enabled">true</bool>
+</Properties>
+
+</Item>
+<Item class="SurfaceGui" referent="RBX0000000D">
+<Properties>
+<string name="Name">OrderDisplay</string>
+<token name="Face">5</token>
+<bool name="Active">false</bool>
+<bool name="ClipsDescendants">true</bool>
+</Properties>
+<Item class="TextLabel" referent="RBX0000000E">
+<Properties>
+<string name="Name">TitleText</string>
+<string name="Text">=== ORDERS ===</string>
+<UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.2</YS><YO>0</YO></UDim2>
+<Color3 name="TextColor3"><R>0</R><G>1</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">8</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+</Item>
+<Item class="TextLabel" referent="RBX0000000F">
+<Properties>
+<string name="Name">OrdersText</string>
+<string name="Text">Waiting for customers...</string>
+<UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.2</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.8</YS><YO>0</YO></UDim2>
+<Color3 name="TextColor3"><R>0</R><G>0.9</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+<bool name="TextWrapped">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="Part" referent="RBX00000011">
+<Properties>
+<string name="Name">OrderScreenFrame</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>7.5</Y><Z>3.8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190361</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>8.5</X><Y>4.5</Y><Z>0.15</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+
+
+</Item>
+<Item class="Part" referent="RBX00000012">
 <Properties>
 <string name="Name">KitchenFloor</string>
 <bool name="Anchored">true</bool>
@@ -251,7 +332,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000000E">
+<Item class="Part" referent="RBX00000014">
 <Properties>
 <string name="Name">Tawa</string>
 <bool name="Anchored">true</bool>
@@ -269,7 +350,7 @@
 <float name="Transparency">0</float>
 </Properties>
 
-<Item class="PointLight" referent="RBX0000000D">
+<Item class="PointLight" referent="RBX00000013">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">0.8</float>
@@ -280,7 +361,7 @@
 
 </Item>
 </Item>
-<Item class="Part" referent="RBX0000000F">
+<Item class="Part" referent="RBX00000015">
 <Properties>
 <string name="Name">TawaStand</string>
 <bool name="Anchored">true</bool>
@@ -300,7 +381,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000010">
+<Item class="Part" referent="RBX00000016">
 <Properties>
 <string name="Name">Fridge</string>
 <bool name="Anchored">true</bool>
@@ -320,13 +401,33 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000011">
+<Item class="Part" referent="RBX00000017">
+<Properties>
+<string name="Name">FridgeDoor</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>3.5</Y><Z>-10.7</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4290230212</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>3</X><Y>6.8</Y><Z>0.15</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+
+
+</Item>
+<Item class="Part" referent="RBX00000018">
 <Properties>
 <string name="Name">FridgeHandle</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
-<X>-10.5</X><Y>4</Y><Z>-10.8</Z>
+<X>-10.8</X><Y>4</Y><Z>-10.6</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -340,7 +441,27 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000012">
+<Item class="Part" referent="RBX00000019">
+<Properties>
+<string name="Name">FridgeBatter</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>2.5</Y><Z>-12</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293253298</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.2</X><Y>1.8</Y><Z>1</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">1</float>
+</Properties>
+
+
+</Item>
+<Item class="Part" referent="RBX0000001A">
 <Properties>
 <string name="Name">Table1</string>
 <bool name="Anchored">true</bool>
@@ -360,7 +481,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000013">
+<Item class="Part" referent="RBX0000001B">
 <Properties>
 <string name="Name">TableLeg1_-2.5_-1.5</string>
 <bool name="Anchored">true</bool>
@@ -380,7 +501,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000014">
+<Item class="Part" referent="RBX0000001C">
 <Properties>
 <string name="Name">TableLeg1_2.5_-1.5</string>
 <bool name="Anchored">true</bool>
@@ -400,7 +521,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000015">
+<Item class="Part" referent="RBX0000001D">
 <Properties>
 <string name="Name">TableLeg1_-2.5_1.5</string>
 <bool name="Anchored">true</bool>
@@ -420,7 +541,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000016">
+<Item class="Part" referent="RBX0000001E">
 <Properties>
 <string name="Name">TableLeg1_2.5_1.5</string>
 <bool name="Anchored">true</bool>
@@ -440,109 +561,46 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000017">
+<Item class="Part" referent="RBX0000001F">
+<Properties>
+<string name="Name">MenuCard1</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>4.3</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293253298</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1.4</Y><Z>0.1</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+<Item class="SurfaceGui" referent="RBX00000020">
+<Properties>
+<string name="Name">MenuText</string>
+<token name="Face">5</token>
+<bool name="Active">false</bool>
+</Properties>
+<Item class="TextLabel" referent="RBX00000021">
+<Properties>
+<string name="Name">MenuLabel</string>
+<string name="Text">MENU\nDosa  $150\nSoda  $150\nAyran  $150</string>
+<UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>1</YS><YO>0</YO></UDim2>
+<Color3 name="TextColor3"><R>0.2</R><G>0.1</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="Part" referent="RBX00000022">
 <Properties>
 <string name="Name">Table2</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>0</X><Y>3.5</Y><Z>10</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>6</X><Y>0.5</Y><Z>4</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000018">
-<Properties>
-<string name="Name">TableLeg2_-2.5_-1.5</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>-2.5</X><Y>1.75</Y><Z>8.5</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.4</X><Y>3.5</Y><Z>0.4</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000019">
-<Properties>
-<string name="Name">TableLeg2_2.5_-1.5</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>2.5</X><Y>1.75</Y><Z>8.5</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.4</X><Y>3.5</Y><Z>0.4</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000001A">
-<Properties>
-<string name="Name">TableLeg2_-2.5_1.5</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>-2.5</X><Y>1.75</Y><Z>11.5</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.4</X><Y>3.5</Y><Z>0.4</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000001B">
-<Properties>
-<string name="Name">TableLeg2_2.5_1.5</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>2.5</X><Y>1.75</Y><Z>11.5</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.4</X><Y>3.5</Y><Z>0.4</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000001C">
-<Properties>
-<string name="Name">Table3</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -560,9 +618,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000001D">
+<Item class="Part" referent="RBX00000023">
 <Properties>
-<string name="Name">TableLeg3_-2.5_-1.5</string>
+<string name="Name">TableLeg2_-2.5_-1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -580,9 +638,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000001E">
+<Item class="Part" referent="RBX00000024">
 <Properties>
-<string name="Name">TableLeg3_2.5_-1.5</string>
+<string name="Name">TableLeg2_2.5_-1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -600,9 +658,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000001F">
+<Item class="Part" referent="RBX00000025">
 <Properties>
-<string name="Name">TableLeg3_-2.5_1.5</string>
+<string name="Name">TableLeg2_-2.5_1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -620,9 +678,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000020">
+<Item class="Part" referent="RBX00000026">
 <Properties>
-<string name="Name">TableLeg3_2.5_1.5</string>
+<string name="Name">TableLeg2_2.5_1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -640,9 +698,46 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000021">
+<Item class="Part" referent="RBX00000027">
 <Properties>
-<string name="Name">Table4</string>
+<string name="Name">MenuCard2</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>4.3</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293253298</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1.4</Y><Z>0.1</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+<Item class="SurfaceGui" referent="RBX00000028">
+<Properties>
+<string name="Name">MenuText</string>
+<token name="Face">5</token>
+<bool name="Active">false</bool>
+</Properties>
+<Item class="TextLabel" referent="RBX00000029">
+<Properties>
+<string name="Name">MenuLabel</string>
+<string name="Text">MENU\nDosa  $150\nSoda  $150\nAyran  $150</string>
+<UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>1</YS><YO>0</YO></UDim2>
+<Color3 name="TextColor3"><R>0.2</R><G>0.1</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="Part" referent="RBX0000002A">
+<Properties>
+<string name="Name">Table3</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -660,9 +755,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000022">
+<Item class="Part" referent="RBX0000002B">
 <Properties>
-<string name="Name">TableLeg4_-2.5_-1.5</string>
+<string name="Name">TableLeg3_-2.5_-1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -680,9 +775,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000023">
+<Item class="Part" referent="RBX0000002C">
 <Properties>
-<string name="Name">TableLeg4_2.5_-1.5</string>
+<string name="Name">TableLeg3_2.5_-1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -700,9 +795,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000024">
+<Item class="Part" referent="RBX0000002D">
 <Properties>
-<string name="Name">TableLeg4_-2.5_1.5</string>
+<string name="Name">TableLeg3_-2.5_1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -720,9 +815,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000025">
+<Item class="Part" referent="RBX0000002E">
 <Properties>
-<string name="Name">TableLeg4_2.5_1.5</string>
+<string name="Name">TableLeg3_2.5_1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -740,9 +835,46 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000026">
+<Item class="Part" referent="RBX0000002F">
 <Properties>
-<string name="Name">Table5</string>
+<string name="Name">MenuCard3</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>4.3</Y><Z>2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293253298</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1.4</Y><Z>0.1</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+<Item class="SurfaceGui" referent="RBX00000030">
+<Properties>
+<string name="Name">MenuText</string>
+<token name="Face">5</token>
+<bool name="Active">false</bool>
+</Properties>
+<Item class="TextLabel" referent="RBX00000031">
+<Properties>
+<string name="Name">MenuLabel</string>
+<string name="Text">MENU\nDosa  $150\nSoda  $150\nAyran  $150</string>
+<UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>1</YS><YO>0</YO></UDim2>
+<Color3 name="TextColor3"><R>0.2</R><G>0.1</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="Part" referent="RBX00000032">
+<Properties>
+<string name="Name">Table4</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -760,9 +892,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000027">
+<Item class="Part" referent="RBX00000033">
 <Properties>
-<string name="Name">TableLeg5_-2.5_-1.5</string>
+<string name="Name">TableLeg4_-2.5_-1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -780,9 +912,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000028">
+<Item class="Part" referent="RBX00000034">
 <Properties>
-<string name="Name">TableLeg5_2.5_-1.5</string>
+<string name="Name">TableLeg4_2.5_-1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -800,9 +932,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000029">
+<Item class="Part" referent="RBX00000035">
 <Properties>
-<string name="Name">TableLeg5_-2.5_1.5</string>
+<string name="Name">TableLeg4_-2.5_1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -820,9 +952,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000002A">
+<Item class="Part" referent="RBX00000036">
 <Properties>
-<string name="Name">TableLeg5_2.5_1.5</string>
+<string name="Name">TableLeg4_2.5_1.5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -840,7 +972,44 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000002B">
+<Item class="Part" referent="RBX00000037">
+<Properties>
+<string name="Name">MenuCard4</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>4.3</Y><Z>2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293253298</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1.4</Y><Z>0.1</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+<Item class="SurfaceGui" referent="RBX00000038">
+<Properties>
+<string name="Name">MenuText</string>
+<token name="Face">5</token>
+<bool name="Active">false</bool>
+</Properties>
+<Item class="TextLabel" referent="RBX00000039">
+<Properties>
+<string name="Name">MenuLabel</string>
+<string name="Text">MENU\nDosa  $150\nSoda  $150\nAyran  $150</string>
+<UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2>
+<UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>1</YS><YO>0</YO></UDim2>
+<Color3 name="TextColor3"><R>0.2</R><G>0.1</G><B>0</B></Color3>
+<float name="BackgroundTransparency">1</float>
+<token name="Font">4</token>
+<bool name="TextScaled">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="Part" referent="RBX0000003A">
 <Properties>
 <string name="Name">Chair1</string>
 <bool name="Anchored">true</bool>
@@ -860,7 +1029,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000002C">
+<Item class="Part" referent="RBX0000003B">
 <Properties>
 <string name="Name">ChairLeg1_-1_-1</string>
 <bool name="Anchored">true</bool>
@@ -880,7 +1049,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000002D">
+<Item class="Part" referent="RBX0000003C">
 <Properties>
 <string name="Name">ChairLeg1_1_-1</string>
 <bool name="Anchored">true</bool>
@@ -900,7 +1069,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000002E">
+<Item class="Part" referent="RBX0000003D">
 <Properties>
 <string name="Name">ChairLeg1_-1_1</string>
 <bool name="Anchored">true</bool>
@@ -920,7 +1089,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000002F">
+<Item class="Part" referent="RBX0000003E">
 <Properties>
 <string name="Name">ChairLeg1_1_1</string>
 <bool name="Anchored">true</bool>
@@ -940,7 +1109,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000030">
+<Item class="Part" referent="RBX0000003F">
 <Properties>
 <string name="Name">ChairBack1</string>
 <bool name="Anchored">true</bool>
@@ -960,7 +1129,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000031">
+<Item class="Part" referent="RBX00000040">
 <Properties>
 <string name="Name">Chair2</string>
 <bool name="Anchored">true</bool>
@@ -980,7 +1149,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000032">
+<Item class="Part" referent="RBX00000041">
 <Properties>
 <string name="Name">ChairLeg2_-1_-1</string>
 <bool name="Anchored">true</bool>
@@ -1000,7 +1169,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000033">
+<Item class="Part" referent="RBX00000042">
 <Properties>
 <string name="Name">ChairLeg2_1_-1</string>
 <bool name="Anchored">true</bool>
@@ -1020,7 +1189,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000034">
+<Item class="Part" referent="RBX00000043">
 <Properties>
 <string name="Name">ChairLeg2_-1_1</string>
 <bool name="Anchored">true</bool>
@@ -1040,7 +1209,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000035">
+<Item class="Part" referent="RBX00000044">
 <Properties>
 <string name="Name">ChairLeg2_1_1</string>
 <bool name="Anchored">true</bool>
@@ -1060,7 +1229,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000036">
+<Item class="Part" referent="RBX00000045">
 <Properties>
 <string name="Name">ChairBack2</string>
 <bool name="Anchored">true</bool>
@@ -1080,249 +1249,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000037">
+<Item class="Part" referent="RBX00000046">
 <Properties>
 <string name="Name">Chair3</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>0</X><Y>2</Y><Z>11.8</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>2.5</X><Y>0.4</Y><Z>2.5</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000038">
-<Properties>
-<string name="Name">ChairLeg3_-1_-1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>-1</X><Y>1</Y><Z>10.8</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000039">
-<Properties>
-<string name="Name">ChairLeg3_1_-1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>1</X><Y>1</Y><Z>10.8</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000003A">
-<Properties>
-<string name="Name">ChairLeg3_-1_1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>-1</X><Y>1</Y><Z>12.8</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000003B">
-<Properties>
-<string name="Name">ChairLeg3_1_1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>1</X><Y>1</Y><Z>12.8</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000003C">
-<Properties>
-<string name="Name">ChairBack3</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>0</X><Y>3.5</Y><Z>12.9</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>2.5</X><Y>2.5</Y><Z>0.3</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000003D">
-<Properties>
-<string name="Name">Chair4</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>0</X><Y>2</Y><Z>8.2</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>2.5</X><Y>0.4</Y><Z>2.5</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000003E">
-<Properties>
-<string name="Name">ChairLeg4_-1_-1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>-1</X><Y>1</Y><Z>7.199999999999999</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX0000003F">
-<Properties>
-<string name="Name">ChairLeg4_1_-1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>1</X><Y>1</Y><Z>7.199999999999999</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000040">
-<Properties>
-<string name="Name">ChairLeg4_-1_1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>-1</X><Y>1</Y><Z>9.2</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000041">
-<Properties>
-<string name="Name">ChairLeg4_1_1</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>1</X><Y>1</Y><Z>9.2</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>0.25</X><Y>2</Y><Z>0.25</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000042">
-<Properties>
-<string name="Name">ChairBack4</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>0</X><Y>3.5</Y><Z>9.299999999999999</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>2.5</X><Y>2.5</Y><Z>0.3</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX00000043">
-<Properties>
-<string name="Name">Chair5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1340,9 +1269,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000044">
+<Item class="Part" referent="RBX00000047">
 <Properties>
-<string name="Name">ChairLeg5_-1_-1</string>
+<string name="Name">ChairLeg3_-1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1360,9 +1289,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000045">
+<Item class="Part" referent="RBX00000048">
 <Properties>
-<string name="Name">ChairLeg5_1_-1</string>
+<string name="Name">ChairLeg3_1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1380,9 +1309,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000046">
+<Item class="Part" referent="RBX00000049">
 <Properties>
-<string name="Name">ChairLeg5_-1_1</string>
+<string name="Name">ChairLeg3_-1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1400,9 +1329,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000047">
+<Item class="Part" referent="RBX0000004A">
 <Properties>
-<string name="Name">ChairLeg5_1_1</string>
+<string name="Name">ChairLeg3_1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1420,9 +1349,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000048">
+<Item class="Part" referent="RBX0000004B">
 <Properties>
-<string name="Name">ChairBack5</string>
+<string name="Name">ChairBack3</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1440,9 +1369,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000049">
+<Item class="Part" referent="RBX0000004C">
 <Properties>
-<string name="Name">Chair6</string>
+<string name="Name">Chair4</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1460,9 +1389,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000004A">
+<Item class="Part" referent="RBX0000004D">
 <Properties>
-<string name="Name">ChairLeg6_-1_-1</string>
+<string name="Name">ChairLeg4_-1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1480,9 +1409,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000004B">
+<Item class="Part" referent="RBX0000004E">
 <Properties>
-<string name="Name">ChairLeg6_1_-1</string>
+<string name="Name">ChairLeg4_1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1500,9 +1429,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000004C">
+<Item class="Part" referent="RBX0000004F">
 <Properties>
-<string name="Name">ChairLeg6_-1_1</string>
+<string name="Name">ChairLeg4_-1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1520,9 +1449,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000004D">
+<Item class="Part" referent="RBX00000050">
 <Properties>
-<string name="Name">ChairLeg6_1_1</string>
+<string name="Name">ChairLeg4_1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1540,9 +1469,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000004E">
+<Item class="Part" referent="RBX00000051">
 <Properties>
-<string name="Name">ChairBack6</string>
+<string name="Name">ChairBack4</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1560,9 +1489,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000004F">
+<Item class="Part" referent="RBX00000052">
 <Properties>
-<string name="Name">Chair7</string>
+<string name="Name">Chair5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1580,9 +1509,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000050">
+<Item class="Part" referent="RBX00000053">
 <Properties>
-<string name="Name">ChairLeg7_-1_-1</string>
+<string name="Name">ChairLeg5_-1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1600,9 +1529,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000051">
+<Item class="Part" referent="RBX00000054">
 <Properties>
-<string name="Name">ChairLeg7_1_-1</string>
+<string name="Name">ChairLeg5_1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1620,9 +1549,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000052">
+<Item class="Part" referent="RBX00000055">
 <Properties>
-<string name="Name">ChairLeg7_-1_1</string>
+<string name="Name">ChairLeg5_-1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1640,9 +1569,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000053">
+<Item class="Part" referent="RBX00000056">
 <Properties>
-<string name="Name">ChairLeg7_1_1</string>
+<string name="Name">ChairLeg5_1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1660,9 +1589,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000054">
+<Item class="Part" referent="RBX00000057">
 <Properties>
-<string name="Name">ChairBack7</string>
+<string name="Name">ChairBack5</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1680,9 +1609,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000055">
+<Item class="Part" referent="RBX00000058">
 <Properties>
-<string name="Name">Chair8</string>
+<string name="Name">Chair6</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1700,9 +1629,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000056">
+<Item class="Part" referent="RBX00000059">
 <Properties>
-<string name="Name">ChairLeg8_-1_-1</string>
+<string name="Name">ChairLeg6_-1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1720,9 +1649,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000057">
+<Item class="Part" referent="RBX0000005A">
 <Properties>
-<string name="Name">ChairLeg8_1_-1</string>
+<string name="Name">ChairLeg6_1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1740,9 +1669,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000058">
+<Item class="Part" referent="RBX0000005B">
 <Properties>
-<string name="Name">ChairLeg8_-1_1</string>
+<string name="Name">ChairLeg6_-1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1760,9 +1689,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000059">
+<Item class="Part" referent="RBX0000005C">
 <Properties>
-<string name="Name">ChairLeg8_1_1</string>
+<string name="Name">ChairLeg6_1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1780,9 +1709,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000005A">
+<Item class="Part" referent="RBX0000005D">
 <Properties>
-<string name="Name">ChairBack8</string>
+<string name="Name">ChairBack6</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1800,9 +1729,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000005B">
+<Item class="Part" referent="RBX0000005E">
 <Properties>
-<string name="Name">Chair9</string>
+<string name="Name">Chair7</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1820,9 +1749,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000005C">
+<Item class="Part" referent="RBX0000005F">
 <Properties>
-<string name="Name">ChairLeg9_-1_-1</string>
+<string name="Name">ChairLeg7_-1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1840,9 +1769,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000005D">
+<Item class="Part" referent="RBX00000060">
 <Properties>
-<string name="Name">ChairLeg9_1_-1</string>
+<string name="Name">ChairLeg7_1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1860,9 +1789,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000005E">
+<Item class="Part" referent="RBX00000061">
 <Properties>
-<string name="Name">ChairLeg9_-1_1</string>
+<string name="Name">ChairLeg7_-1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1880,9 +1809,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000005F">
+<Item class="Part" referent="RBX00000062">
 <Properties>
-<string name="Name">ChairLeg9_1_1</string>
+<string name="Name">ChairLeg7_1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1900,9 +1829,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000060">
+<Item class="Part" referent="RBX00000063">
 <Properties>
-<string name="Name">ChairBack9</string>
+<string name="Name">ChairBack7</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1920,9 +1849,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000061">
+<Item class="Part" referent="RBX00000064">
 <Properties>
-<string name="Name">Chair10</string>
+<string name="Name">Chair8</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1940,9 +1869,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000062">
+<Item class="Part" referent="RBX00000065">
 <Properties>
-<string name="Name">ChairLeg10_-1_-1</string>
+<string name="Name">ChairLeg8_-1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1960,9 +1889,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000063">
+<Item class="Part" referent="RBX00000066">
 <Properties>
-<string name="Name">ChairLeg10_1_-1</string>
+<string name="Name">ChairLeg8_1_-1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -1980,9 +1909,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000064">
+<Item class="Part" referent="RBX00000067">
 <Properties>
-<string name="Name">ChairLeg10_-1_1</string>
+<string name="Name">ChairLeg8_-1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -2000,9 +1929,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000065">
+<Item class="Part" referent="RBX00000068">
 <Properties>
-<string name="Name">ChairLeg10_1_1</string>
+<string name="Name">ChairLeg8_1_1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -2020,9 +1949,9 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000066">
+<Item class="Part" referent="RBX00000069">
 <Properties>
-<string name="Name">ChairBack10</string>
+<string name="Name">ChairBack8</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
@@ -2040,7 +1969,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000067">
+<Item class="Part" referent="RBX0000006A">
 <Properties>
 <string name="Name">WindowFrame_left</string>
 <bool name="Anchored">true</bool>
@@ -2060,7 +1989,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000068">
+<Item class="Part" referent="RBX0000006B">
 <Properties>
 <string name="Name">WindowGlass_left</string>
 <bool name="Anchored">true</bool>
@@ -2080,7 +2009,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000069">
+<Item class="Part" referent="RBX0000006C">
 <Properties>
 <string name="Name">WindowFrame_right</string>
 <bool name="Anchored">true</bool>
@@ -2100,7 +2029,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000006A">
+<Item class="Part" referent="RBX0000006D">
 <Properties>
 <string name="Name">WindowGlass_right</string>
 <bool name="Anchored">true</bool>
@@ -2120,7 +2049,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000006B">
+<Item class="Part" referent="RBX0000006E">
 <Properties>
 <string name="Name">Shutter_left</string>
 <bool name="Anchored">true</bool>
@@ -2140,7 +2069,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000006C">
+<Item class="Part" referent="RBX0000006F">
 <Properties>
 <string name="Name">Shutter_right</string>
 <bool name="Anchored">true</bool>
@@ -2160,7 +2089,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000006D">
+<Item class="Part" referent="RBX00000070">
 <Properties>
 <string name="Name">Shutter_front</string>
 <bool name="Anchored">true</bool>
@@ -2180,7 +2109,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000006F">
+<Item class="Part" referent="RBX00000072">
 <Properties>
 <string name="Name">Phone</string>
 <bool name="Anchored">true</bool>
@@ -2198,7 +2127,7 @@
 <float name="Transparency">0</float>
 </Properties>
 
-<Item class="Sound" referent="RBX0000006E">
+<Item class="Sound" referent="RBX00000071">
 <Properties>
 <string name="Name">RingSound</string>
 <Content name="SoundId"><null></null></Content>
@@ -2207,7 +2136,7 @@
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX00000070">
+<Item class="Part" referent="RBX00000073">
 <Properties>
 <string name="Name">Road</string>
 <bool name="Anchored">true</bool>
@@ -2227,7 +2156,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000071">
+<Item class="Part" referent="RBX00000074">
 <Properties>
 <string name="Name">RoadLine1</string>
 <bool name="Anchored">true</bool>
@@ -2247,7 +2176,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000072">
+<Item class="Part" referent="RBX00000075">
 <Properties>
 <string name="Name">RoadLine2</string>
 <bool name="Anchored">true</bool>
@@ -2267,7 +2196,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000073">
+<Item class="Part" referent="RBX00000076">
 <Properties>
 <string name="Name">RoadLine3</string>
 <bool name="Anchored">true</bool>
@@ -2287,7 +2216,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000074">
+<Item class="Part" referent="RBX00000077">
 <Properties>
 <string name="Name">ParkingArea</string>
 <bool name="Anchored">true</bool>
@@ -2307,7 +2236,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000078">
+<Item class="Part" referent="RBX0000007B">
 <Properties>
 <string name="Name">TerrifierTruck</string>
 <bool name="Anchored">true</bool>
@@ -2325,7 +2254,7 @@
 <float name="Transparency">0</float>
 </Properties>
 
-<Item class="PointLight" referent="RBX00000075">
+<Item class="PointLight" referent="RBX00000078">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">0.4</float>
@@ -2334,19 +2263,19 @@
 <bool name="Enabled">true</bool>
 </Properties>
 
-</Item><Item class="BoolValue" referent="RBX00000076">
+</Item><Item class="BoolValue" referent="RBX00000079">
 <Properties>
 <string name="Name">CursedObject</string>
 <bool name="Value">true</bool>
 </Properties>
-</Item><Item class="StringValue" referent="RBX00000077">
+</Item><Item class="StringValue" referent="RBX0000007A">
 <Properties>
 <string name="Name">NPCType</string>
 <string name="Value">TerrifierTruck</string>
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX00000079">
+<Item class="Part" referent="RBX0000007C">
 <Properties>
 <string name="Name">TruckRoof</string>
 <bool name="Anchored">true</bool>
@@ -2366,7 +2295,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000007A">
+<Item class="Part" referent="RBX0000007D">
 <Properties>
 <string name="Name">TruckCabin</string>
 <bool name="Anchored">true</bool>
@@ -2386,7 +2315,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000007B">
+<Item class="Part" referent="RBX0000007E">
 <Properties>
 <string name="Name">TruckWindshield</string>
 <bool name="Anchored">true</bool>
@@ -2406,7 +2335,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000007C">
+<Item class="Part" referent="RBX0000007F">
 <Properties>
 <string name="Name">TruckWheel_22.8_22</string>
 <bool name="Anchored">true</bool>
@@ -2426,7 +2355,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000007D">
+<Item class="Part" referent="RBX00000080">
 <Properties>
 <string name="Name">TruckWheel_27.2_22</string>
 <bool name="Anchored">true</bool>
@@ -2446,7 +2375,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000007E">
+<Item class="Part" referent="RBX00000081">
 <Properties>
 <string name="Name">TruckWheel_22.8_28</string>
 <bool name="Anchored">true</bool>
@@ -2466,7 +2395,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000007F">
+<Item class="Part" referent="RBX00000082">
 <Properties>
 <string name="Name">TruckWheel_27.2_28</string>
 <bool name="Anchored">true</bool>
@@ -2486,7 +2415,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000080">
+<Item class="Part" referent="RBX00000083">
 <Properties>
 <string name="Name">IceCreamCone</string>
 <bool name="Anchored">true</bool>
@@ -2506,7 +2435,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000081">
+<Item class="Part" referent="RBX00000084">
 <Properties>
 <string name="Name">IceCreamScoop</string>
 <bool name="Anchored">true</bool>
@@ -2526,7 +2455,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000082">
+<Item class="Part" referent="RBX00000085">
 <Properties>
 <string name="Name">TruckStripe</string>
 <bool name="Anchored">true</bool>
@@ -2546,7 +2475,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000083">
+<Item class="Part" referent="RBX00000086">
 <Properties>
 <string name="Name">TruckStripe2</string>
 <bool name="Anchored">true</bool>
@@ -2566,7 +2495,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000085">
+<Item class="Part" referent="RBX00000088">
 <Properties>
 <string name="Name">TruckHeadlight1</string>
 <bool name="Anchored">true</bool>
@@ -2584,7 +2513,7 @@
 <float name="Transparency">0.3</float>
 </Properties>
 
-<Item class="PointLight" referent="RBX00000084">
+<Item class="PointLight" referent="RBX00000087">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">0.8</float>
@@ -2595,7 +2524,7 @@
 
 </Item>
 </Item>
-<Item class="Part" referent="RBX00000086">
+<Item class="Part" referent="RBX00000089">
 <Properties>
 <string name="Name">TruckHeadlight2</string>
 <bool name="Anchored">true</bool>
@@ -2615,7 +2544,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000087">
+<Item class="Part" referent="RBX0000008A">
 <Properties>
 <string name="Name">BackRoomDoor</string>
 <bool name="Anchored">true</bool>
@@ -2635,7 +2564,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000088">
+<Item class="Part" referent="RBX0000008B">
 <Properties>
 <string name="Name">BackRoomFloor</string>
 <bool name="Anchored">true</bool>
@@ -2655,7 +2584,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX00000089">
+<Item class="Part" referent="RBX0000008C">
 <Properties>
 <string name="Name">BackRoomWallL</string>
 <bool name="Anchored">true</bool>
@@ -2675,7 +2604,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000008A">
+<Item class="Part" referent="RBX0000008D">
 <Properties>
 <string name="Name">BackRoomWallR</string>
 <bool name="Anchored">true</bool>
@@ -2695,7 +2624,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000008B">
+<Item class="Part" referent="RBX0000008E">
 <Properties>
 <string name="Name">BackRoomWallBack</string>
 <bool name="Anchored">true</bool>
@@ -2715,7 +2644,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX0000008D">
+<Item class="Part" referent="RBX00000090">
 <Properties>
 <string name="Name">SafeRoomTrigger</string>
 <bool name="Anchored">true</bool>
@@ -2733,14 +2662,14 @@
 <float name="Transparency">1</float>
 </Properties>
 
-<Item class="BoolValue" referent="RBX0000008C">
+<Item class="BoolValue" referent="RBX0000008F">
 <Properties>
 <string name="Name">SafeRoom</string>
 <bool name="Value">true</bool>
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX0000008E">
+<Item class="Part" referent="RBX00000091">
 <Properties>
 <string name="Name">NeonSign</string>
 <bool name="Anchored">true</bool>
@@ -2757,7 +2686,7 @@
 <token name="shape">1</token>
 <float name="Transparency">0</float>
 </Properties>
-<Item class="PointLight" referent="RBX00000092">
+<Item class="PointLight" referent="RBX00000095">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">2.5</float>
@@ -2767,14 +2696,14 @@
 </Properties>
 
 </Item>
-<Item class="SurfaceGui" referent="RBX0000008F">
+<Item class="SurfaceGui" referent="RBX00000092">
 <Properties>
 <string name="Name">NeonText</string>
 <token name="Face">5</token>
 <bool name="Active">false</bool>
 <bool name="ClipsDescendants">false</bool>
 </Properties>
-<Item class="TextLabel" referent="RBX00000090">
+<Item class="TextLabel" referent="RBX00000093">
 <Properties>
 <string name="Name">SignText</string>
 <string name="Text">ROAD SIDE DOSA</string>
@@ -2789,7 +2718,7 @@
 </Properties>
 </Item>
 </Item>
-<Item class="PointLight" referent="RBX00000091">
+<Item class="PointLight" referent="RBX00000094">
 <Properties>
 <string name="Name">NeonGlow</string>
 <float name="Brightness">1.5</float>
@@ -2799,7 +2728,7 @@
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX00000094">
+<Item class="Part" referent="RBX00000097">
 <Properties>
 <string name="Name">SubSign</string>
 <bool name="Anchored">true</bool>
@@ -2817,7 +2746,7 @@
 <float name="Transparency">0</float>
 </Properties>
 
-<Item class="PointLight" referent="RBX00000093">
+<Item class="PointLight" referent="RBX00000096">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">0.5</float>
@@ -2828,47 +2757,13 @@
 
 </Item>
 </Item>
-<Item class="Part" referent="RBX00000097">
+<Item class="Part" referent="RBX0000009A">
 <Properties>
 <string name="Name">CeilingLight1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
 <X>-8</X><Y>11</Y><Z>0</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4294963916</Color3uint8>
-<token name="Material">256</token>
-<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-<Item class="PointLight" referent="RBX00000095">
-<Properties>
-<string name="Name">PointLight</string>
-<float name="Brightness">0.5</float>
-<Color3 name="Color"><R>1</R><G>0.9</G><B>0.7</B></Color3>
-<float name="Range">25</float>
-<bool name="Enabled">true</bool>
-</Properties>
-<Item class="BoolValue" referent="RBX00000096">
-<Properties>
-<string name="Name">Controllable</string>
-<bool name="Value">true</bool>
-</Properties>
-</Item>
-</Item>
-</Item>
-<Item class="Part" referent="RBX0000009A">
-<Properties>
-<string name="Name">CeilingLight2</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>0</X><Y>11</Y><Z>0</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -2898,11 +2793,11 @@
 </Item>
 <Item class="Part" referent="RBX0000009D">
 <Properties>
-<string name="Name">CeilingLight3</string>
+<string name="Name">CeilingLight2</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
-<X>8</X><Y>11</Y><Z>0</Z>
+<X>0</X><Y>11</Y><Z>0</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -2932,11 +2827,11 @@
 </Item>
 <Item class="Part" referent="RBX000000A0">
 <Properties>
-<string name="Name">CeilingLight4</string>
+<string name="Name">CeilingLight3</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
-<X>0</X><Y>11</Y><Z>-8</Z>
+<X>8</X><Y>11</Y><Z>0</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -2964,7 +2859,41 @@
 </Item>
 </Item>
 </Item>
-<Item class="Part" referent="RBX000000A1">
+<Item class="Part" referent="RBX000000A3">
+<Properties>
+<string name="Name">CeilingLight4</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294963916</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+
+<Item class="PointLight" referent="RBX000000A1">
+<Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">0.5</float>
+<Color3 name="Color"><R>1</R><G>0.9</G><B>0.7</B></Color3>
+<float name="Range">25</float>
+<bool name="Enabled">true</bool>
+</Properties>
+<Item class="BoolValue" referent="RBX000000A2">
+<Properties>
+<string name="Name">Controllable</string>
+<bool name="Value">true</bool>
+</Properties>
+</Item>
+</Item>
+</Item>
+<Item class="Part" referent="RBX000000A4">
 <Properties>
 <string name="Name">GasStove</string>
 <bool name="Anchored">true</bool>
@@ -2984,7 +2913,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000A3">
+<Item class="Part" referent="RBX000000A6">
 <Properties>
 <string name="Name">Flame</string>
 <bool name="Anchored">true</bool>
@@ -3002,7 +2931,7 @@
 <float name="Transparency">0.3</float>
 </Properties>
 
-<Item class="PointLight" referent="RBX000000A2">
+<Item class="PointLight" referent="RBX000000A5">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">1.5</float>
@@ -3013,7 +2942,7 @@
 
 </Item>
 </Item>
-<Item class="Part" referent="RBX000000A4">
+<Item class="Part" referent="RBX000000A7">
 <Properties>
 <string name="Name">Sink</string>
 <bool name="Anchored">true</bool>
@@ -3033,7 +2962,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000A5">
+<Item class="Part" referent="RBX000000A8">
 <Properties>
 <string name="Name">MenuBoard</string>
 <bool name="Anchored">true</bool>
@@ -3053,7 +2982,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000A7">
+<Item class="Part" referent="RBX000000AA">
 <Properties>
 <string name="Name">MenuBoardLight</string>
 <bool name="Anchored">true</bool>
@@ -3071,7 +3000,7 @@
 <float name="Transparency">0</float>
 </Properties>
 
-<Item class="SpotLight" referent="RBX000000A6">
+<Item class="SpotLight" referent="RBX000000A9">
 <Properties>
 <float name="Brightness">0.6</float>
 <Color3 name="Color"><R>1</R><G>0.95</G><B>0.85</B></Color3>
@@ -3082,7 +3011,7 @@
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX000000A8">
+<Item class="Part" referent="RBX000000AB">
 <Properties>
 <string name="Name">Shelf1</string>
 <bool name="Anchored">true</bool>
@@ -3102,7 +3031,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000A9">
+<Item class="Part" referent="RBX000000AC">
 <Properties>
 <string name="Name">Shelf2</string>
 <bool name="Anchored">true</bool>
@@ -3122,7 +3051,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000AA">
+<Item class="Part" referent="RBX000000AD">
 <Properties>
 <string name="Name">Jar1</string>
 <bool name="Anchored">true</bool>
@@ -3142,7 +3071,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000AB">
+<Item class="Part" referent="RBX000000AE">
 <Properties>
 <string name="Name">Jar2</string>
 <bool name="Anchored">true</bool>
@@ -3162,7 +3091,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000AC">
+<Item class="Part" referent="RBX000000AF">
 <Properties>
 <string name="Name">Jar3</string>
 <bool name="Anchored">true</bool>
@@ -3182,7 +3111,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000AD">
+<Item class="Part" referent="RBX000000B0">
 <Properties>
 <string name="Name">Jar4</string>
 <bool name="Anchored">true</bool>
@@ -3202,7 +3131,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000AE">
+<Item class="Part" referent="RBX000000B1">
 <Properties>
 <string name="Name">Spice1</string>
 <bool name="Anchored">true</bool>
@@ -3222,7 +3151,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000AF">
+<Item class="Part" referent="RBX000000B2">
 <Properties>
 <string name="Name">Spice2</string>
 <bool name="Anchored">true</bool>
@@ -3242,7 +3171,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B0">
+<Item class="Part" referent="RBX000000B3">
 <Properties>
 <string name="Name">Spice3</string>
 <bool name="Anchored">true</bool>
@@ -3262,7 +3191,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B1">
+<Item class="Part" referent="RBX000000B4">
 <Properties>
 <string name="Name">CashRegister</string>
 <bool name="Anchored">true</bool>
@@ -3282,7 +3211,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B2">
+<Item class="Part" referent="RBX000000B5">
 <Properties>
 <string name="Name">CashScreen</string>
 <bool name="Anchored">true</bool>
@@ -3302,7 +3231,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B3">
+<Item class="Part" referent="RBX000000B6">
 <Properties>
 <string name="Name">PaperTowel</string>
 <bool name="Anchored">true</bool>
@@ -3322,7 +3251,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B4">
+<Item class="Part" referent="RBX000000B7">
 <Properties>
 <string name="Name">TrashBin</string>
 <bool name="Anchored">true</bool>
@@ -3342,7 +3271,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B5">
+<Item class="Part" referent="RBX000000B8">
 <Properties>
 <string name="Name">BatterBucket</string>
 <bool name="Anchored">true</bool>
@@ -3362,7 +3291,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B6">
+<Item class="Part" referent="RBX000000B9">
 <Properties>
 <string name="Name">WallClock</string>
 <bool name="Anchored">true</bool>
@@ -3382,7 +3311,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B7">
+<Item class="Part" referent="RBX000000BA">
 <Properties>
 <string name="Name">StreetLampPole</string>
 <bool name="Anchored">true</bool>
@@ -3402,62 +3331,13 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000B9">
+<Item class="Part" referent="RBX000000BC">
 <Properties>
 <string name="Name">StreetLampHead</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
 <CoordinateFrame name="CFrame">
 <X>-15</X><Y>10.5</Y><Z>25</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
-<token name="Material">272</token>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-<Item class="PointLight" referent="RBX000000B8">
-<Properties>
-<string name="Name">PointLight</string>
-<float name="Brightness">0.8</float>
-<Color3 name="Color"><R>1</R><G>0.8</G><B>0.5</B></Color3>
-<float name="Range">35</float>
-<bool name="Enabled">true</bool>
-</Properties>
-
-</Item>
-</Item>
-<Item class="Part" referent="RBX000000BA">
-<Properties>
-<string name="Name">StreetLampPole2</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>15</X><Y>5</Y><Z>25</Z>
-<R00>1</R00><R01>0</R01><R02>0</R02>
-<R10>0</R10><R11>1</R11><R12>0</R12>
-<R20>0</R20><R21>0</R21><R22>1</R22>
-</CoordinateFrame>
-<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
-<token name="Material">272</token>
-<Vector3 name="size"><X>0.3</X><Y>10</Y><Z>0.3</Z></Vector3>
-<token name="shape">1</token>
-<float name="Transparency">0</float>
-</Properties>
-
-
-</Item>
-<Item class="Part" referent="RBX000000BC">
-<Properties>
-<string name="Name">StreetLampHead2</string>
-<bool name="Anchored">true</bool>
-<bool name="CanCollide">true</bool>
-<CoordinateFrame name="CFrame">
-<X>15</X><Y>10.5</Y><Z>25</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -3482,6 +3362,55 @@
 </Item>
 <Item class="Part" referent="RBX000000BD">
 <Properties>
+<string name="Name">StreetLampPole2</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>15</X><Y>5</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.3</X><Y>10</Y><Z>0.3</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+
+
+</Item>
+<Item class="Part" referent="RBX000000BF">
+<Properties>
+<string name="Name">StreetLampHead2</string>
+<bool name="Anchored">true</bool>
+<bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>15</X><Y>10.5</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
+<token name="shape">1</token>
+<float name="Transparency">0</float>
+</Properties>
+
+<Item class="PointLight" referent="RBX000000BE">
+<Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">0.8</float>
+<Color3 name="Color"><R>1</R><G>0.8</G><B>0.5</B></Color3>
+<float name="Range">35</float>
+<bool name="Enabled">true</bool>
+</Properties>
+
+</Item>
+</Item>
+<Item class="Part" referent="RBX000000C0">
+<Properties>
 <string name="Name">Dumpster</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
@@ -3500,7 +3429,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000BE">
+<Item class="Part" referent="RBX000000C1">
 <Properties>
 <string name="Name">Sidewalk</string>
 <bool name="Anchored">true</bool>
@@ -3520,7 +3449,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000BF">
+<Item class="Part" referent="RBX000000C2">
 <Properties>
 <string name="Name">PotPlant1</string>
 <bool name="Anchored">true</bool>
@@ -3540,7 +3469,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C0">
+<Item class="Part" referent="RBX000000C3">
 <Properties>
 <string name="Name">Pot1</string>
 <bool name="Anchored">true</bool>
@@ -3560,7 +3489,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C1">
+<Item class="Part" referent="RBX000000C4">
 <Properties>
 <string name="Name">PotPlant2</string>
 <bool name="Anchored">true</bool>
@@ -3580,7 +3509,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C2">
+<Item class="Part" referent="RBX000000C5">
 <Properties>
 <string name="Name">Pot2</string>
 <bool name="Anchored">true</bool>
@@ -3600,7 +3529,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C3">
+<Item class="Part" referent="RBX000000C6">
 <Properties>
 <string name="Name">CeilingFanBase</string>
 <bool name="Anchored">true</bool>
@@ -3620,7 +3549,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C4">
+<Item class="Part" referent="RBX000000C7">
 <Properties>
 <string name="Name">FanBlade1</string>
 <bool name="Anchored">true</bool>
@@ -3640,7 +3569,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C5">
+<Item class="Part" referent="RBX000000C8">
 <Properties>
 <string name="Name">FanBlade2</string>
 <bool name="Anchored">true</bool>
@@ -3660,7 +3589,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C6">
+<Item class="Part" referent="RBX000000C9">
 <Properties>
 <string name="Name">BloodStain</string>
 <bool name="Anchored">true</bool>
@@ -3680,7 +3609,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000C8">
+<Item class="Part" referent="RBX000000CB">
 <Properties>
 <string name="Name">MessZone</string>
 <bool name="Anchored">true</bool>
@@ -3698,14 +3627,14 @@
 <float name="Transparency">1</float>
 </Properties>
 
-<Item class="BoolValue" referent="RBX000000C7">
+<Item class="BoolValue" referent="RBX000000CA">
 <Properties>
 <string name="Name">CleanupZone</string>
 <bool name="Value">true</bool>
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX000000C9">
+<Item class="Part" referent="RBX000000CC">
 <Properties>
 <string name="Name">Mop</string>
 <bool name="Anchored">true</bool>
@@ -3725,7 +3654,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000CA">
+<Item class="Part" referent="RBX000000CD">
 <Properties>
 <string name="Name">MopHead</string>
 <bool name="Anchored">true</bool>
@@ -3745,7 +3674,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000CC">
+<Item class="Part" referent="RBX000000CF">
 <Properties>
 <string name="Name">DosaOnTawa</string>
 <bool name="Anchored">true</bool>
@@ -3763,14 +3692,14 @@
 <float name="Transparency">1</float>
 </Properties>
 
-<Item class="BoolValue" referent="RBX000000CB">
+<Item class="BoolValue" referent="RBX000000CE">
 <Properties>
 <string name="Name">CookingVisual</string>
 <bool name="Value">true</bool>
 </Properties>
 </Item>
 </Item>
-<Item class="Part" referent="RBX000000CD">
+<Item class="Part" referent="RBX000000D0">
 <Properties>
 <string name="Name">HidingCabinet</string>
 <bool name="Anchored">true</bool>
@@ -3790,7 +3719,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000CE">
+<Item class="Part" referent="RBX000000D1">
 <Properties>
 <string name="Name">CabinetDoor</string>
 <bool name="Anchored">true</bool>
@@ -3810,7 +3739,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000CF">
+<Item class="Part" referent="RBX000000D2">
 <Properties>
 <string name="Name">Mattress</string>
 <bool name="Anchored">true</bool>
@@ -3830,7 +3759,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000D1">
+<Item class="Part" referent="RBX000000D4">
 <Properties>
 <string name="Name">SafeRoomBulb</string>
 <bool name="Anchored">true</bool>
@@ -3848,7 +3777,7 @@
 <float name="Transparency">0</float>
 </Properties>
 
-<Item class="PointLight" referent="RBX000000D0">
+<Item class="PointLight" referent="RBX000000D3">
 <Properties>
 <string name="Name">PointLight</string>
 <float name="Brightness">0.2</float>
@@ -3859,7 +3788,7 @@
 
 </Item>
 </Item>
-<Item class="Part" referent="RBX000000D2">
+<Item class="Part" referent="RBX000000D5">
 <Properties>
 <string name="Name">WallWriting</string>
 <bool name="Anchored">true</bool>
@@ -3881,17 +3810,17 @@
 </Item>
 
 <!-- NPC Spawn Points -->
-<Item class="Folder" referent="RBX0000015C">
+<Item class="Folder" referent="RBX0000015F">
 <Properties>
 <string name="Name">NPCSpawns</string>
 </Properties>
-<Item class="Part" referent="RBX000000D7">
+<Item class="Part" referent="RBX000000DA">
 <Properties>
 <string name="Name">Spawn1</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
 <CoordinateFrame name="CFrame">
-<X>0</X><Y>1</Y><Z>20</Z>
+<X>0</X><Y>1</Y><Z>18</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -3905,13 +3834,13 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000D8">
+<Item class="Part" referent="RBX000000DB">
 <Properties>
 <string name="Name">Spawn2</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
 <CoordinateFrame name="CFrame">
-<X>-8</X><Y>1</Y><Z>20</Z>
+<X>-3</X><Y>1</Y><Z>18</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -3925,13 +3854,13 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000D9">
+<Item class="Part" referent="RBX000000DC">
 <Properties>
 <string name="Name">Spawn3</string>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
 <CoordinateFrame name="CFrame">
-<X>8</X><Y>1</Y><Z>20</Z>
+<X>3</X><Y>1</Y><Z>18</Z>
 <R00>1</R00><R01>0</R01><R02>0</R02>
 <R10>0</R10><R11>1</R11><R12>0</R12>
 <R20>0</R20><R21>0</R21><R22>1</R22>
@@ -3948,7 +3877,7 @@
 </Item>
 
 <!-- NPCs Folder -->
-<Item class="Folder" referent="RBX0000015D">
+<Item class="Folder" referent="RBX00000160">
 <Properties>
 <string name="Name">NPCs</string>
 </Properties>
@@ -3956,11 +3885,11 @@
 </Item>
 
 <!-- CCTV Cameras -->
-<Item class="Folder" referent="RBX0000015E">
+<Item class="Folder" referent="RBX00000161">
 <Properties>
 <string name="Name">CCTVCameras</string>
 </Properties>
-<Item class="Part" referent="RBX000000D3">
+<Item class="Part" referent="RBX000000D6">
 <Properties>
 <string name="Name">CCTV_Front</string>
 <bool name="Anchored">true</bool>
@@ -3980,7 +3909,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000D4">
+<Item class="Part" referent="RBX000000D7">
 <Properties>
 <string name="Name">CCTV_Kitchen</string>
 <bool name="Anchored">true</bool>
@@ -4000,7 +3929,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000D5">
+<Item class="Part" referent="RBX000000D8">
 <Properties>
 <string name="Name">CCTV_Road</string>
 <bool name="Anchored">true</bool>
@@ -4020,7 +3949,7 @@
 
 
 </Item>
-<Item class="Part" referent="RBX000000D6">
+<Item class="Part" referent="RBX000000D9">
 <Properties>
 <string name="Name">CCTV_Parking</string>
 <bool name="Anchored">true</bool>
@@ -4043,7 +3972,7 @@
 </Item>
 
 <!-- Spawn Location -->
-<Item class="SpawnLocation" referent="RBX000000DA">
+<Item class="SpawnLocation" referent="RBX000000DD">
 <Properties>
 <string name="Name">SpawnLocation</string>
 <CoordinateFrame name="CFrame">
@@ -4061,7 +3990,7 @@
 </Item>
 
 <!-- Camera -->
-<Item class="Camera" referent="RBX0000015F">
+<Item class="Camera" referent="RBX00000162">
 <Properties>
 <string name="Name">Camera</string>
 <CoordinateFrame name="CFrame">
@@ -4076,7 +4005,7 @@
 </Item>
 
 <!-- === LIGHTING === -->
-<Item class="Lighting" referent="RBX00000144">
+<Item class="Lighting" referent="RBX00000147">
 <Properties>
 <string name="Name">Lighting</string>
 <float name="Brightness">0.3</float>
@@ -4090,7 +4019,7 @@
 <float name="EnvironmentSpecularScale">0.2</float>
 <bool name="GlobalShadows">true</bool>
 </Properties>
-<Item class="Atmosphere" referent="RBX00000145">
+<Item class="Atmosphere" referent="RBX00000148">
 <Properties>
 <string name="Name">NightAtmosphere</string>
 <float name="Density">0.35</float>
@@ -4101,7 +4030,7 @@
 <float name="Haze">3</float>
 </Properties>
 </Item>
-<Item class="BloomEffect" referent="RBX00000146">
+<Item class="BloomEffect" referent="RBX00000149">
 <Properties>
 <string name="Name">HorrorBloom</string>
 <float name="Intensity">0.4</float>
@@ -4109,7 +4038,7 @@
 <float name="Threshold">1.5</float>
 </Properties>
 </Item>
-<Item class="ColorCorrectionEffect" referent="RBX00000147">
+<Item class="ColorCorrectionEffect" referent="RBX0000014A">
 <Properties>
 <string name="Name">HorrorColor</string>
 <float name="Brightness">-0.05</float>
@@ -4118,7 +4047,7 @@
 <Color3 name="TintColor"><R>0.9</R><G>0.85</G><B>1</B></Color3>
 </Properties>
 </Item>
-<Item class="ColorCorrectionEffect" referent="RBX00000148">
+<Item class="ColorCorrectionEffect" referent="RBX0000014B">
 <Properties>
 <string name="Name">CCTVFilter</string>
 <float name="Brightness">-0.1</float>
@@ -4131,11 +4060,11 @@
 </Item>
 
 <!-- === SERVER SCRIPT SERVICE === -->
-<Item class="ServerScriptService" referent="RBX00000156">
+<Item class="ServerScriptService" referent="RBX00000159">
 <Properties>
 <string name="Name">ServerScriptService</string>
 </Properties>
-<Item class="Script" referent="RBX00000160">
+<Item class="Script" referent="RBX00000163">
 <Properties>
 <string name="Name">GameManager</string>
 <ProtectedString name="Source"><![CDATA[-- GameManager: Main server script controlling game flow and night progression
@@ -4619,7 +4548,7 @@ print("[GameManager] Road Side Dosa - Game Manager initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000161">
+<Item class="Script" referent="RBX00000164">
 <Properties>
 <string name="Name">NPCManager</string>
 <ProtectedString name="Source"><![CDATA[-- NPCManager: Server script for NPC spawning, AI, and behavior
@@ -5004,6 +4933,10 @@ local function createNPCModel(npcType, template)
 	leftLeg.Position = torso.Position + Vector3.new(-0.5, -2, 0)
 	rightLeg.Position = torso.Position + Vector3.new(0.5, -2, 0)
 
+	-- Make all body parts non-colliding so NPCs walk through furniture
+	torso.CanCollide = false
+	head.CanCollide = false
+
 	-- Humanoid
 	local humanoid = Instance.new("Humanoid")
 	humanoid.WalkSpeed = template.walkSpeed
@@ -5074,10 +5007,19 @@ local function spawnNPC(npcType, targetPlayer)
 	local dialogueLine = enterDialogue[math.random(1, #enterDialogue)]
 	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine)
 
-	-- NPC walks to counter
+	-- NPC walks to counter (through the front entrance, then to counter)
 	local humanoid = model:FindFirstChildOfClass("Humanoid")
 	if humanoid then
-		humanoid:MoveTo(getCounterPoint())
+		local counterPos = getCounterPoint()
+		-- First walk to the door entrance (x=0, z=14) then to counter
+		local doorPos = Vector3.new(0, counterPos.Y, 14)
+		humanoid:MoveTo(doorPos)
+		humanoid.MoveToFinished:Connect(function(reached)
+			if reached and model and model.Parent then
+				-- Now walk to counter
+				humanoid:MoveTo(counterPos)
+			end
+		end)
 	end
 
 	-- Special behaviors
@@ -5278,7 +5220,7 @@ print("[NPCManager] NPC system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000162">
+<Item class="Script" referent="RBX00000165">
 <Properties>
 <string name="Name">DataManager</string>
 <ProtectedString name="Source"><![CDATA[-- DataManager: Server script for DataStore saving/loading, leaderboard, and trading
@@ -5565,7 +5507,7 @@ print("[DataManager] Data system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000163">
+<Item class="Script" referent="RBX00000166">
 <Properties>
 <string name="Name">GamePassManager</string>
 <ProtectedString name="Source"><![CDATA[-- GamePassManager: Handles gamepass purchases and effects
@@ -5708,11 +5650,11 @@ print("[GamePassManager] GamePass system initialized")
 </Item>
 
 <!-- === REPLICATED STORAGE === -->
-<Item class="ReplicatedStorage" referent="RBX00000157">
+<Item class="ReplicatedStorage" referent="RBX0000015A">
 <Properties>
 <string name="Name">ReplicatedStorage</string>
 </Properties>
-<Item class="ModuleScript" referent="RBX00000164">
+<Item class="ModuleScript" referent="RBX00000167">
 <Properties>
 <string name="Name">Config</string>
 <ProtectedString name="Source"><![CDATA[-- Config Module: All game configuration values
@@ -5804,7 +5746,7 @@ return Config
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="ModuleScript" referent="RBX00000165">
+<Item class="ModuleScript" referent="RBX00000168">
 <Properties>
 <string name="Name">NightData</string>
 <ProtectedString name="Source"><![CDATA[-- NightData Module: All 5 nights' rules, events, and phone dialogues
@@ -5998,221 +5940,221 @@ return NightData
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Folder" referent="RBX00000143">
+<Item class="Folder" referent="RBX00000146">
 <Properties>
 <string name="Name">Remotes</string>
 </Properties>
-<Item class="RemoteEvent" referent="RBX00000118">
+<Item class="RemoteEvent" referent="RBX0000011B">
 <Properties>
 <string name="Name">StartNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000119">
+<Item class="RemoteEvent" referent="RBX0000011C">
 <Properties>
 <string name="Name">EndNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011A">
+<Item class="RemoteEvent" referent="RBX0000011D">
 <Properties>
 <string name="Name">PhoneRing</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011B">
+<Item class="RemoteEvent" referent="RBX0000011E">
 <Properties>
 <string name="Name">PhoneDialogue</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011C">
+<Item class="RemoteEvent" referent="RBX0000011F">
 <Properties>
 <string name="Name">PhoneDialogueEnd</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011D">
+<Item class="RemoteEvent" referent="RBX00000120">
 <Properties>
 <string name="Name">PlayerDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011E">
+<Item class="RemoteEvent" referent="RBX00000121">
 <Properties>
 <string name="Name">NightComplete</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000011F">
+<Item class="RemoteEvent" referent="RBX00000122">
 <Properties>
 <string name="Name">TriggerEvent</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000120">
+<Item class="RemoteEvent" referent="RBX00000123">
 <Properties>
 <string name="Name">UpdateHUD</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000121">
+<Item class="RemoteEvent" referent="RBX00000124">
 <Properties>
 <string name="Name">JumpScare</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000122">
+<Item class="RemoteEvent" referent="RBX00000125">
 <Properties>
 <string name="Name">SpawnNPC</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000123">
+<Item class="RemoteEvent" referent="RBX00000126">
 <Properties>
 <string name="Name">NPCDialogue</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000124">
+<Item class="RemoteEvent" referent="RBX00000127">
 <Properties>
 <string name="Name">NPCLeave</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000125">
+<Item class="RemoteEvent" referent="RBX00000128">
 <Properties>
 <string name="Name">RequestStartNight</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000126">
+<Item class="RemoteEvent" referent="RBX00000129">
 <Properties>
 <string name="Name">RequestRetry</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000127">
+<Item class="RemoteEvent" referent="RBX0000012A">
 <Properties>
 <string name="Name">GrabBatter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000128">
+<Item class="RemoteEvent" referent="RBX0000012B">
 <Properties>
 <string name="Name">CookDosa</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000129">
+<Item class="RemoteEvent" referent="RBX0000012C">
 <Properties>
 <string name="Name">ServeCustomer</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012A">
+<Item class="RemoteEvent" referent="RBX0000012D">
 <Properties>
 <string name="Name">ToggleShutter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012B">
+<Item class="RemoteEvent" referent="RBX0000012E">
 <Properties>
 <string name="Name">ToggleLights</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012C">
+<Item class="RemoteEvent" referent="RBX0000012F">
 <Properties>
 <string name="Name">GazeDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012D">
+<Item class="RemoteEvent" referent="RBX00000130">
 <Properties>
 <string name="Name">TruckArrival</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012E">
+<Item class="RemoteEvent" referent="RBX00000131">
 <Properties>
 <string name="Name">SpillBatter</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000012F">
+<Item class="RemoteEvent" referent="RBX00000132">
 <Properties>
 <string name="Name">ReachedSafeRoom</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000130">
+<Item class="RemoteEvent" referent="RBX00000133">
 <Properties>
 <string name="Name">CleanMess</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000131">
+<Item class="RemoteEvent" referent="RBX00000134">
 <Properties>
 <string name="Name">LookedAtFace</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000132">
+<Item class="RemoteEvent" referent="RBX00000135">
 <Properties>
 <string name="Name">UpdateCurrency</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000133">
+<Item class="RemoteEvent" referent="RBX00000136">
 <Properties>
 <string name="Name">UpdateNightProgress</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000134">
+<Item class="RemoteEvent" referent="RBX00000137">
 <Properties>
 <string name="Name">RecordDeath</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000135">
+<Item class="RemoteEvent" referent="RBX00000138">
 <Properties>
 <string name="Name">RecordServe</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000136">
+<Item class="RemoteEvent" referent="RBX00000139">
 <Properties>
 <string name="Name">GameCompleted</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000137">
+<Item class="RemoteEvent" referent="RBX0000013A">
 <Properties>
 <string name="Name">LoadPlayerData</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000138">
+<Item class="RemoteEvent" referent="RBX0000013B">
 <Properties>
 <string name="Name">UpdateLeaderboard</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000139">
+<Item class="RemoteEvent" referent="RBX0000013C">
 <Properties>
 <string name="Name">TradeRequest</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013A">
+<Item class="RemoteEvent" referent="RBX0000013D">
 <Properties>
 <string name="Name">TradeRequestReceived</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013B">
+<Item class="RemoteEvent" referent="RBX0000013E">
 <Properties>
 <string name="Name">TradeAccept</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013C">
+<Item class="RemoteEvent" referent="RBX0000013F">
 <Properties>
 <string name="Name">TradeComplete</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013D">
+<Item class="RemoteEvent" referent="RBX00000140">
 <Properties>
 <string name="Name">GamePassOwned</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013E">
+<Item class="RemoteEvent" referent="RBX00000141">
 <Properties>
 <string name="Name">CheckGamePass</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX0000013F">
+<Item class="RemoteEvent" referent="RBX00000142">
 <Properties>
 <string name="Name">GamePassCheckResult</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000140">
+<Item class="RemoteEvent" referent="RBX00000143">
 <Properties>
 <string name="Name">UseJumpscareFriend</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000141">
+<Item class="RemoteEvent" referent="RBX00000144">
 <Properties>
 <string name="Name">UseHumanitySerum</string>
 </Properties>
 </Item>
-<Item class="RemoteEvent" referent="RBX00000142">
+<Item class="RemoteEvent" referent="RBX00000145">
 <Properties>
 <string name="Name">NPCTransformed</string>
 </Properties>
@@ -6221,11 +6163,11 @@ return NightData
 </Item>
 
 <!-- === SERVER STORAGE === -->
-<Item class="ServerStorage" referent="RBX00000158">
+<Item class="ServerStorage" referent="RBX0000015B">
 <Properties>
 <string name="Name">ServerStorage</string>
 </Properties>
-<Item class="BindableEvent" referent="RBX00000166">
+<Item class="BindableEvent" referent="RBX00000169">
 <Properties>
 <string name="Name">NightStartBindable</string>
 </Properties>
@@ -6233,18 +6175,18 @@ return NightData
 </Item>
 
 <!-- === STARTER GUI === -->
-<Item class="StarterGui" referent="RBX00000159">
+<Item class="StarterGui" referent="RBX0000015C">
 <Properties>
 <string name="Name">StarterGui</string>
 </Properties>
-<Item class="ScreenGui" referent="RBX00000110">
+<Item class="ScreenGui" referent="RBX00000113">
 <Properties>
 <string name="Name">LobbyScreenGui</string>
 <bool name="Enabled">true</bool>
 <int name="DisplayOrder">0</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX0000010F">
+<Item class="Frame" referent="RBX00000112">
 <Properties>
 <string name="Name">LobbyUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6254,7 +6196,7 @@ return NightData
 <bool name="Visible">true</bool>
 <int name="ZIndex">1</int>
 </Properties>
-<Item class="Frame" referent="RBX00000106">
+<Item class="Frame" referent="RBX00000109">
 <Properties>
 <string name="Name">LobbyBG</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6266,7 +6208,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextLabel" referent="RBX00000107">
+<Item class="TextLabel" referent="RBX0000010A">
 <Properties>
 <string name="Name">TitleLabel</string>
 <string name="Text">ROAD SIDE DOSA</string>
@@ -6280,7 +6222,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX00000108">
+<Item class="TextLabel" referent="RBX0000010B">
 <Properties>
 <string name="Name">SubtitleLabel</string>
 <string name="Text">A Psychological Horror Experience</string>
@@ -6294,7 +6236,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX00000109">
+<Item class="TextLabel" referent="RBX0000010C">
 <Properties>
 <string name="Name">TaglineLabel</string>
 <string name="Text">5 Nights. 1 Dhaba. Infinite Terror.</string>
@@ -6308,7 +6250,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX0000010A">
+<Item class="TextLabel" referent="RBX0000010D">
 <Properties>
 <string name="Name">InstructionsLabel</string>
 <string name="Text">Cook dosa. Serve customers. Follow the rules. Survive.</string>
@@ -6322,7 +6264,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextButton" referent="RBX0000010C">
+<Item class="TextButton" referent="RBX0000010F">
 <Properties>
 <string name="Name">StartButton</string>
 <string name="Text">START SHIFT</string>
@@ -6333,13 +6275,13 @@ return NightData
 <token name="Font">4</token>
 <bool name="TextScaled">true</bool>
 </Properties>
-<Item class="UICorner" referent="RBX0000010B">
+<Item class="UICorner" referent="RBX0000010E">
 <Properties>
 <UDim name="CornerRadius"><S>0</S><O>10</O></UDim>
 </Properties>
 </Item>
 </Item>
-<Item class="TextLabel" referent="RBX0000010D">
+<Item class="TextLabel" referent="RBX00000110">
 <Properties>
 <string name="Name">CreditsLabel</string>
 <string name="Text">v2.0</string>
@@ -6353,7 +6295,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX0000010E">
+<Item class="TextLabel" referent="RBX00000111">
 <Properties>
 <string name="Name">ControlsInfo</string>
 <string name="Text">Controls: WASD Move | Shift Sprint | F Grab Batter | T Cook | C CCTV | L Lights | 1-2-3 Shutters</string>
@@ -6369,14 +6311,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000111">
+<Item class="ScreenGui" referent="RBX00000114">
 <Properties>
 <string name="Name">MainUI</string>
 <bool name="Enabled">true</bool>
 <int name="DisplayOrder">1</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX000000E7">
+<Item class="Frame" referent="RBX000000EA">
 <Properties>
 <string name="Name">HUD</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6386,7 +6328,7 @@ return NightData
 <bool name="Visible">true</bool>
 <int name="ZIndex">1</int>
 </Properties>
-<Item class="TextLabel" referent="RBX000000DB">
+<Item class="TextLabel" referent="RBX000000DE">
 <Properties>
 <string name="Name">NightLabel</string>
 <string name="Text">Night 1</string>
@@ -6400,7 +6342,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000DC">
+<Item class="TextLabel" referent="RBX000000DF">
 <Properties>
 <string name="Name">CurrencyLabel</string>
 <string name="Text">$0</string>
@@ -6414,7 +6356,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000DD">
+<Item class="TextLabel" referent="RBX000000E0">
 <Properties>
 <string name="Name">BatterLabel</string>
 <string name="Text">Batter: 0</string>
@@ -6428,7 +6370,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000DE">
+<Item class="TextLabel" referent="RBX000000E1">
 <Properties>
 <string name="Name">LightsIndicator</string>
 <string name="Text">LIGHTS: ON</string>
@@ -6442,7 +6384,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000DF">
+<Item class="TextLabel" referent="RBX000000E2">
 <Properties>
 <string name="Name">GazeWarning</string>
 <string name="Text">DON&#x27;T LOOK!</string>
@@ -6456,7 +6398,7 @@ return NightData
 <bool name="Visible">false</bool>
 </Properties>
 </Item>
-<Item class="Frame" referent="RBX000000E1">
+<Item class="Frame" referent="RBX000000E4">
 <Properties>
 <string name="Name">StaminaBar</string>
 <UDim2 name="Position"><XS>0.35</XS><XO>0</XO><YS>0.92</YS><YO>0</YO></UDim2>
@@ -6466,7 +6408,7 @@ return NightData
 <bool name="Visible">true</bool>
 <int name="ZIndex">1</int>
 </Properties>
-<Item class="Frame" referent="RBX000000E0">
+<Item class="Frame" referent="RBX000000E3">
 <Properties>
 <string name="Name">Fill</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6479,7 +6421,7 @@ return NightData
 
 </Item>
 </Item>
-<Item class="Frame" referent="RBX000000E2">
+<Item class="Frame" referent="RBX000000E5">
 <Properties>
 <string name="Name">MenuContainer</string>
 <UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.85</YS><YO>0</YO></UDim2>
@@ -6491,7 +6433,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextButton" referent="RBX000000E3">
+<Item class="TextButton" referent="RBX000000E6">
 <Properties>
 <string name="Name">Shutter_front</string>
 <string name="Text">Front: OPEN</string>
@@ -6504,7 +6446,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextButton" referent="RBX000000E4">
+<Item class="TextButton" referent="RBX000000E7">
 <Properties>
 <string name="Name">Shutter_left</string>
 <string name="Text">Left: OPEN</string>
@@ -6517,7 +6459,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextButton" referent="RBX000000E5">
+<Item class="TextButton" referent="RBX000000E8">
 <Properties>
 <string name="Name">Shutter_right</string>
 <string name="Text">Right: OPEN</string>
@@ -6530,7 +6472,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextLabel" referent="RBX000000E6">
+<Item class="TextLabel" referent="RBX000000E9">
 <Properties>
 <string name="Name">ControlsHint</string>
 <string name="Text">[F] Grab Batter  [T] Cook  [E] Interact  [C] CCTV  [L] Lights  [1/2/3] Shutters  [Shift] Sprint  [G] Spill Batter (Night 5)</string>
@@ -6546,24 +6488,24 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000112">
+<Item class="ScreenGui" referent="RBX00000115">
 <Properties>
 <string name="Name">PhoneScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">5</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX000000EC">
+<Item class="Frame" referent="RBX000000EF">
 <Properties>
 <string name="Name">PhoneUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
 <UDim2 name="Size"><XS>1.0</XS><XO>0</XO><YS>1.0</YS><YO>0</YO></UDim2>
 <Color3 name="BackgroundColor3"><R>0</R><G>0</G><B>0</B></Color3>
 <float name="BackgroundTransparency">0.5</float>
-<bool name="Visible">false</bool>
+<bool name="Visible">true</bool>
 <int name="ZIndex">5</int>
 </Properties>
-<Item class="Frame" referent="RBX000000EB">
+<Item class="Frame" referent="RBX000000EE">
 <Properties>
 <string name="Name">PhoneBG</string>
 <UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.2</YS><YO>0</YO></UDim2>
@@ -6573,12 +6515,12 @@ return NightData
 <bool name="Visible">true</bool>
 <int name="ZIndex">1</int>
 </Properties>
-<Item class="UICorner" referent="RBX000000E8">
+<Item class="UICorner" referent="RBX000000EB">
 <Properties>
 <UDim name="CornerRadius"><S>0</S><O>12</O></UDim>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000E9">
+<Item class="TextLabel" referent="RBX000000EC">
 <Properties>
 <string name="Name">CallerLabel</string>
 <string name="Text">MANAGER</string>
@@ -6592,7 +6534,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000EA">
+<Item class="TextLabel" referent="RBX000000ED">
 <Properties>
 <string name="Name">PhoneIcon</string>
 <string name="Text">📞</string>
@@ -6608,17 +6550,17 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="Frame" referent="RBX000000F2">
+<Item class="Frame" referent="RBX000000F5">
 <Properties>
 <string name="Name">DialogueUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
 <UDim2 name="Size"><XS>1.0</XS><XO>0</XO><YS>1.0</YS><YO>0</YO></UDim2>
 <Color3 name="BackgroundColor3"><R>0.1</R><G>0.1</G><B>0.1</B></Color3>
 <float name="BackgroundTransparency">1</float>
-<bool name="Visible">false</bool>
+<bool name="Visible">true</bool>
 <int name="ZIndex">6</int>
 </Properties>
-<Item class="Frame" referent="RBX000000F1">
+<Item class="Frame" referent="RBX000000F4">
 <Properties>
 <string name="Name">DialogueBG</string>
 <UDim2 name="Position"><XS>0.15</XS><XO>0</XO><YS>0.7</YS><YO>0</YO></UDim2>
@@ -6628,12 +6570,12 @@ return NightData
 <bool name="Visible">true</bool>
 <int name="ZIndex">1</int>
 </Properties>
-<Item class="UICorner" referent="RBX000000ED">
+<Item class="UICorner" referent="RBX000000F0">
 <Properties>
 <UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000EE">
+<Item class="TextLabel" referent="RBX000000F1">
 <Properties>
 <string name="Name">DialogueText</string>
 <string name="Text"></string>
@@ -6647,7 +6589,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000EF">
+<Item class="TextLabel" referent="RBX000000F2">
 <Properties>
 <string name="Name">ProgressLabel</string>
 <string name="Text">1/1</string>
@@ -6661,7 +6603,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000F0">
+<Item class="TextLabel" referent="RBX000000F3">
 <Properties>
 <string name="Name">SkipHint</string>
 <string name="Text">[Click to skip]</string>
@@ -6678,14 +6620,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000113">
+<Item class="ScreenGui" referent="RBX00000116">
 <Properties>
 <string name="Name">CCTVScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">4</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX000000F7">
+<Item class="Frame" referent="RBX000000FA">
 <Properties>
 <string name="Name">CCTVUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6695,7 +6637,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">4</int>
 </Properties>
-<Item class="Frame" referent="RBX000000F3">
+<Item class="Frame" referent="RBX000000F6">
 <Properties>
 <string name="Name">CCTVOverlay</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6707,7 +6649,7 @@ return NightData
 </Properties>
 
 </Item>
-<Item class="TextLabel" referent="RBX000000F4">
+<Item class="TextLabel" referent="RBX000000F7">
 <Properties>
 <string name="Name">CameraLabel</string>
 <string name="Text">CAM 1</string>
@@ -6721,7 +6663,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000F5">
+<Item class="TextLabel" referent="RBX000000F8">
 <Properties>
 <string name="Name">RecLabel</string>
 <string name="Text">● REC</string>
@@ -6735,7 +6677,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000F6">
+<Item class="TextLabel" referent="RBX000000F9">
 <Properties>
 <string name="Name">CCTVHint</string>
 <string name="Text">[Q/E] Switch Camera  [C] Exit CCTV</string>
@@ -6751,14 +6693,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000114">
+<Item class="ScreenGui" referent="RBX00000117">
 <Properties>
 <string name="Name">DeathScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">8</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX000000FD">
+<Item class="Frame" referent="RBX00000100">
 <Properties>
 <string name="Name">DeathUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6768,7 +6710,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">8</int>
 </Properties>
-<Item class="TextLabel" referent="RBX000000F8">
+<Item class="TextLabel" referent="RBX000000FB">
 <Properties>
 <string name="Name">YouDiedLabel</string>
 <string name="Text">YOU DIED</string>
@@ -6782,7 +6724,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000F9">
+<Item class="TextLabel" referent="RBX000000FC">
 <Properties>
 <string name="Name">CauseLabel</string>
 <string name="Text"></string>
@@ -6796,7 +6738,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextLabel" referent="RBX000000FA">
+<Item class="TextLabel" referent="RBX000000FD">
 <Properties>
 <string name="Name">NightLabel</string>
 <string name="Text">Night 1</string>
@@ -6810,7 +6752,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="TextButton" referent="RBX000000FC">
+<Item class="TextButton" referent="RBX000000FF">
 <Properties>
 <string name="Name">RetryButton</string>
 <string name="Text">RETRY</string>
@@ -6821,7 +6763,7 @@ return NightData
 <token name="Font">4</token>
 <bool name="TextScaled">true</bool>
 </Properties>
-<Item class="UICorner" referent="RBX000000FB">
+<Item class="UICorner" referent="RBX000000FE">
 <Properties>
 <UDim name="CornerRadius"><S>0</S><O>8</O></UDim>
 </Properties>
@@ -6829,14 +6771,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000115">
+<Item class="ScreenGui" referent="RBX00000118">
 <Properties>
 <string name="Name">MenuScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">7</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000100">
+<Item class="Frame" referent="RBX00000103">
 <Properties>
 <string name="Name">MenuUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6846,7 +6788,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">7</int>
 </Properties>
-<Item class="TextLabel" referent="RBX000000FE">
+<Item class="TextLabel" referent="RBX00000101">
 <Properties>
 <string name="Name">MenuTitle</string>
 <string name="Text">Select Item to Serve</string>
@@ -6860,7 +6802,7 @@ return NightData
 <bool name="Visible">true</bool>
 </Properties>
 </Item>
-<Item class="Frame" referent="RBX000000FF">
+<Item class="Frame" referent="RBX00000102">
 <Properties>
 <string name="Name">ItemButtons</string>
 <UDim2 name="Position"><XS>0.2</XS><XO>0</XO><YS>0.4</YS><YO>0</YO></UDim2>
@@ -6874,14 +6816,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000116">
+<Item class="ScreenGui" referent="RBX00000119">
 <Properties>
 <string name="Name">JumpscareScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">10</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000103">
+<Item class="Frame" referent="RBX00000106">
 <Properties>
 <string name="Name">JumpscareUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6891,7 +6833,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">10</int>
 </Properties>
-<Item class="ImageLabel" referent="RBX00000101">
+<Item class="ImageLabel" referent="RBX00000104">
 <Properties>
 <string name="Name">ScareImage</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6902,7 +6844,7 @@ return NightData
 <bool name="Visible">false</bool>
 </Properties>
 </Item>
-<Item class="Frame" referent="RBX00000102">
+<Item class="Frame" referent="RBX00000105">
 <Properties>
 <string name="Name">RedFlash</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6916,14 +6858,14 @@ return NightData
 </Item>
 </Item>
 </Item>
-<Item class="ScreenGui" referent="RBX00000117">
+<Item class="ScreenGui" referent="RBX0000011A">
 <Properties>
 <string name="Name">NightStartScreenGui</string>
 <bool name="Enabled">false</bool>
 <int name="DisplayOrder">9</int>
 <bool name="ResetOnSpawn">false</bool>
 </Properties>
-<Item class="Frame" referent="RBX00000105">
+<Item class="Frame" referent="RBX00000108">
 <Properties>
 <string name="Name">NightStartUI</string>
 <UDim2 name="Position"><XS>0.0</XS><XO>0</XO><YS>0.0</YS><YO>0</YO></UDim2>
@@ -6933,7 +6875,7 @@ return NightData
 <bool name="Visible">false</bool>
 <int name="ZIndex">9</int>
 </Properties>
-<Item class="TextLabel" referent="RBX00000104">
+<Item class="TextLabel" referent="RBX00000107">
 <Properties>
 <string name="Name">TitleLabel</string>
 <string name="Text">NIGHT 1</string>
@@ -6952,15 +6894,15 @@ return NightData
 </Item>
 
 <!-- === STARTER PLAYER SCRIPTS === -->
-<Item class="StarterPlayer" referent="RBX00000167">
+<Item class="StarterPlayer" referent="RBX0000016A">
 <Properties>
 <string name="Name">StarterPlayer</string>
 </Properties>
-<Item class="StarterPlayerScripts" referent="RBX0000015A">
+<Item class="StarterPlayerScripts" referent="RBX0000015D">
 <Properties>
 <string name="Name">StarterPlayerScripts</string>
 </Properties>
-<Item class="LocalScript" referent="RBX00000168">
+<Item class="LocalScript" referent="RBX0000016B">
 <Properties>
 <string name="Name">ClientController</string>
 <ProtectedString name="Source"><![CDATA[-- ClientController: Main client script handling UI, input, and game interaction
@@ -7082,6 +7024,10 @@ local function updateHUD(data)
 		-- Show success feedback
 		playSound("CookingSound")
 		showFloatingText("+$" .. Config.CURRENCY_PER_SALE, Color3.fromRGB(0, 255, 0))
+		updateOrderScreen("ORDER SERVED!\n+$" .. Config.CURRENCY_PER_SALE)
+		task.delay(3, function()
+			updateOrderScreen("Waiting for customers...")
+		end)
 	end
 	if data.messCleared then
 		showFloatingText("Mess Cleaned!", Color3.fromRGB(100, 200, 255))
@@ -7161,9 +7107,11 @@ end
 -- === PROXIMITY PROMPTS SETUP ===
 -- Add ProximityPrompts to key objects on load
 task.spawn(function()
-	-- Fridge prompt
+	-- Fridge prompt (on door for better interaction feel)
+	local fridgeDoor = workspace:WaitForChild("FridgeDoor", 10)
 	local fridge = workspace:WaitForChild("Fridge", 10)
-	if fridge and not fridge:FindFirstChild("FridgePrompt") then
+	local fridgeTarget = fridgeDoor or fridge
+	if fridgeTarget and not fridgeTarget:FindFirstChild("FridgePrompt") then
 		local prompt = Instance.new("ProximityPrompt")
 		prompt.Name = "FridgePrompt"
 		prompt.ActionText = "Grab Batter"
@@ -7171,10 +7119,11 @@ task.spawn(function()
 		prompt.MaxActivationDistance = 8
 		prompt.HoldDuration = 0
 		prompt.KeyboardKeyCode = Enum.KeyCode.F
-		prompt.Parent = fridge
+		prompt.Parent = fridgeTarget
 		prompt.Triggered:Connect(function()
 			Remotes:WaitForChild("GrabBatter"):FireServer()
 			playSound("DoorCreak")
+			animateFridgeOpen()
 		end)
 	end
 
@@ -7227,25 +7176,62 @@ task.spawn(function()
 	end
 end)
 
+-- === FRIDGE DOOR ANIMATION ===
+local function animateFridgeOpen()
+	local fridgeDoor = workspace:FindFirstChild("FridgeDoor")
+	local fridgeBatter = workspace:FindFirstChild("FridgeBatter")
+	if not fridgeDoor then return end
+
+	-- Show batter inside
+	if fridgeBatter then fridgeBatter.Transparency = 0 end
+
+	-- Slide door to the side (open effect)
+	local originalPos = fridgeDoor.CFrame
+	local openPos = fridgeDoor.CFrame * CFrame.new(2.5, 0, 0)
+	TweenService:Create(fridgeDoor, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CFrame = openPos}):Play()
+
+	-- Close after delay
+	task.delay(1.5, function()
+		TweenService:Create(fridgeDoor, TweenInfo.new(0.4, Enum.EasingStyle.Quad), {CFrame = originalPos}):Play()
+		task.delay(0.4, function()
+			if fridgeBatter then fridgeBatter.Transparency = 1 end
+		end)
+	end)
+end
+
+-- === LED ORDER SCREEN UPDATE ===
+local function updateOrderScreen(text)
+	local screen = workspace:FindFirstChild("OrderScreen")
+	if not screen then return end
+	local gui = screen:FindFirstChild("OrderDisplay")
+	if not gui then return end
+	local ordersText = gui:FindFirstChild("OrdersText")
+	if ordersText then
+		ordersText.Text = text
+	end
+end
+
 -- === PHONE SYSTEM ===
 local function showPhone(active)
 	isPhoneActive = active
 	phoneScreenGui.Enabled = active
+	-- Also ensure the child frames are visible
+	phoneFrame.Visible = active
+	dialogueFrame.Visible = active
 	dialogueSkipRequested = false
 	phoneDialogueComplete = false
 	if active then
-		dialogueFrame.Visible = true
 		-- Phone ring sound
 		playSound("PhoneRing")
 	else
-		dialogueFrame.Visible = false
 		stopSound("PhoneRing")
 	end
 end
 
 local function showDialogue(text, lineNum, totalLines)
-	-- Ensure phone screen is enabled and dialogue visible
+	-- Ensure phone screen is enabled and all frames visible
 	phoneScreenGui.Enabled = true
+	phoneFrame.Visible = true
 	dialogueFrame.Visible = true
 	dialogueSkipRequested = false
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
@@ -7601,12 +7587,13 @@ UserInputService.InputBegan:Connect(function(input, processed)
 		-- Grab batter from fridge (when near fridge)
 		local character = player.Character
 		if character then
-			local fridge = workspace:FindFirstChild("Fridge")
-			if fridge then
-				local dist = (character.HumanoidRootPart.Position - fridge.Position).Magnitude
+			local fridgePart = workspace:FindFirstChild("FridgeDoor") or workspace:FindFirstChild("Fridge")
+			if fridgePart then
+				local dist = (character.HumanoidRootPart.Position - fridgePart.Position).Magnitude
 				if dist < 8 then
 					Remotes:WaitForChild("GrabBatter"):FireServer()
 					playSound("DoorCreak")
+					animateFridgeOpen()
 				end
 			end
 		end
@@ -7787,6 +7774,22 @@ Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcMode
 	if npcType ~= "NormalCustomer" then
 		playSound("WhisperSound")
 	end
+	-- Update LED order screen
+	local orderText = "NEW CUSTOMER\n"
+	if npcType == "ChineseGuy" then
+		orderText = orderText .. "Chinese Hat Man\nWaiting for order..."
+	elseif npcType == "SareeWoman" then
+		orderText = orderText .. "Saree Woman\nWaiting for order..."
+	elseif npcType == "DancingGuy" then
+		orderText = orderText .. "Dancing Man\n⚠ DO NOT SERVE ⚠"
+	elseif npcType == "Suthan" then
+		orderText = orderText .. "SUTHAN\n⚠ DANGER ⚠"
+	elseif npcType == "NakedGuy" then
+		orderText = orderText .. "???\nRUN THROUGH!"
+	else
+		orderText = orderText .. "Customer\nWaiting for order..."
+	end
+	updateOrderScreen(orderText)
 end)
 
 Remotes:WaitForChild("NPCDialogue").OnClientEvent:Connect(function(npcType, dialogue)
@@ -7912,18 +7915,18 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === STARTER PACK === -->
-<Item class="StarterPack" referent="RBX0000015B">
+<Item class="StarterPack" referent="RBX0000015E">
 <Properties>
 <string name="Name">StarterPack</string>
 </Properties>
 </Item>
 
 <!-- === SOUND SERVICE === -->
-<Item class="SoundService" referent="RBX00000149">
+<Item class="SoundService" referent="RBX0000014C">
 <Properties>
 <string name="Name">SoundService</string>
 </Properties>
-<Item class="Sound" referent="RBX0000014A">
+<Item class="Sound" referent="RBX0000014D">
 <Properties>
 <string name="Name">AmbientHorror</string>
 <Content name="SoundId"><url>rbxassetid://9112854440</url></Content>
@@ -7931,7 +7934,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">true</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014B">
+<Item class="Sound" referent="RBX0000014E">
 <Properties>
 <string name="Name">JumpScareSound</string>
 <Content name="SoundId"><url>rbxassetid://9114265792</url></Content>
@@ -7939,7 +7942,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014C">
+<Item class="Sound" referent="RBX0000014F">
 <Properties>
 <string name="Name">PhoneRing</string>
 <Content name="SoundId"><url>rbxassetid://9114220987</url></Content>
@@ -7947,7 +7950,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014D">
+<Item class="Sound" referent="RBX00000150">
 <Properties>
 <string name="Name">CookingSound</string>
 <Content name="SoundId"><url>rbxassetid://9114248953</url></Content>
@@ -7955,7 +7958,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014E">
+<Item class="Sound" referent="RBX00000151">
 <Properties>
 <string name="Name">ShutterSound</string>
 <Content name="SoundId"><url>rbxassetid://9114254790</url></Content>
@@ -7963,7 +7966,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX0000014F">
+<Item class="Sound" referent="RBX00000152">
 <Properties>
 <string name="Name">HeartbeatSound</string>
 <Content name="SoundId"><url>rbxassetid://9113655458</url></Content>
@@ -7971,7 +7974,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">true</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000150">
+<Item class="Sound" referent="RBX00000153">
 <Properties>
 <string name="Name">FootstepSound</string>
 <Content name="SoundId"><url>rbxassetid://9114267993</url></Content>
@@ -7979,7 +7982,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000151">
+<Item class="Sound" referent="RBX00000154">
 <Properties>
 <string name="Name">VictorySound</string>
 <Content name="SoundId"><url>rbxassetid://9114854738</url></Content>
@@ -7987,7 +7990,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000152">
+<Item class="Sound" referent="RBX00000155">
 <Properties>
 <string name="Name">DoorCreak</string>
 <Content name="SoundId"><url>rbxassetid://9114263621</url></Content>
@@ -7995,7 +7998,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000153">
+<Item class="Sound" referent="RBX00000156">
 <Properties>
 <string name="Name">WhisperSound</string>
 <Content name="SoundId"><url>rbxassetid://9113489604</url></Content>
@@ -8003,7 +8006,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
-<Item class="Sound" referent="RBX00000154">
+<Item class="Sound" referent="RBX00000157">
 <Properties>
 <string name="Name">TruckEngine</string>
 <Content name="SoundId"><url>rbxassetid://9114229867</url></Content>
@@ -8014,7 +8017,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === TEAMS === -->
-<Item class="Teams" referent="RBX00000169">
+<Item class="Teams" referent="RBX0000016C">
 <Properties>
 <string name="Name">Teams</string>
 </Properties>

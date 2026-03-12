@@ -117,6 +117,10 @@ local function updateHUD(data)
 		-- Show success feedback
 		playSound("CookingSound")
 		showFloatingText("+$" .. Config.CURRENCY_PER_SALE, Color3.fromRGB(0, 255, 0))
+		updateOrderScreen("ORDER SERVED!\n+$" .. Config.CURRENCY_PER_SALE)
+		task.delay(3, function()
+			updateOrderScreen("Waiting for customers...")
+		end)
 	end
 	if data.messCleared then
 		showFloatingText("Mess Cleaned!", Color3.fromRGB(100, 200, 255))
@@ -196,9 +200,11 @@ end
 -- === PROXIMITY PROMPTS SETUP ===
 -- Add ProximityPrompts to key objects on load
 task.spawn(function()
-	-- Fridge prompt
+	-- Fridge prompt (on door for better interaction feel)
+	local fridgeDoor = workspace:WaitForChild("FridgeDoor", 10)
 	local fridge = workspace:WaitForChild("Fridge", 10)
-	if fridge and not fridge:FindFirstChild("FridgePrompt") then
+	local fridgeTarget = fridgeDoor or fridge
+	if fridgeTarget and not fridgeTarget:FindFirstChild("FridgePrompt") then
 		local prompt = Instance.new("ProximityPrompt")
 		prompt.Name = "FridgePrompt"
 		prompt.ActionText = "Grab Batter"
@@ -206,10 +212,11 @@ task.spawn(function()
 		prompt.MaxActivationDistance = 8
 		prompt.HoldDuration = 0
 		prompt.KeyboardKeyCode = Enum.KeyCode.F
-		prompt.Parent = fridge
+		prompt.Parent = fridgeTarget
 		prompt.Triggered:Connect(function()
 			Remotes:WaitForChild("GrabBatter"):FireServer()
 			playSound("DoorCreak")
+			animateFridgeOpen()
 		end)
 	end
 
@@ -262,25 +269,62 @@ task.spawn(function()
 	end
 end)
 
+-- === FRIDGE DOOR ANIMATION ===
+local function animateFridgeOpen()
+	local fridgeDoor = workspace:FindFirstChild("FridgeDoor")
+	local fridgeBatter = workspace:FindFirstChild("FridgeBatter")
+	if not fridgeDoor then return end
+
+	-- Show batter inside
+	if fridgeBatter then fridgeBatter.Transparency = 0 end
+
+	-- Slide door to the side (open effect)
+	local originalPos = fridgeDoor.CFrame
+	local openPos = fridgeDoor.CFrame * CFrame.new(2.5, 0, 0)
+	TweenService:Create(fridgeDoor, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CFrame = openPos}):Play()
+
+	-- Close after delay
+	task.delay(1.5, function()
+		TweenService:Create(fridgeDoor, TweenInfo.new(0.4, Enum.EasingStyle.Quad), {CFrame = originalPos}):Play()
+		task.delay(0.4, function()
+			if fridgeBatter then fridgeBatter.Transparency = 1 end
+		end)
+	end)
+end
+
+-- === LED ORDER SCREEN UPDATE ===
+local function updateOrderScreen(text)
+	local screen = workspace:FindFirstChild("OrderScreen")
+	if not screen then return end
+	local gui = screen:FindFirstChild("OrderDisplay")
+	if not gui then return end
+	local ordersText = gui:FindFirstChild("OrdersText")
+	if ordersText then
+		ordersText.Text = text
+	end
+end
+
 -- === PHONE SYSTEM ===
 local function showPhone(active)
 	isPhoneActive = active
 	phoneScreenGui.Enabled = active
+	-- Also ensure the child frames are visible
+	phoneFrame.Visible = active
+	dialogueFrame.Visible = active
 	dialogueSkipRequested = false
 	phoneDialogueComplete = false
 	if active then
-		dialogueFrame.Visible = true
 		-- Phone ring sound
 		playSound("PhoneRing")
 	else
-		dialogueFrame.Visible = false
 		stopSound("PhoneRing")
 	end
 end
 
 local function showDialogue(text, lineNum, totalLines)
-	-- Ensure phone screen is enabled and dialogue visible
+	-- Ensure phone screen is enabled and all frames visible
 	phoneScreenGui.Enabled = true
+	phoneFrame.Visible = true
 	dialogueFrame.Visible = true
 	dialogueSkipRequested = false
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
@@ -636,12 +680,13 @@ UserInputService.InputBegan:Connect(function(input, processed)
 		-- Grab batter from fridge (when near fridge)
 		local character = player.Character
 		if character then
-			local fridge = workspace:FindFirstChild("Fridge")
-			if fridge then
-				local dist = (character.HumanoidRootPart.Position - fridge.Position).Magnitude
+			local fridgePart = workspace:FindFirstChild("FridgeDoor") or workspace:FindFirstChild("Fridge")
+			if fridgePart then
+				local dist = (character.HumanoidRootPart.Position - fridgePart.Position).Magnitude
 				if dist < 8 then
 					Remotes:WaitForChild("GrabBatter"):FireServer()
 					playSound("DoorCreak")
+					animateFridgeOpen()
 				end
 			end
 		end
@@ -822,6 +867,22 @@ Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcMode
 	if npcType ~= "NormalCustomer" then
 		playSound("WhisperSound")
 	end
+	-- Update LED order screen
+	local orderText = "NEW CUSTOMER\n"
+	if npcType == "ChineseGuy" then
+		orderText = orderText .. "Chinese Hat Man\nWaiting for order..."
+	elseif npcType == "SareeWoman" then
+		orderText = orderText .. "Saree Woman\nWaiting for order..."
+	elseif npcType == "DancingGuy" then
+		orderText = orderText .. "Dancing Man\n⚠ DO NOT SERVE ⚠"
+	elseif npcType == "Suthan" then
+		orderText = orderText .. "SUTHAN\n⚠ DANGER ⚠"
+	elseif npcType == "NakedGuy" then
+		orderText = orderText .. "???\nRUN THROUGH!"
+	else
+		orderText = orderText .. "Customer\nWaiting for order..."
+	end
+	updateOrderScreen(orderText)
 end)
 
 Remotes:WaitForChild("NPCDialogue").OnClientEvent:Connect(function(npcType, dialogue)

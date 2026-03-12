@@ -363,9 +363,66 @@ def build_restaurant():
     parts.append(make_part("CounterTop", 0, 4.1, 5, 13, 0.3, 2.5,
                            color=(0.5, 0.35, 0.2), material=256))
 
-    # Counter target (where NPCs walk to)
-    parts.append(make_part("CounterTarget", 0, 1, 8, 1, 1, 1,
+    # Counter target (where NPCs walk to - in front of counter, customer side)
+    parts.append(make_part("CounterTarget", 0, 1, 7, 1, 1, 1,
                            color=(0,1,0), transparency=1, cancollide=False))
+
+    # == LED ORDER DISPLAY SCREEN (mounted on wall behind counter) ==
+    led_screen_ref = ref()
+    led_surface_ref = ref()
+    led_title_ref = ref()
+    led_orders_ref = ref()
+    led_screen_xml = f'''<Item class="Part" referent="{led_screen_ref}">
+<Properties>
+{prop_string("Name", "OrderScreen")}
+{prop_bool("Anchored", True)}
+{prop_bool("CanCollide", True)}
+{prop_cframe("CFrame", 0, 7.5, 4)}
+<Color3uint8 name="Color3uint8">{color_float_to_uint8(0.05, 0.05, 0.08)}</Color3uint8>
+{prop_token("Material", 272)}
+{prop_vector3("size", 8, 4, 0.3)}
+{prop_token("shape", 1)}
+{prop_float("Transparency", 0)}
+</Properties>
+{make_pointlight(0.6, (0.2, 0.8, 0.2), 10)}
+<Item class="SurfaceGui" referent="{led_surface_ref}">
+<Properties>
+{prop_string("Name", "OrderDisplay")}
+{prop_token("Face", 5)}
+{prop_bool("Active", False)}
+{prop_bool("ClipsDescendants", True)}
+</Properties>
+<Item class="TextLabel" referent="{led_title_ref}">
+<Properties>
+{prop_string("Name", "TitleText")}
+{prop_string("Text", "=== ORDERS ===")}
+{prop_udim2("Position", 0, 0, 0, 0)}
+{prop_udim2("Size", 1, 0, 0.2, 0)}
+{prop_color3("TextColor3", 0, 1, 0)}
+{prop_float("BackgroundTransparency", 1)}
+{prop_token("Font", 8)}
+{prop_bool("TextScaled", True)}
+</Properties>
+</Item>
+<Item class="TextLabel" referent="{led_orders_ref}">
+<Properties>
+{prop_string("Name", "OrdersText")}
+{prop_string("Text", "Waiting for customers...")}
+{prop_udim2("Position", 0, 0, 0.2, 0)}
+{prop_udim2("Size", 1, 0, 0.8, 0)}
+{prop_color3("TextColor3", 0, 0.9, 0)}
+{prop_float("BackgroundTransparency", 1)}
+{prop_token("Font", 4)}
+{prop_bool("TextScaled", True)}
+{prop_bool("TextWrapped", True)}
+</Properties>
+</Item>
+</Item>
+</Item>'''
+    parts.append(led_screen_xml)
+    # LED screen frame/border (metallic rim)
+    parts.append(make_part("OrderScreenFrame", 0, 7.5, 3.8, 8.5, 4.5, 0.15,
+                           color=(0.3, 0.3, 0.35), material=272))
 
     # == KITCHEN AREA ==
     # Kitchen floor (slightly raised)
@@ -381,14 +438,23 @@ def build_restaurant():
                            color=(0.3, 0.3, 0.3), material=272))
 
     # == FRIDGE ==
+    # Fridge body (back + sides)
     parts.append(make_part("Fridge", -12, 3.5, -12, 3, 7, 2.5,
                            color=(0.7, 0.7, 0.75), material=272))
+    # Fridge door (separate part for open/close animation)
+    parts.append(make_part("FridgeDoor", -12, 3.5, -10.7, 3, 6.8, 0.15,
+                           color=(0.72, 0.72, 0.77), material=272))
     # Fridge handle
-    parts.append(make_part("FridgeHandle", -10.5, 4, -10.8, 0.2, 2, 0.2,
+    parts.append(make_part("FridgeHandle", -10.8, 4, -10.6, 0.2, 2, 0.2,
                            color=(0.5, 0.5, 0.5), material=272))
+    # Batter inside fridge (visible when door opens)
+    parts.append(make_part("FridgeBatter", -12, 2.5, -12, 1.2, 1.8, 1,
+                           color=(0.9, 0.85, 0.7), material=256, transparency=1))
 
-    # == DINING TABLES (realistic Roblox scale) ==
-    for i, (tx, tz) in enumerate([(-8, 10), (0, 10), (8, 10), (-8, 2), (8, 2)]):
+    # == DINING TABLES (center table removed for clear NPC path to counter) ==
+    # Table positions: left-front, right-front, left-back, right-back (no center)
+    table_positions = [(-8, 10), (8, 10), (-8, 2), (8, 2)]
+    for i, (tx, tz) in enumerate(table_positions):
         # Table top: 6 wide, 0.5 thick, 4 deep
         parts.append(make_part(f"Table{i+1}", tx, 3.5, tz, 6, 0.5, 4,
                                color=(0.4, 0.28, 0.18), material=256))
@@ -396,14 +462,50 @@ def build_restaurant():
         for lx, lz in [(-2.5, -1.5), (2.5, -1.5), (-2.5, 1.5), (2.5, 1.5)]:
             parts.append(make_part(f"TableLeg{i+1}_{lx}_{lz}", tx+lx, 1.75, tz+lz, 0.4, 3.5, 0.4,
                                    color=(0.3, 0.2, 0.12), material=256))
+        # Menu card on each table (small standing card)
+        menu_card_ref = ref()
+        menu_card_surface_ref = ref()
+        menu_card_text_ref = ref()
+        menu_card_xml = f'''<Item class="Part" referent="{menu_card_ref}">
+<Properties>
+{prop_string("Name", f"MenuCard{i+1}")}
+{prop_bool("Anchored", True)}
+{prop_bool("CanCollide", True)}
+{prop_cframe("CFrame", tx, 4.3, tz)}
+<Color3uint8 name="Color3uint8">{color_float_to_uint8(0.9, 0.85, 0.7)}</Color3uint8>
+{prop_token("Material", 256)}
+{prop_vector3("size", 1, 1.4, 0.1)}
+{prop_token("shape", 1)}
+{prop_float("Transparency", 0)}
+</Properties>
+<Item class="SurfaceGui" referent="{menu_card_surface_ref}">
+<Properties>
+{prop_string("Name", "MenuText")}
+{prop_token("Face", 5)}
+{prop_bool("Active", False)}
+</Properties>
+<Item class="TextLabel" referent="{menu_card_text_ref}">
+<Properties>
+{prop_string("Name", "MenuLabel")}
+{prop_string("Text", "MENU\\nDosa  $150\\nSoda  $150\\nAyran  $150")}
+{prop_udim2("Position", 0, 0, 0, 0)}
+{prop_udim2("Size", 1, 0, 1, 0)}
+{prop_color3("TextColor3", 0.2, 0.1, 0)}
+{prop_float("BackgroundTransparency", 1)}
+{prop_token("Font", 4)}
+{prop_bool("TextScaled", True)}
+</Properties>
+</Item>
+</Item>
+</Item>'''
+        parts.append(menu_card_xml)
 
-    # == CHAIRS (realistic size, 2 per table) ==
+    # == CHAIRS (2 per table, matching 4 tables) ==
     chair_positions = [
-        (-8, 11.8), (-8, 8.2),   # Table 1
-        (0, 11.8), (0, 8.2),     # Table 2
-        (8, 11.8), (8, 8.2),     # Table 3
-        (-8, 3.8), (-8, 0.2),    # Table 4
-        (8, 3.8), (8, 0.2),      # Table 5
+        (-8, 11.8), (-8, 8.2),   # Table 1 (left-front)
+        (8, 11.8), (8, 8.2),     # Table 2 (right-front)
+        (-8, 3.8), (-8, 0.2),    # Table 3 (left-back)
+        (8, 3.8), (8, 0.2),      # Table 4 (right-back)
     ]
     for i, (cx, cz) in enumerate(chair_positions):
         # Chair seat: 2.5 wide, 0.4 thick, 2.5 deep
@@ -733,9 +835,9 @@ def build_restaurant():
         cctv_parts.append(make_part(name, cx, cy, cz, 0.5, 0.5, 0.8,
                                     color=(0.2, 0.2, 0.2), material=272))
 
-    # == NPC SPAWN POINTS ==
+    # == NPC SPAWN POINTS (just outside entrance, so they walk in through door) ==
     spawn_parts = []
-    spawn_positions = [(0, 1, 20), (-8, 1, 20), (8, 1, 20)]
+    spawn_positions = [(0, 1, 18), (-3, 1, 18), (3, 1, 18)]
     for i, (sx, sy, sz) in enumerate(spawn_positions):
         spawn_parts.append(make_part(f"Spawn{i+1}", sx, sy, sz, 1, 1, 1,
                                      transparency=1, cancollide=False))
@@ -810,7 +912,7 @@ def build_ui():
                    ])),
     ])
     phone = make_frame("PhoneUI", "0,0,0,0", "1,0,1,0", bg_color=(0,0,0),
-                       bg_transparency=0.5, visible=False, children=phone_children, zindex=5)
+                       bg_transparency=0.5, visible=True, children=phone_children, zindex=5)
 
     # --- Dialogue UI ---
     dialogue_children = "\n".join([
@@ -827,7 +929,7 @@ def build_ui():
                    ])),
     ])
     dialogue = make_frame("DialogueUI", "0,0,0,0", "1,0,1,0", bg_transparency=1,
-                          visible=False, children=dialogue_children, zindex=6)
+                          visible=True, children=dialogue_children, zindex=6)
 
     # --- CCTV UI ---
     cctv_children = "\n".join([

@@ -380,6 +380,10 @@ local function createNPCModel(npcType, template)
 	leftLeg.Position = torso.Position + Vector3.new(-0.5, -2, 0)
 	rightLeg.Position = torso.Position + Vector3.new(0.5, -2, 0)
 
+	-- Make all body parts non-colliding so NPCs walk through furniture
+	torso.CanCollide = false
+	head.CanCollide = false
+
 	-- Humanoid
 	local humanoid = Instance.new("Humanoid")
 	humanoid.WalkSpeed = template.walkSpeed
@@ -450,10 +454,19 @@ local function spawnNPC(npcType, targetPlayer)
 	local dialogueLine = enterDialogue[math.random(1, #enterDialogue)]
 	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine)
 
-	-- NPC walks to counter
+	-- NPC walks to counter (through the front entrance, then to counter)
 	local humanoid = model:FindFirstChildOfClass("Humanoid")
 	if humanoid then
-		humanoid:MoveTo(getCounterPoint())
+		local counterPos = getCounterPoint()
+		-- First walk to the door entrance (x=0, z=14) then to counter
+		local doorPos = Vector3.new(0, counterPos.Y, 14)
+		humanoid:MoveTo(doorPos)
+		humanoid.MoveToFinished:Connect(function(reached)
+			if reached and model and model.Parent then
+				-- Now walk to counter
+				humanoid:MoveTo(counterPos)
+			end
+		end)
 	end
 
 	-- Special behaviors
