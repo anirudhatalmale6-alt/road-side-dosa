@@ -457,6 +457,97 @@ def build_restaurant():
     parts.append(make_part("Sink", 8, 2.5, -10, 2.5, 1.5, 2,
                            color=(0.6, 0.6, 0.65), material=272))
 
+    # == ADDITIONAL RESTAURANT PROPS ==
+
+    # Menu board on back wall
+    parts.append(make_part("MenuBoard", 0, 8, -14.7, 6, 3, 0.2,
+                           color=(0.1, 0.1, 0.1), material=256))
+    # Menu board light
+    parts.append(make_part("MenuBoardLight", 0, 9.8, -14.5, 6.5, 0.2, 0.3,
+                           color=(0.8, 0.8, 0.8), material=272,
+                           children=make_spotlight(0.6, (1, 0.95, 0.85), 10, 120, 1)))
+
+    # Shelf with jars (behind counter)
+    parts.append(make_part("Shelf1", -12, 5, -14.5, 8, 0.3, 1.5,
+                           color=(0.4, 0.28, 0.18), material=256))
+    parts.append(make_part("Shelf2", -12, 7, -14.5, 8, 0.3, 1.5,
+                           color=(0.4, 0.28, 0.18), material=256))
+    # Jars on shelf
+    for j, jx in enumerate([-15, -13, -11, -9]):
+        parts.append(make_part(f"Jar{j+1}", jx, 5.6, -14.5, 0.6, 1, 0.6,
+                               color=(0.3, 0.6, 0.3), material=256, transparency=0.3))
+    # Spice containers
+    for j, jx in enumerate([-14, -12, -10]):
+        parts.append(make_part(f"Spice{j+1}", jx, 7.6, -14.5, 0.8, 0.8, 0.6,
+                               color=(0.7, 0.4, 0.1), material=256))
+
+    # Cash register on counter
+    parts.append(make_part("CashRegister", 4, 4.5, 5, 1.2, 1, 1,
+                           color=(0.15, 0.15, 0.15), material=272))
+    parts.append(make_part("CashScreen", 4, 5.2, 4.7, 0.8, 0.5, 0.1,
+                           color=(0.1, 0.3, 0.1), material=256))
+
+    # Paper towel roll holder
+    parts.append(make_part("PaperTowel", 10, 4, -8, 0.4, 0.8, 0.4,
+                           color=(1, 1, 1), material=256))
+
+    # Trash bin
+    parts.append(make_part("TrashBin", 12, 1.5, -6, 1.5, 3, 1.5,
+                           color=(0.3, 0.3, 0.35), material=272))
+
+    # Dosa batter bucket (near tawa)
+    parts.append(make_part("BatterBucket", -3, 1.5, -10, 1, 1.5, 1,
+                           color=(0.8, 0.8, 0.85), material=272))
+
+    # Wall clock
+    parts.append(make_part("WallClock", -19.7, 8, 5, 0.2, 1.5, 1.5,
+                           color=(0.3, 0.2, 0.1), material=256, shape=2))
+
+    # Outdoor elements
+    # Street lamp
+    parts.append(make_part("StreetLampPole", -15, 5, 25, 0.3, 10, 0.3,
+                           color=(0.3, 0.3, 0.3), material=272))
+    parts.append(make_part("StreetLampHead", -15, 10.5, 25, 1.5, 0.3, 1.5,
+                           color=(0.2, 0.2, 0.2), material=272,
+                           children=make_pointlight(0.8, (1, 0.8, 0.5), 35)))
+    # Second street lamp
+    parts.append(make_part("StreetLampPole2", 15, 5, 25, 0.3, 10, 0.3,
+                           color=(0.3, 0.3, 0.3), material=272))
+    parts.append(make_part("StreetLampHead2", 15, 10.5, 25, 1.5, 0.3, 1.5,
+                           color=(0.2, 0.2, 0.2), material=272,
+                           children=make_pointlight(0.8, (1, 0.8, 0.5), 35)))
+
+    # Dumpster outside
+    parts.append(make_part("Dumpster", -25, 2, 20, 3, 3, 2,
+                           color=(0.2, 0.35, 0.2), material=272))
+
+    # Sidewalk
+    parts.append(make_part("Sidewalk", 0, -0.1, 18, 45, 0.3, 5,
+                           color=(0.5, 0.5, 0.5), material=256))
+
+    # Potted plant at entrance
+    parts.append(make_part("PotPlant1", -10, 1.5, 14, 1, 3, 1,
+                           color=(0.2, 0.5, 0.15), material=256))
+    parts.append(make_part("Pot1", -10, 0.5, 14, 1.2, 1, 1.2,
+                           color=(0.5, 0.3, 0.15), material=256))
+    # Another plant
+    parts.append(make_part("PotPlant2", 10, 1.5, 14, 1, 3, 1,
+                           color=(0.2, 0.5, 0.15), material=256))
+    parts.append(make_part("Pot2", 10, 0.5, 14, 1.2, 1, 1.2,
+                           color=(0.5, 0.3, 0.15), material=256))
+
+    # Ceiling fan (not spinning - creepy stopped fan)
+    parts.append(make_part("CeilingFanBase", 0, 11.5, 3, 0.5, 0.5, 0.5,
+                           color=(0.3, 0.3, 0.3), material=272))
+    parts.append(make_part("FanBlade1", 0, 11.3, 3, 4, 0.1, 0.5,
+                           color=(0.35, 0.25, 0.15), material=256))
+    parts.append(make_part("FanBlade2", 0, 11.3, 3, 0.5, 0.1, 4,
+                           color=(0.35, 0.25, 0.15), material=256))
+
+    # Blood stain on floor (subtle horror detail, appears Night 3+)
+    parts.append(make_part("BloodStain", -6, 0.52, 8, 2, 0.01, 1.5,
+                           color=(0.3, 0.05, 0.05), material=256, transparency=0.6))
+
     # == CCTV CAMERAS ==
     cctv_positions = [
         ("CCTV_Front", 0, 11, 14, 0, 0, -1),    # Looking at entrance
@@ -715,14 +806,17 @@ def build_sounds():
 <Properties>
 {prop_string("Name", "SoundService")}
 </Properties>
-{make_sound("AmbientHorror", "", 0.3, True)}
-{make_sound("JumpScareSound", "", 1.0, False)}
-{make_sound("PhoneRing", "", 0.8, False)}
-{make_sound("CookingSound", "", 0.5, False)}
-{make_sound("ShutterSound", "", 0.7, False)}
-{make_sound("HeartbeatSound", "", 0.4, True)}
-{make_sound("FootstepSound", "", 0.3, False)}
-{make_sound("VictorySound", "", 0.8, False)}
+{make_sound("AmbientHorror", "rbxassetid://9112854440", 0.3, True)}
+{make_sound("JumpScareSound", "rbxassetid://9114265792", 1.0, False)}
+{make_sound("PhoneRing", "rbxassetid://9114220987", 0.8, False)}
+{make_sound("CookingSound", "rbxassetid://9114248953", 0.5, False)}
+{make_sound("ShutterSound", "rbxassetid://9114254790", 0.7, False)}
+{make_sound("HeartbeatSound", "rbxassetid://9113655458", 0.4, True)}
+{make_sound("FootstepSound", "rbxassetid://9114267993", 0.3, False)}
+{make_sound("VictorySound", "rbxassetid://9114854738", 0.8, False)}
+{make_sound("DoorCreak", "rbxassetid://9114263621", 0.6, False)}
+{make_sound("WhisperSound", "rbxassetid://9113489604", 0.3, False)}
+{make_sound("TruckEngine", "rbxassetid://9114229867", 0.5, False)}
 </Item>'''
 
 # === ASSEMBLE FULL RBXLX ===
