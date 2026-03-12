@@ -14,185 +14,264 @@
 <Item class="Part" referent="RBX00000001">
 <Properties>
 <string name="Name">Floor</string>
-<Vector3 name="Position"><X>0</X><Y>0</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>40</X><Y>1</Y><Z>30</Z></Vector3>
-<Color3 name="Color3"><R>0.25</R><G>0.18</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>0</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4282330398</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>40</X><Y>1</Y><Z>30</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000002">
 <Properties>
 <string name="Name">WallBack</string>
-<Vector3 name="Position"><X>0</X><Y>6</Y><Z>-15</Z></Vector3>
-<Vector3 name="size"><X>40</X><Y>12</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>6</Y><Z>-15</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038957</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>40</X><Y>12</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000003">
 <Properties>
 <string name="Name">WallLeft</string>
-<Vector3 name="Position"><X>-20</X><Y>6</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>12</Y><Z>30</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-20</X><Y>6</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038957</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.5</X><Y>12</Y><Z>30</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000004">
 <Properties>
 <string name="Name">WallRight</string>
-<Vector3 name="Position"><X>20</X><Y>6</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>12</Y><Z>30</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>20</X><Y>6</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038957</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.5</X><Y>12</Y><Z>30</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000005">
 <Properties>
 <string name="Name">WallFrontLeft</string>
-<Vector3 name="Position"><X>-15</X><Y>6</Y><Z>15</Z></Vector3>
-<Vector3 name="size"><X>10</X><Y>12</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-15</X><Y>6</Y><Z>15</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038957</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>10</X><Y>12</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000006">
 <Properties>
 <string name="Name">WallFrontRight</string>
-<Vector3 name="Position"><X>15</X><Y>6</Y><Z>15</Z></Vector3>
-<Vector3 name="size"><X>10</X><Y>12</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>15</X><Y>6</Y><Z>15</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038957</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>10</X><Y>12</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000007">
 <Properties>
 <string name="Name">WallFrontTop</string>
-<Vector3 name="Position"><X>0</X><Y>10.5</Y><Z>15</Z></Vector3>
-<Vector3 name="size"><X>20</X><Y>3</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>10.5</Y><Z>15</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038957</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>20</X><Y>3</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000008">
 <Properties>
 <string name="Name">Ceiling</string>
-<Vector3 name="Position"><X>0</X><Y>12</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>40</X><Y>0.5</Y><Z>30</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.15</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>12</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281542169</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>40</X><Y>0.5</Y><Z>30</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000009">
 <Properties>
 <string name="Name">Counter</string>
-<Vector3 name="Position"><X>0</X><Y>2</Y><Z>5</Z></Vector3>
-<Vector3 name="size"><X>12</X><Y>4</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.3</G><B>0.2</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>2</Y><Z>5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284894259</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>12</X><Y>4</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000000A">
 <Properties>
 <string name="Name">CounterTop</string>
-<Vector3 name="Position"><X>0</X><Y>4.1</Y><Z>5</Z></Vector3>
-<Vector3 name="size"><X>13</X><Y>0.3</Y><Z>2.5</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.35</G><B>0.2</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>4.1</Y><Z>5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286535987</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>13</X><Y>0.3</Y><Z>2.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000000B">
 <Properties>
 <string name="Name">CounterTarget</string>
-<Vector3 name="Position"><X>0</X><Y>1</Y><Z>8</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0</R><G>1</G><B>0</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">1</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>1</Y><Z>8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4278255360</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">1</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000000C">
 <Properties>
 <string name="Name">KitchenFloor</string>
-<Vector3 name="Position"><X>0</X><Y>0.2</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>20</X><Y>0.4</Y><Z>12</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>0.2</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>20</X><Y>0.4</Y><Z>12</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000000E">
 <Properties>
 <string name="Name">Tawa</string>
-<Vector3 name="Position"><X>-5</X><Y>3.5</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>3</Z></Vector3>
-<Color3 name="Color3"><R>0.15</R><G>0.15</G><B>0.15</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>3.5</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4280690214</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>3</Z></Vector3>
 <token name="shape">2</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX0000000D">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.8</float>
 <Color3 name="Color"><R>1</R><G>0.5</G><B>0.1</B></Color3>
 <float name="Range">8</float>
@@ -203,448 +282,640 @@
 <Item class="Part" referent="RBX0000000F">
 <Properties>
 <string name="Name">TawaStand</string>
-<Vector3 name="Position"><X>-5</X><Y>2</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>2</X><Y>3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>2</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>2</X><Y>3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000010">
 <Properties>
 <string name="Name">Fridge</string>
-<Vector3 name="Position"><X>-12</X><Y>3.5</Y><Z>-12</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>7</Y><Z>2.5</Z></Vector3>
-<Color3 name="Color3"><R>0.7</R><G>0.7</G><B>0.75</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>3.5</Y><Z>-12</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4289901247</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>3</X><Y>7</Y><Z>2.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000011">
 <Properties>
 <string name="Name">FridgeHandle</string>
-<Vector3 name="Position"><X>-10.5</X><Y>4</Y><Z>-10.8</Z></Vector3>
-<Vector3 name="size"><X>0.2</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-10.5</X><Y>4</Y><Z>-10.8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.2</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000012">
 <Properties>
 <string name="Name">Table1</string>
-<Vector3 name="Position"><X>-8</X><Y>2</Y><Z>10</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>2</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000013">
 <Properties>
 <string name="Name">TableLeg1</string>
-<Vector3 name="Position"><X>-8</X><Y>1</Y><Z>10</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>1</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000014">
 <Properties>
 <string name="Name">Table2</string>
-<Vector3 name="Position"><X>0</X><Y>2</Y><Z>10</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>2</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000015">
 <Properties>
 <string name="Name">TableLeg2</string>
-<Vector3 name="Position"><X>0</X><Y>1</Y><Z>10</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>1</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000016">
 <Properties>
 <string name="Name">Table3</string>
-<Vector3 name="Position"><X>8</X><Y>2</Y><Z>10</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>2</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000017">
 <Properties>
 <string name="Name">TableLeg3</string>
-<Vector3 name="Position"><X>8</X><Y>1</Y><Z>10</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>1</Y><Z>10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000018">
 <Properties>
 <string name="Name">Table4</string>
-<Vector3 name="Position"><X>-8</X><Y>2</Y><Z>2</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>2</Y><Z>2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000019">
 <Properties>
 <string name="Name">TableLeg4</string>
-<Vector3 name="Position"><X>-8</X><Y>1</Y><Z>2</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>1</Y><Z>2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000001A">
 <Properties>
 <string name="Name">Table5</string>
-<Vector3 name="Position"><X>8</X><Y>2</Y><Z>2</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>2</Y><Z>2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>3</X><Y>0.3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000001B">
 <Properties>
 <string name="Name">TableLeg5</string>
-<Vector3 name="Position"><X>8</X><Y>1</Y><Z>2</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>1</Y><Z>2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183902</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.3</X><Y>2</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000001C">
 <Properties>
 <string name="Name">Chair1</string>
-<Vector3 name="Position"><X>-8</X><Y>1.2</Y><Z>11.5</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>1.2</Y><Z>11.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000001D">
 <Properties>
 <string name="Name">ChairBack1</string>
-<Vector3 name="Position"><X>-8</X><Y>2.5</Y><Z>12.2</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>2.5</Y><Z>12.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000001E">
 <Properties>
 <string name="Name">Chair2</string>
-<Vector3 name="Position"><X>0</X><Y>1.2</Y><Z>11.5</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>1.2</Y><Z>11.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000001F">
 <Properties>
 <string name="Name">ChairBack2</string>
-<Vector3 name="Position"><X>0</X><Y>2.5</Y><Z>12.2</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>2.5</Y><Z>12.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000020">
 <Properties>
 <string name="Name">Chair3</string>
-<Vector3 name="Position"><X>8</X><Y>1.2</Y><Z>11.5</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>1.2</Y><Z>11.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000021">
 <Properties>
 <string name="Name">ChairBack3</string>
-<Vector3 name="Position"><X>8</X><Y>2.5</Y><Z>12.2</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>2.5</Y><Z>12.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000022">
 <Properties>
 <string name="Name">Chair4</string>
-<Vector3 name="Position"><X>-8</X><Y>1.2</Y><Z>3.5</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>1.2</Y><Z>3.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000023">
 <Properties>
 <string name="Name">ChairBack4</string>
-<Vector3 name="Position"><X>-8</X><Y>2.5</Y><Z>4.2</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>2.5</Y><Z>4.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000024">
 <Properties>
 <string name="Name">Chair5</string>
-<Vector3 name="Position"><X>8</X><Y>1.2</Y><Z>3.5</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>1.2</Y><Z>3.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000025">
 <Properties>
 <string name="Name">ChairBack5</string>
-<Vector3 name="Position"><X>8</X><Y>2.5</Y><Z>4.2</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.22</G><B>0.12</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>2.5</Y><Z>4.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284037150</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.5</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000026">
 <Properties>
 <string name="Name">WindowFrame_left</string>
-<Vector3 name="Position"><X>-5</X><Y>6</Y><Z>15.2</Z></Vector3>
-<Vector3 name="size"><X>5</X><Y>5</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>6</Y><Z>15.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183897</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>5</X><Y>5</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000027">
 <Properties>
 <string name="Name">WindowGlass_left</string>
-<Vector3 name="Position"><X>-5</X><Y>6</Y><Z>15.1</Z></Vector3>
-<Vector3 name="size"><X>4.5</X><Y>4.5</Y><Z>0.1</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.7</G><B>0.9</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.6</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>6</Y><Z>15.1</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286558949</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>4.5</X><Y>4.5</Y><Z>0.1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.6</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000028">
 <Properties>
 <string name="Name">Shutter_left</string>
-<Vector3 name="Position"><X>-5</X><Y>6</Y><Z>15.3</Z></Vector3>
-<Vector3 name="size"><X>4.8</X><Y>4.8</Y><Z>0.15</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0.8</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>6</Y><Z>15.3</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>4.8</X><Y>4.8</Y><Z>0.15</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.8</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000029">
 <Properties>
 <string name="Name">WindowFrame_right</string>
-<Vector3 name="Position"><X>5</X><Y>6</Y><Z>15.2</Z></Vector3>
-<Vector3 name="size"><X>5</X><Y>5</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>5</X><Y>6</Y><Z>15.2</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183897</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>5</X><Y>5</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000002A">
 <Properties>
 <string name="Name">WindowGlass_right</string>
-<Vector3 name="Position"><X>5</X><Y>6</Y><Z>15.1</Z></Vector3>
-<Vector3 name="size"><X>4.5</X><Y>4.5</Y><Z>0.1</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.7</G><B>0.9</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.6</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>5</X><Y>6</Y><Z>15.1</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286558949</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>4.5</X><Y>4.5</Y><Z>0.1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.6</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000002B">
 <Properties>
 <string name="Name">Shutter_right</string>
-<Vector3 name="Position"><X>5</X><Y>6</Y><Z>15.3</Z></Vector3>
-<Vector3 name="size"><X>4.8</X><Y>4.8</Y><Z>0.15</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0.8</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>5</X><Y>6</Y><Z>15.3</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>4.8</X><Y>4.8</Y><Z>0.15</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.8</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000002C">
 <Properties>
 <string name="Name">Shutter_front</string>
-<Vector3 name="Position"><X>0</X><Y>5</Y><Z>15.3</Z></Vector3>
-<Vector3 name="size"><X>9</X><Y>9</Y><Z>0.15</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0.8</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>5</Y><Z>15.3</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>9</X><Y>9</Y><Z>0.15</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.8</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000002D">
 <Properties>
 <string name="Name">Shutters_Marker</string>
-<Vector3 name="Position"><X>0</X><Y>-10</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">1</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>-10</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">1</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000002F">
 <Properties>
 <string name="Name">Phone</string>
-<Vector3 name="Position"><X>6</X><Y>4.3</Y><Z>5</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.3</Y><Z>0.8</Z></Vector3>
-<Color3 name="Color3"><R>0.1</R><G>0.1</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>6</X><Y>4.3</Y><Z>5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4279834905</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.5</X><Y>0.3</Y><Z>0.8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="Sound" referent="RBX0000002E">
 <Properties>
@@ -658,87 +929,124 @@
 <Item class="Part" referent="RBX00000030">
 <Properties>
 <string name="Name">Road</string>
-<Vector3 name="Position"><X>0</X><Y>-0.3</Y><Z>30</Z></Vector3>
-<Vector3 name="size"><X>60</X><Y>0.5</Y><Z>20</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>-0.3</Y><Z>30</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>60</X><Y>0.5</Y><Z>20</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000031">
 <Properties>
 <string name="Name">RoadLine1</string>
-<Vector3 name="Position"><X>0</X><Y>-0.01</Y><Z>30</Z></Vector3>
-<Vector3 name="size"><X>4</X><Y>0.01</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.9</R><G>0.9</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>-0.01</Y><Z>30</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293256473</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>4</X><Y>0.01</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000032">
 <Properties>
 <string name="Name">RoadLine2</string>
-<Vector3 name="Position"><X>-12</X><Y>-0.01</Y><Z>30</Z></Vector3>
-<Vector3 name="size"><X>4</X><Y>0.01</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.9</R><G>0.9</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>-0.01</Y><Z>30</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293256473</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>4</X><Y>0.01</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000033">
 <Properties>
 <string name="Name">RoadLine3</string>
-<Vector3 name="Position"><X>12</X><Y>-0.01</Y><Z>30</Z></Vector3>
-<Vector3 name="size"><X>4</X><Y>0.01</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.9</R><G>0.9</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>12</X><Y>-0.01</Y><Z>30</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293256473</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>4</X><Y>0.01</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000034">
 <Properties>
 <string name="Name">ParkingArea</string>
-<Vector3 name="Position"><X>25</X><Y>-0.2</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>10</X><Y>0.5</Y><Z>10</Z></Vector3>
-<Color3 name="Color3"><R>0.25</R><G>0.25</G><B>0.25</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>25</X><Y>-0.2</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4282335039</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>10</X><Y>0.5</Y><Z>10</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000036">
 <Properties>
 <string name="Name">TerrifierTruck</string>
-<Vector3 name="Position"><X>25</X><Y>3</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>5</X><Y>5</Y><Z>10</Z></Vector3>
-<Color3 name="Color3"><R>0.9</R><G>0.9</G><B>0.95</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>25</X><Y>3</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4293256690</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>5</X><Y>5</Y><Z>10</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+<BinaryString name="AttributesSerialize"><bool name="CursedObject">true</bool><string name="NPCType">TerrifierTruck</string></BinaryString>
 </Properties>
 <Item class="PointLight" referent="RBX00000035">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.3</float>
 <Color3 name="Color"><R>1</R><G>0</G><B>0</B></Color3>
 <float name="Range">15</float>
@@ -749,115 +1057,164 @@
 <Item class="Part" referent="RBX00000037">
 <Properties>
 <string name="Name">TruckRoof</string>
-<Vector3 name="Position"><X>25</X><Y>6</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>5.2</X><Y>0.3</Y><Z>10.2</Z></Vector3>
-<Color3 name="Color3"><R>0.8</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>25</X><Y>6</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4291572531</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>5.2</X><Y>0.3</Y><Z>10.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000038">
 <Properties>
 <string name="Name">BackRoomDoor</string>
-<Vector3 name="Position"><X>0</X><Y>4</Y><Z>-14.8</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>7</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.25</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>4</Y><Z>-14.8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284890918</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>3</X><Y>7</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000039">
 <Properties>
 <string name="Name">BackRoomFloor</string>
-<Vector3 name="Position"><X>0</X><Y>0</Y><Z>-22</Z></Vector3>
-<Vector3 name="size"><X>10</X><Y>1</Y><Z>8</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.15</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>0</Y><Z>-22</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281542169</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>10</X><Y>1</Y><Z>8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000003A">
 <Properties>
 <string name="Name">BackRoomWallL</string>
-<Vector3 name="Position"><X>-5</X><Y>4</Y><Z>-22</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>8</Y><Z>8</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>4</Y><Z>-22</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183910</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.5</X><Y>8</Y><Z>8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000003B">
 <Properties>
 <string name="Name">BackRoomWallR</string>
-<Vector3 name="Position"><X>5</X><Y>4</Y><Z>-22</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>8</Y><Z>8</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>5</X><Y>4</Y><Z>-22</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183910</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.5</X><Y>8</Y><Z>8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000003C">
 <Properties>
 <string name="Name">BackRoomWallBack</string>
-<Vector3 name="Position"><X>0</X><Y>4</Y><Z>-26</Z></Vector3>
-<Vector3 name="size"><X>10</X><Y>8</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>4</Y><Z>-26</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183910</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>10</X><Y>8</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000003D">
 <Properties>
 <string name="Name">SafeRoomTrigger</string>
-<Vector3 name="Position"><X>0</X><Y>2</Y><Z>-22</Z></Vector3>
-<Vector3 name="size"><X>8</X><Y>4</Y><Z>6</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">1</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>2</Y><Z>-22</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>8</X><Y>4</Y><Z>6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">1</float>
+<BinaryString name="AttributesSerialize"><bool name="SafeRoom">true</bool></BinaryString>
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000003F">
 <Properties>
 <string name="Name">NeonSign</string>
-<Vector3 name="Position"><X>0</X><Y>11</Y><Z>15.5</Z></Vector3>
-<Vector3 name="size"><X>10</X><Y>2</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>0.4</G><B>0</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11</Y><Z>15.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294927872</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>10</X><Y>2</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX0000003E">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">2</float>
 <Color3 name="Color"><R>1</R><G>0.5</G><B>0</B></Color3>
 <float name="Range">30</float>
@@ -868,115 +1225,160 @@
 <Item class="Part" referent="RBX00000041">
 <Properties>
 <string name="Name">CeilingLight1</string>
-<Vector3 name="Position"><X>-8</X><Y>11</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>0.95</G><B>0.8</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>11</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294963916</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX00000040">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.5</float>
 <Color3 name="Color"><R>1</R><G>0.9</G><B>0.7</B></Color3>
 <float name="Range">25</float>
 <bool name="Enabled">true</bool>
+<bool name="Controllable">true</bool>
 </Properties>
 </Item>
 </Item>
 <Item class="Part" referent="RBX00000043">
 <Properties>
 <string name="Name">CeilingLight2</string>
-<Vector3 name="Position"><X>0</X><Y>11</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>0.95</G><B>0.8</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294963916</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX00000042">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.5</float>
 <Color3 name="Color"><R>1</R><G>0.9</G><B>0.7</B></Color3>
 <float name="Range">25</float>
 <bool name="Enabled">true</bool>
+<bool name="Controllable">true</bool>
 </Properties>
 </Item>
 </Item>
 <Item class="Part" referent="RBX00000045">
 <Properties>
 <string name="Name">CeilingLight3</string>
-<Vector3 name="Position"><X>8</X><Y>11</Y><Z>0</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>0.95</G><B>0.8</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>11</Y><Z>0</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294963916</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX00000044">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.5</float>
 <Color3 name="Color"><R>1</R><G>0.9</G><B>0.7</B></Color3>
 <float name="Range">25</float>
 <bool name="Enabled">true</bool>
+<bool name="Controllable">true</bool>
 </Properties>
 </Item>
 </Item>
 <Item class="Part" referent="RBX00000047">
 <Properties>
 <string name="Name">CeilingLight4</string>
-<Vector3 name="Position"><X>0</X><Y>11</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>0.95</G><B>0.8</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294963916</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>0.3</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX00000046">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.5</float>
 <Color3 name="Color"><R>1</R><G>0.9</G><B>0.7</B></Color3>
 <float name="Range">25</float>
 <bool name="Enabled">true</bool>
+<bool name="Controllable">true</bool>
 </Properties>
 </Item>
 </Item>
 <Item class="Part" referent="RBX00000048">
 <Properties>
 <string name="Name">GasStove</string>
-<Vector3 name="Position"><X>-5</X><Y>1</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>3.5</X><Y>2</Y><Z>3.5</Z></Vector3>
-<Color3 name="Color3"><R>0.15</R><G>0.15</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>1</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4280690227</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>3.5</X><Y>2</Y><Z>3.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000004A">
 <Properties>
 <string name="Name">Flame</string>
-<Vector3 name="Position"><X>-5</X><Y>3.2</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>0.5</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>0.5</G><B>0</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.3</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-5</X><Y>3.2</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294934272</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>0.5</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.3</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX00000049">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">1.5</float>
 <Color3 name="Color"><R>1</R><G>0.4</G><B>0</B></Color3>
 <float name="Range">6</float>
@@ -987,42 +1389,60 @@
 <Item class="Part" referent="RBX0000004B">
 <Properties>
 <string name="Name">Sink</string>
-<Vector3 name="Position"><X>8</X><Y>2.5</Y><Z>-10</Z></Vector3>
-<Vector3 name="size"><X>2.5</X><Y>1.5</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.6</R><G>0.6</G><B>0.65</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>2.5</Y><Z>-10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4288256421</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>2.5</X><Y>1.5</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000004C">
 <Properties>
 <string name="Name">MenuBoard</string>
-<Vector3 name="Position"><X>0</X><Y>8</Y><Z>-14.7</Z></Vector3>
-<Vector3 name="size"><X>6</X><Y>3</Y><Z>0.2</Z></Vector3>
-<Color3 name="Color3"><R>0.1</R><G>0.1</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>8</Y><Z>-14.7</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4279834905</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>6</X><Y>3</Y><Z>0.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000004E">
 <Properties>
 <string name="Name">MenuBoardLight</string>
-<Vector3 name="Position"><X>0</X><Y>9.8</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>6.5</X><Y>0.2</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.8</R><G>0.8</G><B>0.8</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>9.8</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4291611852</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>6.5</X><Y>0.2</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="SpotLight" referent="RBX0000004D">
 <Properties>
@@ -1038,241 +1458,344 @@
 <Item class="Part" referent="RBX0000004F">
 <Properties>
 <string name="Name">Shelf1</string>
-<Vector3 name="Position"><X>-12</X><Y>5</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>8</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>5</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>8</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000050">
 <Properties>
 <string name="Name">Shelf2</string>
-<Vector3 name="Position"><X>-12</X><Y>7</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>8</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.4</R><G>0.28</G><B>0.18</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>7</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284892973</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>8</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000051">
 <Properties>
 <string name="Name">Jar1</string>
-<Vector3 name="Position"><X>-15</X><Y>5.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.6</G><B>0.3</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.3</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-15</X><Y>5.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283210060</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.3</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000052">
 <Properties>
 <string name="Name">Jar2</string>
-<Vector3 name="Position"><X>-13</X><Y>5.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.6</G><B>0.3</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.3</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-13</X><Y>5.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283210060</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.3</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000053">
 <Properties>
 <string name="Name">Jar3</string>
-<Vector3 name="Position"><X>-11</X><Y>5.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.6</G><B>0.3</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.3</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-11</X><Y>5.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283210060</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.3</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000054">
 <Properties>
 <string name="Name">Jar4</string>
-<Vector3 name="Position"><X>-9</X><Y>5.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.6</G><B>0.3</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.3</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-9</X><Y>5.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283210060</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.6</X><Y>1</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.3</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000055">
 <Properties>
 <string name="Name">Spice1</string>
-<Vector3 name="Position"><X>-14</X><Y>7.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.8</X><Y>0.8</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.7</R><G>0.4</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-14</X><Y>7.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4289881625</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.8</X><Y>0.8</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000056">
 <Properties>
 <string name="Name">Spice2</string>
-<Vector3 name="Position"><X>-12</X><Y>7.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.8</X><Y>0.8</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.7</R><G>0.4</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-12</X><Y>7.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4289881625</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.8</X><Y>0.8</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000057">
 <Properties>
 <string name="Name">Spice3</string>
-<Vector3 name="Position"><X>-10</X><Y>7.6</Y><Z>-14.5</Z></Vector3>
-<Vector3 name="size"><X>0.8</X><Y>0.8</Y><Z>0.6</Z></Vector3>
-<Color3 name="Color3"><R>0.7</R><G>0.4</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-10</X><Y>7.6</Y><Z>-14.5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4289881625</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.8</X><Y>0.8</Y><Z>0.6</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000058">
 <Properties>
 <string name="Name">CashRegister</string>
-<Vector3 name="Position"><X>4</X><Y>4.5</Y><Z>5</Z></Vector3>
-<Vector3 name="size"><X>1.2</X><Y>1</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.15</R><G>0.15</G><B>0.15</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>4</X><Y>4.5</Y><Z>5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4280690214</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>1.2</X><Y>1</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000059">
 <Properties>
 <string name="Name">CashScreen</string>
-<Vector3 name="Position"><X>4</X><Y>5.2</Y><Z>4.7</Z></Vector3>
-<Vector3 name="size"><X>0.8</X><Y>0.5</Y><Z>0.1</Z></Vector3>
-<Color3 name="Color3"><R>0.1</R><G>0.3</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>4</X><Y>5.2</Y><Z>4.7</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4279847961</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.8</X><Y>0.5</Y><Z>0.1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000005A">
 <Properties>
 <string name="Name">PaperTowel</string>
-<Vector3 name="Position"><X>10</X><Y>4</Y><Z>-8</Z></Vector3>
-<Vector3 name="size"><X>0.4</X><Y>0.8</Y><Z>0.4</Z></Vector3>
-<Color3 name="Color3"><R>1</R><G>1</G><B>1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>10</X><Y>4</Y><Z>-8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.4</X><Y>0.8</Y><Z>0.4</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000005B">
 <Properties>
 <string name="Name">TrashBin</string>
-<Vector3 name="Position"><X>12</X><Y>1.5</Y><Z>-6</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.3</G><B>0.35</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>12</X><Y>1.5</Y><Z>-6</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190361</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>1.5</X><Y>3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000005C">
 <Properties>
 <string name="Name">BatterBucket</string>
-<Vector3 name="Position"><X>-3</X><Y>1.5</Y><Z>-10</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>1.5</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.8</R><G>0.8</G><B>0.85</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-3</X><Y>1.5</Y><Z>-10</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4291611864</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>1</X><Y>1.5</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000005D">
 <Properties>
 <string name="Name">WallClock</string>
-<Vector3 name="Position"><X>-19.7</X><Y>8</Y><Z>5</Z></Vector3>
-<Vector3 name="size"><X>0.2</X><Y>1.5</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.2</G><B>0.1</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-19.7</X><Y>8</Y><Z>5</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283183897</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.2</X><Y>1.5</Y><Z>1.5</Z></Vector3>
 <token name="shape">2</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000005E">
 <Properties>
 <string name="Name">StreetLampPole</string>
-<Vector3 name="Position"><X>-15</X><Y>5</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>10</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-15</X><Y>5</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.3</X><Y>10</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000060">
 <Properties>
 <string name="Name">StreetLampHead</string>
-<Vector3 name="Position"><X>-15</X><Y>10.5</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-15</X><Y>10.5</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX0000005F">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.8</float>
 <Color3 name="Color"><R>1</R><G>0.8</G><B>0.5</B></Color3>
 <float name="Range">35</float>
@@ -1283,31 +1806,44 @@
 <Item class="Part" referent="RBX00000061">
 <Properties>
 <string name="Name">StreetLampPole2</string>
-<Vector3 name="Position"><X>15</X><Y>5</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>0.3</X><Y>10</Y><Z>0.3</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>15</X><Y>5</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.3</X><Y>10</Y><Z>0.3</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000063">
 <Properties>
 <string name="Name">StreetLampHead2</string>
-<Vector3 name="Position"><X>15</X><Y>10.5</Y><Z>25</Z></Vector3>
-<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>15</X><Y>10.5</Y><Z>25</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>1.5</X><Y>0.3</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 <Item class="PointLight" referent="RBX00000062">
 <Properties>
+<string name="Name">PointLight</string>
 <float name="Brightness">0.8</float>
 <Color3 name="Color"><R>1</R><G>0.8</G><B>0.5</B></Color3>
 <float name="Range">35</float>
@@ -1318,140 +1854,200 @@
 <Item class="Part" referent="RBX00000064">
 <Properties>
 <string name="Name">Dumpster</string>
-<Vector3 name="Position"><X>-25</X><Y>2</Y><Z>20</Z></Vector3>
-<Vector3 name="size"><X>3</X><Y>3</Y><Z>2</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.35</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-25</X><Y>2</Y><Z>20</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281555251</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>3</X><Y>3</Y><Z>2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000065">
 <Properties>
 <string name="Name">Sidewalk</string>
-<Vector3 name="Position"><X>0</X><Y>-0.1</Y><Z>18</Z></Vector3>
-<Vector3 name="size"><X>45</X><Y>0.3</Y><Z>5</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>-0.1</Y><Z>18</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>45</X><Y>0.3</Y><Z>5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000066">
 <Properties>
 <string name="Name">PotPlant1</string>
-<Vector3 name="Position"><X>-10</X><Y>1.5</Y><Z>14</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>3</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.5</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-10</X><Y>1.5</Y><Z>14</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281564966</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>3</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000067">
 <Properties>
 <string name="Name">Pot1</string>
-<Vector3 name="Position"><X>-10</X><Y>0.5</Y><Z>14</Z></Vector3>
-<Vector3 name="size"><X>1.2</X><Y>1</Y><Z>1.2</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.3</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-10</X><Y>0.5</Y><Z>14</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286532646</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.2</X><Y>1</Y><Z>1.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000068">
 <Properties>
 <string name="Name">PotPlant2</string>
-<Vector3 name="Position"><X>10</X><Y>1.5</Y><Z>14</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>3</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.5</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>10</X><Y>1.5</Y><Z>14</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281564966</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>3</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000069">
 <Properties>
 <string name="Name">Pot2</string>
-<Vector3 name="Position"><X>10</X><Y>0.5</Y><Z>14</Z></Vector3>
-<Vector3 name="size"><X>1.2</X><Y>1</Y><Z>1.2</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.3</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>10</X><Y>0.5</Y><Z>14</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286532646</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1.2</X><Y>1</Y><Z>1.2</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000006A">
 <Properties>
 <string name="Name">CeilingFanBase</string>
-<Vector3 name="Position"><X>0</X><Y>11.5</Y><Z>3</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.3</G><B>0.3</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11.5</Y><Z>3</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283190348</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000006B">
 <Properties>
 <string name="Name">FanBlade1</string>
-<Vector3 name="Position"><X>0</X><Y>11.3</Y><Z>3</Z></Vector3>
-<Vector3 name="size"><X>4</X><Y>0.1</Y><Z>0.5</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11.3</Y><Z>3</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038950</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>4</X><Y>0.1</Y><Z>0.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000006C">
 <Properties>
 <string name="Name">FanBlade2</string>
-<Vector3 name="Position"><X>0</X><Y>11.3</Y><Z>3</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.1</Y><Z>4</Z></Vector3>
-<Color3 name="Color3"><R>0.35</R><G>0.25</G><B>0.15</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11.3</Y><Z>3</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4284038950</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>0.5</X><Y>0.1</Y><Z>4</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000006D">
 <Properties>
 <string name="Name">BloodStain</string>
-<Vector3 name="Position"><X>-6</X><Y>0.52</Y><Z>8</Z></Vector3>
-<Vector3 name="size"><X>2</X><Y>0.01</Y><Z>1.5</Z></Vector3>
-<Color3 name="Color3"><R>0.3</R><G>0.05</G><B>0.05</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">0.6</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>-6</X><Y>0.52</Y><Z>8</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4283173900</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>2</X><Y>0.01</Y><Z>1.5</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0.6</float>
+
 </Properties>
 
 </Item>
@@ -1464,42 +2060,60 @@
 <Item class="Part" referent="RBX00000072">
 <Properties>
 <string name="Name">Spawn1</string>
-<Vector3 name="Position"><X>0</X><Y>1</Y><Z>20</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">1</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>1</Y><Z>20</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">1</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000073">
 <Properties>
 <string name="Name">Spawn2</string>
-<Vector3 name="Position"><X>-8</X><Y>1</Y><Z>20</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">1</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
+<CoordinateFrame name="CFrame">
+<X>-8</X><Y>1</Y><Z>20</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">1</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000074">
 <Properties>
 <string name="Name">Spawn3</string>
-<Vector3 name="Position"><X>8</X><Y>1</Y><Z>20</Z></Vector3>
-<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
-<Color3 name="Color3"><R>0.5</R><G>0.5</G><B>0.5</B></Color3>
-<token name="Material">256</token>
-<float name="Transparency">1</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">false</bool>
+<CoordinateFrame name="CFrame">
+<X>8</X><Y>1</Y><Z>20</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4286545791</Color3uint8>
+<token name="Material">256</token>
+<Vector3 name="size"><X>1</X><Y>1</Y><Z>1</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">1</float>
+
 </Properties>
 
 </Item>
@@ -1521,56 +2135,80 @@
 <Item class="Part" referent="RBX0000006E">
 <Properties>
 <string name="Name">CCTV_Front</string>
-<Vector3 name="Position"><X>0</X><Y>11</Y><Z>14</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11</Y><Z>14</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX0000006F">
 <Properties>
 <string name="Name">CCTV_Kitchen</string>
-<Vector3 name="Position"><X>0</X><Y>11</Y><Z>-6</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>11</Y><Z>-6</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000070">
 <Properties>
 <string name="Name">CCTV_Road</string>
-<Vector3 name="Position"><X>15</X><Y>11</Y><Z>14</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>15</X><Y>11</Y><Z>14</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
 <Item class="Part" referent="RBX00000071">
 <Properties>
 <string name="Name">CCTV_Parking</string>
-<Vector3 name="Position"><X>19</X><Y>8</Y><Z>15</Z></Vector3>
-<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
-<Color3 name="Color3"><R>0.2</R><G>0.2</G><B>0.2</B></Color3>
-<token name="Material">272</token>
-<float name="Transparency">0</float>
 <bool name="Anchored">true</bool>
 <bool name="CanCollide">true</bool>
+<CoordinateFrame name="CFrame">
+<X>19</X><Y>8</Y><Z>15</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
+<Color3uint8 name="Color3uint8">4281545523</Color3uint8>
+<token name="Material">272</token>
+<Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.8</Z></Vector3>
 <token name="shape">1</token>
+<float name="Transparency">0</float>
+
 </Properties>
 
 </Item>
@@ -1588,7 +2226,12 @@
 <Item class="SpawnLocation" referent="RBX00000075">
 <Properties>
 <string name="Name">SpawnLocation</string>
-<Vector3 name="Position"><X>0</X><Y>2</Y><Z>12</Z></Vector3>
+<CoordinateFrame name="CFrame">
+<X>0</X><Y>2</Y><Z>12</Z>
+<R00>1</R00><R01>0</R01><R02>0</R02>
+<R10>0</R10><R11>1</R11><R12>0</R12>
+<R20>0</R20><R21>0</R21><R22>1</R22>
+</CoordinateFrame>
 <Vector3 name="size"><X>6</X><Y>1</Y><Z>6</Z></Vector3>
 <bool name="Anchored">true</bool>
 <float name="Transparency">1</float>
@@ -1625,7 +2268,7 @@
 <token name="Technology">3</token>
 <float name="EnvironmentDiffuseScale">0.3</float>
 <float name="EnvironmentSpecularScale">0.2</float>
-<float name="GlobalShadows">1</float>
+<bool name="GlobalShadows">true</bool>
 </Properties>
 <Item class="Atmosphere" referent="RBX000000CF">
 <Properties>

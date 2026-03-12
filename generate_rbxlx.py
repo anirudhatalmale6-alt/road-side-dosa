@@ -66,8 +66,15 @@ def prop_color3(name, r, g, b):
     return f'<Color3 name="{name}"><R>{r}</R><G>{g}</G><B>{b}</B></Color3>'
 
 def prop_color3uint8(name, r, g, b):
-    val = (r << 16) | (g << 8) | b | (0xFF << 24)
+    """Pack RGB (0-255 ints) into Roblox Color3uint8 format"""
+    val = (0xFF << 24) | (int(r) << 16) | (int(g) << 8) | int(b)
     return f'<Color3uint8 name="{name}">{val}</Color3uint8>'
+
+def color_float_to_uint8(r, g, b):
+    """Convert 0.0-1.0 float color to packed Color3uint8"""
+    ri, gi, bi = int(r*255), int(g*255), int(b*255)
+    val = (0xFF << 24) | (ri << 16) | (gi << 8) | bi
+    return val
 
 def prop_token(name, value):
     return f'<token name="{name}">{value}</token>'
@@ -101,32 +108,39 @@ def make_part(name, x, y, z, sx, sy, sz, color=(0.5,0.5,0.5), material=256,
                 attr_items += f'<string name="{k}">{escape(v)}</string>'
         attr_xml = f'<BinaryString name="AttributesSerialize">{attr_items}</BinaryString>' if attr_items else ""
 
+    # Convert float color (0-1) to uint8
+    cr, cg, cb = int(color[0]*255), int(color[1]*255), int(color[2]*255)
+    color_packed = (0xFF << 24) | (cr << 16) | (cg << 8) | cb
+
     return f'''<Item class="Part" referent="{r}">
 <Properties>
 {prop_string("Name", name)}
-{prop_vector3("Position", x, y, z)}
-{prop_vector3("size", sx, sy, sz)}
-{prop_color3("Color3", color[0], color[1], color[2])}
-{prop_token("Material", material)}
-{prop_float("Transparency", transparency)}
 {prop_bool("Anchored", anchored)}
 {prop_bool("CanCollide", cancollide)}
+{prop_cframe("CFrame", x, y, z)}
+<Color3uint8 name="Color3uint8">{color_packed}</Color3uint8>
+{prop_token("Material", material)}
+{prop_vector3("size", sx, sy, sz)}
 {prop_token("shape", shape)}
+{prop_float("Transparency", transparency)}
+{attr_xml}
 </Properties>
 {children}
 </Item>'''
 
 def make_pointlight(brightness=1, color=(1,1,0.9), range_val=20, enabled=True, controllable=False):
     r = ref()
+    # Controllable attribute for lights the player can toggle
     attr = ""
     if controllable:
-        attr = '<BinaryString name="AttributesSerialize"></BinaryString>'
+        attr = f'\n{prop_bool("Controllable", True)}'
     return f'''<Item class="PointLight" referent="{r}">
 <Properties>
+{prop_string("Name", "PointLight")}
 {prop_float("Brightness", brightness)}
 {prop_color3("Color", color[0], color[1], color[2])}
 {prop_float("Range", range_val)}
-{prop_bool("Enabled", enabled)}
+{prop_bool("Enabled", enabled)}{attr}
 </Properties>
 </Item>'''
 
@@ -571,7 +585,7 @@ def build_restaurant():
     spawn_loc = f'''<Item class="SpawnLocation" referent="{ref()}">
 <Properties>
 {prop_string("Name", "SpawnLocation")}
-{prop_vector3("Position", 0, 2, 12)}
+{prop_cframe("CFrame", 0, 2, 12)}
 {prop_vector3("size", 6, 1, 6)}
 {prop_bool("Anchored", True)}
 {prop_float("Transparency", 1)}
@@ -757,7 +771,7 @@ def build_lighting():
 {prop_token("Technology", 3)}
 {prop_float("EnvironmentDiffuseScale", 0.3)}
 {prop_float("EnvironmentSpecularScale", 0.2)}
-{prop_float("GlobalShadows", 1)}
+{prop_bool("GlobalShadows", True)}
 </Properties>
 <Item class="Atmosphere" referent="{atmosphere_ref}">
 <Properties>
