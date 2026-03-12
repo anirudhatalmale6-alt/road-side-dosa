@@ -9,7 +9,7 @@ Config.STARTING_CURRENCY = 0
 Config.NIGHT_DURATION = 300 -- 5 minutes per night
 Config.PHONE_RING_DELAY = 5 -- seconds before phone rings at night start
 Config.NPC_SPAWN_INTERVAL = 20 -- seconds between NPC spawns
-Config.SERVING_TIMEOUT = 30 -- seconds to serve before NPC leaves angry
+Config.SERVING_TIMEOUT = 120 -- 2 minutes to serve before NPC leaves angry
 
 -- Cooking
 Config.COOKING_TIME = 4 -- seconds on tawa

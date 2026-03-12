@@ -101,9 +101,14 @@ local NPCTemplates = {
 local RandomFaces = {
 	"rbxasset://textures/face.png",              -- Default smile
 	"rbxassetid://7699174",                       -- Worried
-	"rbxassetid://7699174",                       -- Chill
 	"rbxassetid://163348489",                     -- Skeptic
 	"rbxassetid://31117192",                      -- Friendly
+	"rbxassetid://28999228",                      -- Grinning
+	"rbxassetid://20418518",                      -- Freckles
+	"rbxassetid://7074766",                       -- Thinking
+	"rbxassetid://209713952",                     -- Happy
+	"rbxassetid://7074631",                       -- Content
+	"rbxassetid://7074784",                       -- Smirk
 }
 
 -- Random shirt colors for normal NPCs
@@ -441,18 +446,25 @@ local function spawnNPC(npcType, targetPlayer)
 
 	model.Parent = workspace:FindFirstChild("NPCs") or workspace
 
+	-- Pick a specific order item for this NPC
+	local orderedItem = nil
+	if template.orderItems and #template.orderItems > 0 then
+		orderedItem = template.orderItems[math.random(1, #template.orderItems)]
+	end
+
 	activeNPCs[model] = {
 		type = npcType,
 		player = targetPlayer,
 		spawnTime = tick(),
 		template = template,
-		state = "entering"
+		state = "entering",
+		orderedItem = orderedItem
 	}
 
-	-- Notify client
+	-- Notify client with NPC type, model, dialogue, and ordered item
 	local enterDialogue = template.dialogue.enter
 	local dialogueLine = enterDialogue[math.random(1, #enterDialogue)]
-	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine)
+	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine, orderedItem)
 
 	-- NPC walks to counter (through the front entrance, then to counter)
 	local humanoid = model:FindFirstChildOfClass("Humanoid")
@@ -501,6 +513,10 @@ local function spawnNPC(npcType, targetPlayer)
 					model:Destroy()
 					activeNPCs[model] = nil
 				end
+				-- Decrement active customer count
+				if activeCustomerCountPerPlayer[targetPlayer] then
+					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+				end
 			end
 		end)
 	end
@@ -524,12 +540,19 @@ local function spawnNPC(npcType, targetPlayer)
 					model:Destroy()
 					activeNPCs[model] = nil
 				end
+				-- Decrement active customer count
+				if activeCustomerCountPerPlayer[targetPlayer] then
+					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+				end
 			end
 		end)
 	end
 
 	return model
 end
+
+-- Track how many active customers per player (for one-at-a-time logic)
+local activeCustomerCountPerPlayer = {} -- [player] = number
 
 -- NPC Spawning loop per player per night (uses NPCManager's own state)
 local function nightNPCLoop(player, nightNum)
@@ -538,6 +561,7 @@ local function nightNPCLoop(player, nightNum)
 
 	local spawnCount = 0
 	local maxSpawns = 3 + nightNum -- More NPCs on harder nights
+	activeCustomerCountPerPlayer[player] = 0
 
 	-- Spawn anomaly NPCs based on night rules
 	local anomalySpawned = {}
@@ -552,6 +576,12 @@ local function nightNPCLoop(player, nightNum)
 
 		if not nightActivePerPlayer[player] then break end
 		if spawnCount >= maxSpawns then break end
+
+		-- ONE CUSTOMER AT A TIME: wait until current customer leaves
+		while (activeCustomerCountPerPlayer[player] or 0) > 0 and nightActivePerPlayer[player] do
+			task.wait(1)
+		end
+		if not nightActivePerPlayer[player] then break end
 
 		-- Decide what to spawn
 		local npcType = "NormalCustomer"
@@ -582,6 +612,7 @@ local function nightNPCLoop(player, nightNum)
 			end
 		end
 
+		activeCustomerCountPerPlayer[player] = (activeCustomerCountPerPlayer[player] or 0) + 1
 		spawnNPC(npcType, player)
 		spawnCount = spawnCount + 1
 	end
@@ -610,6 +641,7 @@ local function cleanupNPCsForPlayer(player)
 	nightActivePerPlayer[player] = nil
 	nightNumPerPlayer[player] = nil
 	nightTimerPerPlayer[player] = nil
+	activeCustomerCountPerPlayer[player] = nil
 
 	local npcsFolder = workspace:FindFirstChild("NPCs")
 	if npcsFolder then
@@ -654,6 +686,10 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 					if npc and npc.Parent then
 						npc:Destroy()
 						activeNPCs[npc] = nil
+					end
+					-- Decrement active customer count
+					if activeCustomerCountPerPlayer[player] then
+						activeCustomerCountPerPlayer[player] = math.max(0, activeCustomerCountPerPlayer[player] - 1)
 					end
 				end)
 				break

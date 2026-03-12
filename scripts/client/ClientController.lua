@@ -292,6 +292,56 @@ local function animateFridgeOpen()
 	end)
 end
 
+-- === NPC SPEECH BUBBLE ===
+local function showNPCSpeechBubble(npcModel, text)
+	if not npcModel or not npcModel.Parent then return end
+	local head = npcModel:FindFirstChild("Head")
+	if not head then return end
+
+	-- Remove any existing speech bubble
+	local existing = head:FindFirstChild("SpeechBubble")
+	if existing then existing:Destroy() end
+
+	-- Create BillboardGui above NPC head
+	local billboard = Instance.new("BillboardGui")
+	billboard.Name = "SpeechBubble"
+	billboard.Size = UDim2.new(0, 250, 0, 80)
+	billboard.StudsOffset = Vector3.new(0, 3, 0)
+	billboard.AlwaysOnTop = true
+	billboard.Adornee = head
+	billboard.Parent = head
+
+	-- Background frame
+	local bg = Instance.new("Frame")
+	bg.Size = UDim2.new(1, 0, 1, 0)
+	bg.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	bg.BackgroundTransparency = 0.15
+	bg.Parent = billboard
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 10)
+	corner.Parent = bg
+
+	-- Text label
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, -10, 1, -6)
+	label.Position = UDim2.new(0, 5, 0, 3)
+	label.BackgroundTransparency = 1
+	label.TextColor3 = Color3.fromRGB(255, 255, 220)
+	label.TextScaled = true
+	label.Font = Enum.Font.GothamMedium
+	label.TextWrapped = true
+	label.Text = text
+	label.Parent = bg
+
+	-- Auto-remove after 5 seconds
+	task.delay(5, function()
+		if billboard and billboard.Parent then
+			billboard:Destroy()
+		end
+	end)
+end
+
 -- === LED ORDER SCREEN UPDATE ===
 local function updateOrderScreen(text)
 	local screen = workspace:FindFirstChild("OrderScreen")
@@ -327,6 +377,10 @@ local function showDialogue(text, lineNum, totalLines)
 	phoneFrame.Visible = true
 	dialogueFrame.Visible = true
 	dialogueSkipRequested = false
+
+	-- Play manager voice sound for each line
+	playSound("ManagerVoice")
+
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
 	local progressLabel = dialogueFrame:FindFirstChild("ProgressLabel")
 	local skipHint = dialogueFrame:FindFirstChild("SkipHint")
@@ -344,6 +398,10 @@ local function showDialogue(text, lineNum, totalLines)
 					break
 				end
 				textLabel.Text = string.sub(text, 1, i)
+				-- Play tick sound every few characters for voice effect
+				if i % 3 == 0 then
+					playSound("DialogueTick")
+				end
 				task.wait(NightData.PhoneConfig.dialogueSpeed)
 			end
 		end)
@@ -858,35 +916,54 @@ Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	end
 end)
 
-Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue)
-	-- Show NPC dialogue
+Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue, orderedItem)
+	-- Show NPC dialogue as floating text
 	if dialogue then
 		showFloatingText(dialogue, Color3.fromRGB(255, 255, 200))
 	end
+
+	-- Show speech bubble above NPC head
+	if npcModel and dialogue then
+		showNPCSpeechBubble(npcModel, dialogue)
+	end
+
+	-- Play customer voice sound
+	playSound("CustomerVoice")
+
 	-- Whisper sound when anomaly spawns
 	if npcType ~= "NormalCustomer" then
 		playSound("WhisperSound")
 	end
-	-- Update LED order screen
-	local orderText = "NEW CUSTOMER\n"
-	if npcType == "ChineseGuy" then
-		orderText = orderText .. "Chinese Hat Man\nWaiting for order..."
-	elseif npcType == "SareeWoman" then
-		orderText = orderText .. "Saree Woman\nWaiting for order..."
-	elseif npcType == "DancingGuy" then
+
+	-- Update LED order screen with specific order
+	local orderText = "NEW ORDER\n"
+	if npcType == "DancingGuy" then
 		orderText = orderText .. "Dancing Man\n⚠ DO NOT SERVE ⚠"
 	elseif npcType == "Suthan" then
 		orderText = orderText .. "SUTHAN\n⚠ DANGER ⚠"
 	elseif npcType == "NakedGuy" then
 		orderText = orderText .. "???\nRUN THROUGH!"
+	elseif orderedItem then
+		orderText = orderText .. "1 " .. orderedItem
 	else
-		orderText = orderText .. "Customer\nWaiting for order..."
+		orderText = orderText .. "Waiting for order..."
 	end
 	updateOrderScreen(orderText)
 end)
 
 Remotes:WaitForChild("NPCDialogue").OnClientEvent:Connect(function(npcType, dialogue)
 	showFloatingText(dialogue, Color3.fromRGB(255, 255, 200))
+	playSound("CustomerVoice")
+	-- Find the NPC model and show speech bubble
+	local npcsFolder = workspace:FindFirstChild("NPCs")
+	if npcsFolder then
+		for _, npc in ipairs(npcsFolder:GetChildren()) do
+			if npc:GetAttribute("NPCType") == npcType then
+				showNPCSpeechBubble(npc, dialogue)
+				break
+			end
+		end
+	end
 end)
 
 Remotes:WaitForChild("NPCLeave").OnClientEvent:Connect(function(npcType, reason)

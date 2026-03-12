@@ -5,7 +5,7 @@
 <External>nil</External>
 
 <!-- === WORKSPACE === -->
-<Item class="Workspace" referent="RBX00000158">
+<Item class="Workspace" referent="RBX0000015B">
 <Properties>
 <string name="Name">Workspace</string>
 </Properties>
@@ -3810,7 +3810,7 @@
 </Item>
 
 <!-- NPC Spawn Points -->
-<Item class="Folder" referent="RBX0000015F">
+<Item class="Folder" referent="RBX00000162">
 <Properties>
 <string name="Name">NPCSpawns</string>
 </Properties>
@@ -3877,7 +3877,7 @@
 </Item>
 
 <!-- NPCs Folder -->
-<Item class="Folder" referent="RBX00000160">
+<Item class="Folder" referent="RBX00000163">
 <Properties>
 <string name="Name">NPCs</string>
 </Properties>
@@ -3885,7 +3885,7 @@
 </Item>
 
 <!-- CCTV Cameras -->
-<Item class="Folder" referent="RBX00000161">
+<Item class="Folder" referent="RBX00000164">
 <Properties>
 <string name="Name">CCTVCameras</string>
 </Properties>
@@ -3990,7 +3990,7 @@
 </Item>
 
 <!-- Camera -->
-<Item class="Camera" referent="RBX00000162">
+<Item class="Camera" referent="RBX00000165">
 <Properties>
 <string name="Name">Camera</string>
 <CoordinateFrame name="CFrame">
@@ -4060,11 +4060,11 @@
 </Item>
 
 <!-- === SERVER SCRIPT SERVICE === -->
-<Item class="ServerScriptService" referent="RBX00000159">
+<Item class="ServerScriptService" referent="RBX0000015C">
 <Properties>
 <string name="Name">ServerScriptService</string>
 </Properties>
-<Item class="Script" referent="RBX00000163">
+<Item class="Script" referent="RBX00000166">
 <Properties>
 <string name="Name">GameManager</string>
 <ProtectedString name="Source"><![CDATA[-- GameManager: Main server script controlling game flow and night progression
@@ -4548,7 +4548,7 @@ print("[GameManager] Road Side Dosa - Game Manager initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000164">
+<Item class="Script" referent="RBX00000167">
 <Properties>
 <string name="Name">NPCManager</string>
 <ProtectedString name="Source"><![CDATA[-- NPCManager: Server script for NPC spawning, AI, and behavior
@@ -4654,9 +4654,14 @@ local NPCTemplates = {
 local RandomFaces = {
 	"rbxasset://textures/face.png",              -- Default smile
 	"rbxassetid://7699174",                       -- Worried
-	"rbxassetid://7699174",                       -- Chill
 	"rbxassetid://163348489",                     -- Skeptic
 	"rbxassetid://31117192",                      -- Friendly
+	"rbxassetid://28999228",                      -- Grinning
+	"rbxassetid://20418518",                      -- Freckles
+	"rbxassetid://7074766",                       -- Thinking
+	"rbxassetid://209713952",                     -- Happy
+	"rbxassetid://7074631",                       -- Content
+	"rbxassetid://7074784",                       -- Smirk
 }
 
 -- Random shirt colors for normal NPCs
@@ -4994,18 +4999,25 @@ local function spawnNPC(npcType, targetPlayer)
 
 	model.Parent = workspace:FindFirstChild("NPCs") or workspace
 
+	-- Pick a specific order item for this NPC
+	local orderedItem = nil
+	if template.orderItems and #template.orderItems > 0 then
+		orderedItem = template.orderItems[math.random(1, #template.orderItems)]
+	end
+
 	activeNPCs[model] = {
 		type = npcType,
 		player = targetPlayer,
 		spawnTime = tick(),
 		template = template,
-		state = "entering"
+		state = "entering",
+		orderedItem = orderedItem
 	}
 
-	-- Notify client
+	-- Notify client with NPC type, model, dialogue, and ordered item
 	local enterDialogue = template.dialogue.enter
 	local dialogueLine = enterDialogue[math.random(1, #enterDialogue)]
-	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine)
+	SpawnNPCEvent:FireClient(targetPlayer, npcType, model, dialogueLine, orderedItem)
 
 	-- NPC walks to counter (through the front entrance, then to counter)
 	local humanoid = model:FindFirstChildOfClass("Humanoid")
@@ -5054,6 +5066,10 @@ local function spawnNPC(npcType, targetPlayer)
 					model:Destroy()
 					activeNPCs[model] = nil
 				end
+				-- Decrement active customer count
+				if activeCustomerCountPerPlayer[targetPlayer] then
+					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+				end
 			end
 		end)
 	end
@@ -5077,12 +5093,19 @@ local function spawnNPC(npcType, targetPlayer)
 					model:Destroy()
 					activeNPCs[model] = nil
 				end
+				-- Decrement active customer count
+				if activeCustomerCountPerPlayer[targetPlayer] then
+					activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+				end
 			end
 		end)
 	end
 
 	return model
 end
+
+-- Track how many active customers per player (for one-at-a-time logic)
+local activeCustomerCountPerPlayer = {} -- [player] = number
 
 -- NPC Spawning loop per player per night (uses NPCManager's own state)
 local function nightNPCLoop(player, nightNum)
@@ -5091,6 +5114,7 @@ local function nightNPCLoop(player, nightNum)
 
 	local spawnCount = 0
 	local maxSpawns = 3 + nightNum -- More NPCs on harder nights
+	activeCustomerCountPerPlayer[player] = 0
 
 	-- Spawn anomaly NPCs based on night rules
 	local anomalySpawned = {}
@@ -5105,6 +5129,12 @@ local function nightNPCLoop(player, nightNum)
 
 		if not nightActivePerPlayer[player] then break end
 		if spawnCount >= maxSpawns then break end
+
+		-- ONE CUSTOMER AT A TIME: wait until current customer leaves
+		while (activeCustomerCountPerPlayer[player] or 0) > 0 and nightActivePerPlayer[player] do
+			task.wait(1)
+		end
+		if not nightActivePerPlayer[player] then break end
 
 		-- Decide what to spawn
 		local npcType = "NormalCustomer"
@@ -5135,6 +5165,7 @@ local function nightNPCLoop(player, nightNum)
 			end
 		end
 
+		activeCustomerCountPerPlayer[player] = (activeCustomerCountPerPlayer[player] or 0) + 1
 		spawnNPC(npcType, player)
 		spawnCount = spawnCount + 1
 	end
@@ -5163,6 +5194,7 @@ local function cleanupNPCsForPlayer(player)
 	nightActivePerPlayer[player] = nil
 	nightNumPerPlayer[player] = nil
 	nightTimerPerPlayer[player] = nil
+	activeCustomerCountPerPlayer[player] = nil
 
 	local npcsFolder = workspace:FindFirstChild("NPCs")
 	if npcsFolder then
@@ -5208,6 +5240,10 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 						npc:Destroy()
 						activeNPCs[npc] = nil
 					end
+					-- Decrement active customer count
+					if activeCustomerCountPerPlayer[player] then
+						activeCustomerCountPerPlayer[player] = math.max(0, activeCustomerCountPerPlayer[player] - 1)
+					end
 				end)
 				break
 			end
@@ -5220,7 +5256,7 @@ print("[NPCManager] NPC system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000165">
+<Item class="Script" referent="RBX00000168">
 <Properties>
 <string name="Name">DataManager</string>
 <ProtectedString name="Source"><![CDATA[-- DataManager: Server script for DataStore saving/loading, leaderboard, and trading
@@ -5507,7 +5543,7 @@ print("[DataManager] Data system initialized")
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="Script" referent="RBX00000166">
+<Item class="Script" referent="RBX00000169">
 <Properties>
 <string name="Name">GamePassManager</string>
 <ProtectedString name="Source"><![CDATA[-- GamePassManager: Handles gamepass purchases and effects
@@ -5650,11 +5686,11 @@ print("[GamePassManager] GamePass system initialized")
 </Item>
 
 <!-- === REPLICATED STORAGE === -->
-<Item class="ReplicatedStorage" referent="RBX0000015A">
+<Item class="ReplicatedStorage" referent="RBX0000015D">
 <Properties>
 <string name="Name">ReplicatedStorage</string>
 </Properties>
-<Item class="ModuleScript" referent="RBX00000167">
+<Item class="ModuleScript" referent="RBX0000016A">
 <Properties>
 <string name="Name">Config</string>
 <ProtectedString name="Source"><![CDATA[-- Config Module: All game configuration values
@@ -5668,7 +5704,7 @@ Config.STARTING_CURRENCY = 0
 Config.NIGHT_DURATION = 300 -- 5 minutes per night
 Config.PHONE_RING_DELAY = 5 -- seconds before phone rings at night start
 Config.NPC_SPAWN_INTERVAL = 20 -- seconds between NPC spawns
-Config.SERVING_TIMEOUT = 30 -- seconds to serve before NPC leaves angry
+Config.SERVING_TIMEOUT = 120 -- 2 minutes to serve before NPC leaves angry
 
 -- Cooking
 Config.COOKING_TIME = 4 -- seconds on tawa
@@ -5746,7 +5782,7 @@ return Config
 <bool name="Disabled">false</bool>
 </Properties>
 </Item>
-<Item class="ModuleScript" referent="RBX00000168">
+<Item class="ModuleScript" referent="RBX0000016B">
 <Properties>
 <string name="Name">NightData</string>
 <ProtectedString name="Source"><![CDATA[-- NightData Module: All 5 nights' rules, events, and phone dialogues
@@ -6163,11 +6199,11 @@ return NightData
 </Item>
 
 <!-- === SERVER STORAGE === -->
-<Item class="ServerStorage" referent="RBX0000015B">
+<Item class="ServerStorage" referent="RBX0000015E">
 <Properties>
 <string name="Name">ServerStorage</string>
 </Properties>
-<Item class="BindableEvent" referent="RBX00000169">
+<Item class="BindableEvent" referent="RBX0000016C">
 <Properties>
 <string name="Name">NightStartBindable</string>
 </Properties>
@@ -6175,7 +6211,7 @@ return NightData
 </Item>
 
 <!-- === STARTER GUI === -->
-<Item class="StarterGui" referent="RBX0000015C">
+<Item class="StarterGui" referent="RBX0000015F">
 <Properties>
 <string name="Name">StarterGui</string>
 </Properties>
@@ -6894,15 +6930,15 @@ return NightData
 </Item>
 
 <!-- === STARTER PLAYER SCRIPTS === -->
-<Item class="StarterPlayer" referent="RBX0000016A">
+<Item class="StarterPlayer" referent="RBX0000016D">
 <Properties>
 <string name="Name">StarterPlayer</string>
 </Properties>
-<Item class="StarterPlayerScripts" referent="RBX0000015D">
+<Item class="StarterPlayerScripts" referent="RBX00000160">
 <Properties>
 <string name="Name">StarterPlayerScripts</string>
 </Properties>
-<Item class="LocalScript" referent="RBX0000016B">
+<Item class="LocalScript" referent="RBX0000016E">
 <Properties>
 <string name="Name">ClientController</string>
 <ProtectedString name="Source"><![CDATA[-- ClientController: Main client script handling UI, input, and game interaction
@@ -7199,6 +7235,56 @@ local function animateFridgeOpen()
 	end)
 end
 
+-- === NPC SPEECH BUBBLE ===
+local function showNPCSpeechBubble(npcModel, text)
+	if not npcModel or not npcModel.Parent then return end
+	local head = npcModel:FindFirstChild("Head")
+	if not head then return end
+
+	-- Remove any existing speech bubble
+	local existing = head:FindFirstChild("SpeechBubble")
+	if existing then existing:Destroy() end
+
+	-- Create BillboardGui above NPC head
+	local billboard = Instance.new("BillboardGui")
+	billboard.Name = "SpeechBubble"
+	billboard.Size = UDim2.new(0, 250, 0, 80)
+	billboard.StudsOffset = Vector3.new(0, 3, 0)
+	billboard.AlwaysOnTop = true
+	billboard.Adornee = head
+	billboard.Parent = head
+
+	-- Background frame
+	local bg = Instance.new("Frame")
+	bg.Size = UDim2.new(1, 0, 1, 0)
+	bg.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	bg.BackgroundTransparency = 0.15
+	bg.Parent = billboard
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 10)
+	corner.Parent = bg
+
+	-- Text label
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, -10, 1, -6)
+	label.Position = UDim2.new(0, 5, 0, 3)
+	label.BackgroundTransparency = 1
+	label.TextColor3 = Color3.fromRGB(255, 255, 220)
+	label.TextScaled = true
+	label.Font = Enum.Font.GothamMedium
+	label.TextWrapped = true
+	label.Text = text
+	label.Parent = bg
+
+	-- Auto-remove after 5 seconds
+	task.delay(5, function()
+		if billboard and billboard.Parent then
+			billboard:Destroy()
+		end
+	end)
+end
+
 -- === LED ORDER SCREEN UPDATE ===
 local function updateOrderScreen(text)
 	local screen = workspace:FindFirstChild("OrderScreen")
@@ -7234,6 +7320,10 @@ local function showDialogue(text, lineNum, totalLines)
 	phoneFrame.Visible = true
 	dialogueFrame.Visible = true
 	dialogueSkipRequested = false
+
+	-- Play manager voice sound for each line
+	playSound("ManagerVoice")
+
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")
 	local progressLabel = dialogueFrame:FindFirstChild("ProgressLabel")
 	local skipHint = dialogueFrame:FindFirstChild("SkipHint")
@@ -7251,6 +7341,10 @@ local function showDialogue(text, lineNum, totalLines)
 					break
 				end
 				textLabel.Text = string.sub(text, 1, i)
+				-- Play tick sound every few characters for voice effect
+				if i % 3 == 0 then
+					playSound("DialogueTick")
+				end
 				task.wait(NightData.PhoneConfig.dialogueSpeed)
 			end
 		end)
@@ -7765,35 +7859,54 @@ Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	end
 end)
 
-Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue)
-	-- Show NPC dialogue
+Remotes:WaitForChild("SpawnNPC").OnClientEvent:Connect(function(npcType, npcModel, dialogue, orderedItem)
+	-- Show NPC dialogue as floating text
 	if dialogue then
 		showFloatingText(dialogue, Color3.fromRGB(255, 255, 200))
 	end
+
+	-- Show speech bubble above NPC head
+	if npcModel and dialogue then
+		showNPCSpeechBubble(npcModel, dialogue)
+	end
+
+	-- Play customer voice sound
+	playSound("CustomerVoice")
+
 	-- Whisper sound when anomaly spawns
 	if npcType ~= "NormalCustomer" then
 		playSound("WhisperSound")
 	end
-	-- Update LED order screen
-	local orderText = "NEW CUSTOMER\n"
-	if npcType == "ChineseGuy" then
-		orderText = orderText .. "Chinese Hat Man\nWaiting for order..."
-	elseif npcType == "SareeWoman" then
-		orderText = orderText .. "Saree Woman\nWaiting for order..."
-	elseif npcType == "DancingGuy" then
+
+	-- Update LED order screen with specific order
+	local orderText = "NEW ORDER\n"
+	if npcType == "DancingGuy" then
 		orderText = orderText .. "Dancing Man\n⚠ DO NOT SERVE ⚠"
 	elseif npcType == "Suthan" then
 		orderText = orderText .. "SUTHAN\n⚠ DANGER ⚠"
 	elseif npcType == "NakedGuy" then
 		orderText = orderText .. "???\nRUN THROUGH!"
+	elseif orderedItem then
+		orderText = orderText .. "1 " .. orderedItem
 	else
-		orderText = orderText .. "Customer\nWaiting for order..."
+		orderText = orderText .. "Waiting for order..."
 	end
 	updateOrderScreen(orderText)
 end)
 
 Remotes:WaitForChild("NPCDialogue").OnClientEvent:Connect(function(npcType, dialogue)
 	showFloatingText(dialogue, Color3.fromRGB(255, 255, 200))
+	playSound("CustomerVoice")
+	-- Find the NPC model and show speech bubble
+	local npcsFolder = workspace:FindFirstChild("NPCs")
+	if npcsFolder then
+		for _, npc in ipairs(npcsFolder:GetChildren()) do
+			if npc:GetAttribute("NPCType") == npcType then
+				showNPCSpeechBubble(npc, dialogue)
+				break
+			end
+		end
+	end
 end)
 
 Remotes:WaitForChild("NPCLeave").OnClientEvent:Connect(function(npcType, reason)
@@ -7915,7 +8028,7 @@ print("[ClientController] Client initialized for " .. player.Name)
 </Item>
 
 <!-- === STARTER PACK === -->
-<Item class="StarterPack" referent="RBX0000015E">
+<Item class="StarterPack" referent="RBX00000161">
 <Properties>
 <string name="Name">StarterPack</string>
 </Properties>
@@ -8014,10 +8127,34 @@ print("[ClientController] Client initialized for " .. player.Name)
 <bool name="Looped">false</bool>
 </Properties>
 </Item>
+<Item class="Sound" referent="RBX00000158">
+<Properties>
+<string name="Name">ManagerVoice</string>
+<Content name="SoundId"><url>rbxassetid://9114220987</url></Content>
+<float name="Volume">0.6</float>
+<bool name="Looped">false</bool>
+</Properties>
+</Item>
+<Item class="Sound" referent="RBX00000159">
+<Properties>
+<string name="Name">CustomerVoice</string>
+<Content name="SoundId"><url>rbxassetid://9114248953</url></Content>
+<float name="Volume">0.4</float>
+<bool name="Looped">false</bool>
+</Properties>
+</Item>
+<Item class="Sound" referent="RBX0000015A">
+<Properties>
+<string name="Name">DialogueTick</string>
+<Content name="SoundId"><url>rbxassetid://9114267993</url></Content>
+<float name="Volume">0.15</float>
+<bool name="Looped">false</bool>
+</Properties>
+</Item>
 </Item>
 
 <!-- === TEAMS === -->
-<Item class="Teams" referent="RBX0000016C">
+<Item class="Teams" referent="RBX0000016F">
 <Properties>
 <string name="Name">Teams</string>
 </Properties>

@@ -1131,6 +1131,9 @@ def build_sounds():
 {make_sound("DoorCreak", "rbxassetid://9114263621", 0.6, False)}
 {make_sound("WhisperSound", "rbxassetid://9113489604", 0.3, False)}
 {make_sound("TruckEngine", "rbxassetid://9114229867", 0.5, False)}
+{make_sound("ManagerVoice", "rbxassetid://9114220987", 0.6, False)}
+{make_sound("CustomerVoice", "rbxassetid://9114248953", 0.4, False)}
+{make_sound("DialogueTick", "rbxassetid://9114267993", 0.15, False)}
 </Item>'''
 
 # === ASSEMBLE FULL RBXLX ===
