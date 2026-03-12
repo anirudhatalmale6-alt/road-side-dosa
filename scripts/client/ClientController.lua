@@ -168,29 +168,96 @@ function updateMenuButtons()
 	end
 end
 
+-- === PROXIMITY PROMPTS SETUP ===
+-- Add ProximityPrompts to key objects on load
+task.spawn(function()
+	-- Fridge prompt
+	local fridge = workspace:WaitForChild("Fridge", 10)
+	if fridge and not fridge:FindFirstChild("FridgePrompt") then
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "FridgePrompt"
+		prompt.ActionText = "Grab Batter"
+		prompt.ObjectText = "Fridge"
+		prompt.MaxActivationDistance = 8
+		prompt.HoldDuration = 0
+		prompt.KeyboardKeyCode = Enum.KeyCode.F
+		prompt.Parent = fridge
+		prompt.Triggered:Connect(function()
+			Remotes:WaitForChild("GrabBatter"):FireServer()
+		end)
+	end
+
+	-- Tawa prompt
+	local tawa = workspace:WaitForChild("Tawa", 10)
+	if tawa and not tawa:FindFirstChild("TawaPrompt") then
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "TawaPrompt"
+		prompt.ActionText = "Cook Dosa"
+		prompt.ObjectText = "Tawa (Griddle)"
+		prompt.MaxActivationDistance = 8
+		prompt.HoldDuration = 0
+		prompt.KeyboardKeyCode = Enum.KeyCode.T
+		prompt.Parent = tawa
+		prompt.Triggered:Connect(function()
+			Remotes:WaitForChild("CookDosa"):FireServer()
+		end)
+	end
+
+	-- Phone prompt
+	local phone = workspace:WaitForChild("Phone", 10)
+	if phone and not phone:FindFirstChild("PhonePrompt") then
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "PhonePrompt"
+		prompt.ActionText = "Answer Phone"
+		prompt.ObjectText = "Phone"
+		prompt.MaxActivationDistance = 8
+		prompt.HoldDuration = 0
+		prompt.KeyboardKeyCode = Enum.KeyCode.P
+		prompt.Parent = phone
+		prompt.Triggered:Connect(function()
+			showPhone(true)
+		end)
+	end
+
+	-- Mop prompt (for cleanup)
+	local mop = workspace:WaitForChild("Mop", 10)
+	if mop and not mop:FindFirstChild("MopPrompt") then
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "MopPrompt"
+		prompt.ActionText = "Pick Up Mop"
+		prompt.ObjectText = "Mop"
+		prompt.MaxActivationDistance = 6
+		prompt.HoldDuration = 0
+		prompt.Parent = mop
+	end
+end)
+
 -- === PHONE SYSTEM ===
 local function showPhone(active)
 	isPhoneActive = active
 	phoneScreenGui.Enabled = active
 	if active then
+		-- Also make sure dialogue frame is visible inside phone GUI
+		dialogueFrame.Visible = true
 		-- Phone ring animation
 		local phoneModel = workspace:FindFirstChild("Phone")
 		if phoneModel then
-			-- Vibrate effect
 			task.spawn(function()
 				for i = 1, 6 do
 					if not isPhoneActive then break end
-					-- Play ring sound
 					local ringSound = phoneModel:FindFirstChild("RingSound")
 					if ringSound then ringSound:Play() end
 					task.wait(2)
 				end
 			end)
 		end
+	else
+		dialogueFrame.Visible = false
 	end
 end
 
 local function showDialogue(text, lineNum, totalLines)
+	-- Ensure phone screen is enabled and dialogue visible
 	phoneScreenGui.Enabled = true
 	dialogueFrame.Visible = true
 	local textLabel = dialogueFrame:FindFirstChild("DialogueText")

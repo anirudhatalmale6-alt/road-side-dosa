@@ -365,18 +365,35 @@ def build_restaurant():
     parts.append(make_part("FridgeHandle", -10.5, 4, -10.8, 0.2, 2, 0.2,
                            color=(0.5, 0.5, 0.5), material=272))
 
-    # == DINING TABLES ==
+    # == DINING TABLES (realistic Roblox scale) ==
     for i, (tx, tz) in enumerate([(-8, 10), (0, 10), (8, 10), (-8, 2), (8, 2)]):
-        parts.append(make_part(f"Table{i+1}", tx, 2, tz, 3, 0.3, 2,
+        # Table top: 6 wide, 0.5 thick, 4 deep
+        parts.append(make_part(f"Table{i+1}", tx, 3.5, tz, 6, 0.5, 4,
                                color=(0.4, 0.28, 0.18), material=256))
-        parts.append(make_part(f"TableLeg{i+1}", tx, 1, tz, 0.3, 2, 0.3,
-                               color=(0.3, 0.2, 0.12), material=256))
+        # 4 table legs
+        for lx, lz in [(-2.5, -1.5), (2.5, -1.5), (-2.5, 1.5), (2.5, 1.5)]:
+            parts.append(make_part(f"TableLeg{i+1}_{lx}_{lz}", tx+lx, 1.75, tz+lz, 0.4, 3.5, 0.4,
+                                   color=(0.3, 0.2, 0.12), material=256))
 
-    # == CHAIRS ==
-    for i, (cx, cz) in enumerate([(-8, 11.5), (0, 11.5), (8, 11.5), (-8, 3.5), (8, 3.5)]):
-        parts.append(make_part(f"Chair{i+1}", cx, 1.2, cz, 1.5, 0.3, 1.5,
+    # == CHAIRS (realistic size, 2 per table) ==
+    chair_positions = [
+        (-8, 11.8), (-8, 8.2),   # Table 1
+        (0, 11.8), (0, 8.2),     # Table 2
+        (8, 11.8), (8, 8.2),     # Table 3
+        (-8, 3.8), (-8, 0.2),    # Table 4
+        (8, 3.8), (8, 0.2),      # Table 5
+    ]
+    for i, (cx, cz) in enumerate(chair_positions):
+        # Chair seat: 2.5 wide, 0.4 thick, 2.5 deep
+        parts.append(make_part(f"Chair{i+1}", cx, 2, cz, 2.5, 0.4, 2.5,
                                color=(0.35, 0.22, 0.12), material=256))
-        parts.append(make_part(f"ChairBack{i+1}", cx, 2.5, cz+0.7, 1.5, 2, 0.2,
+        # Chair legs (4)
+        for lx, lz in [(-1, -1), (1, -1), (-1, 1), (1, 1)]:
+            parts.append(make_part(f"ChairLeg{i+1}_{lx}_{lz}", cx+lx, 1, cz+lz, 0.25, 2, 0.25,
+                                   color=(0.3, 0.2, 0.12), material=256))
+        # Chair back: 2.5 wide, 2.5 tall, 0.3 thick
+        facing_back = 1 if cz > 5 else -1  # face toward counter
+        parts.append(make_part(f"ChairBack{i+1}", cx, 3.5, cz + (1.1 * facing_back), 2.5, 2.5, 0.3,
                                color=(0.35, 0.22, 0.12), material=256))
 
     # == WINDOWS (with shutter frames) ==
