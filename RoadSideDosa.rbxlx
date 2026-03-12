@@ -4091,8 +4091,10 @@ local TriggerEventRemote = Remotes:WaitForChild("TriggerEvent")
 local UpdateHUDEvent = Remotes:WaitForChild("UpdateHUD")
 local JumpScareEvent = Remotes:WaitForChild("JumpScare")
 
--- BindableEvent to notify NPCManager when a night starts
+-- BindableEvents for server-to-server communication
 local NightStartBindable = ServerStorage:WaitForChild("NightStartBindable")
+local NightEndBindable = ServerStorage:WaitForChild("NightEndBindable")
+local SyncPlayerData = ServerStorage:WaitForChild("SyncPlayerData")
 
 -- Game State
 local GameState = {
@@ -4288,9 +4290,14 @@ local function startNight(player)
 				nextNight = pData.night
 			})
 
-			-- Sync to DataManager
-			Remotes:WaitForChild("UpdateCurrency"):FireServer(pData.currency)
-			Remotes:WaitForChild("UpdateNightProgress"):FireServer(pData.night)
+			-- Sync to DataManager via BindableEvent (FireServer doesn't work from server)
+			SyncPlayerData:Fire(player, {
+				currency = pData.currency,
+				nightProgress = pData.night
+			})
+
+			-- Notify NPCManager to clean up
+			NightEndBindable:Fire(player)
 
 			-- Play victory sound for surviving
 			local victorySound = SoundService:FindFirstChild("VictorySound")
@@ -4305,6 +4312,9 @@ local function startNight(player)
 
 	-- Stop ambient on death/exit too
 	if ambientSound then ambientSound:Stop() end
+
+	-- Notify NPCManager to clean up NPCs
+	NightEndBindable:Fire(player)
 end
 
 -- Handle player death
@@ -4428,8 +4438,8 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 			serveSuccess = true,
 			npcId = npcId
 		})
-		-- Sync to DataManager
-		Remotes:WaitForChild("RecordServe"):FireServer(itemName)
+		-- Sync serve stat to DataManager via BindableEvent
+		SyncPlayerData:Fire(player, {recordServe = itemName})
 	end
 end)
 
@@ -4530,6 +4540,12 @@ Remotes:WaitForChild("ReachedSafeRoom").OnServerEvent:Connect(function(player)
 		GameState.nightActive[player] = false
 		pData.night = 6
 		NightCompleteEvent:FireClient(player, "victory")
+
+		-- Sync final progress
+		SyncPlayerData:Fire(player, {
+			currency = pData.currency,
+			nightProgress = 6
+		})
 
 		-- Play victory sound
 		local victorySound = SoundService:FindFirstChild("VictorySound")
@@ -5255,11 +5271,9 @@ nightStartBindable.Event:Connect(function(player, nightNum)
 	end)
 end)
 
--- Clean up NPCs when night ends
-Remotes:WaitForChild("EndNight").OnClientEvent = nil -- Server doesn't listen to OnClientEvent
+-- Clean up NPCs when night ends (via BindableEvent from GameManager)
+local NightEndBindable = ServerStorage:WaitForChild("NightEndBindable")
 
--- Listen for EndNight sent from client (night survived or death)
--- We need to stop NPC spawning and clean up
 local function cleanupNPCsForPlayer(player)
 	nightActivePerPlayer[player] = nil
 	nightNumPerPlayer[player] = nil
@@ -5277,10 +5291,8 @@ local function cleanupNPCsForPlayer(player)
 	end
 end
 
--- When StartNight fires to client, we already started spawning.
--- When EndNight fires from server, we should stop spawning.
--- Listen for EndNight remote (server→client, but we intercept the server-side trigger)
-Remotes:WaitForChild("EndNight").OnServerEvent:Connect(function(player)
+-- Listen for NightEndBindable from GameManager (night survived or death)
+NightEndBindable.Event:Connect(function(player)
 	cleanupNPCsForPlayer(player)
 end)
 
@@ -5604,6 +5616,49 @@ Remotes:WaitForChild("GameCompleted").OnServerEvent:Connect(function(player)
 		savePlayerData(player)
 		updateLeaderboard(player)
 	end
+end)
+
+-- Server-to-server data sync via BindableEvent (GameManager → DataManager)
+local ServerStorage = game:GetService("ServerStorage")
+local SyncPlayerData = ServerStorage:WaitForChild("SyncPlayerData")
+
+SyncPlayerData.Event:Connect(function(player, syncData)
+	local data = PlayerCache[player]
+	if not data then return end
+
+	if syncData.currency then
+		data.currency = syncData.currency
+		data.totalEarnings = math.max(data.totalEarnings, syncData.currency)
+		-- Update leaderstats
+		local leaderstats = player:FindFirstChild("leaderstats")
+		if leaderstats then
+			local cash = leaderstats:FindFirstChild("Cash")
+			if cash then cash.Value = data.currency end
+		end
+	end
+
+	if syncData.recordServe then
+		if syncData.recordServe == "Dosa" or syncData.recordServe == "SoothuDosai" then
+			data.stats.dosasServed = data.stats.dosasServed + 1
+		elseif syncData.recordServe == "Soda" then
+			data.stats.sodasServed = data.stats.sodasServed + 1
+		elseif syncData.recordServe == "Ayran" then
+			data.stats.ayransServed = data.stats.ayransServed + 1
+		end
+	end
+
+	if syncData.nightProgress and syncData.nightProgress > data.nightProgress then
+		data.nightProgress = syncData.nightProgress
+		data.stats.nightsSurvived = data.stats.nightsSurvived + 1
+		local leaderstats = player:FindFirstChild("leaderstats")
+		if leaderstats then
+			local night = leaderstats:FindFirstChild("Night")
+			if night then night.Value = syncData.nightProgress end
+		end
+	end
+
+	-- Auto-save after sync
+	savePlayerData(player)
 end)
 
 print("[DataManager] Data system initialized")
@@ -6284,6 +6339,16 @@ return NightData
 <Item class="BindableEvent" referent="RBX000001C0">
 <Properties>
 <string name="Name">NightStartBindable</string>
+</Properties>
+</Item>
+<Item class="BindableEvent" referent="RBX000001C1">
+<Properties>
+<string name="Name">NightEndBindable</string>
+</Properties>
+</Item>
+<Item class="BindableEvent" referent="RBX000001C2">
+<Properties>
+<string name="Name">SyncPlayerData</string>
 </Properties>
 </Item>
 </Item>
@@ -7778,7 +7843,7 @@ return NightData
 </Item>
 
 <!-- === STARTER PLAYER SCRIPTS === -->
-<Item class="StarterPlayer" referent="RBX000001C1">
+<Item class="StarterPlayer" referent="RBX000001C3">
 <Properties>
 <string name="Name">StarterPlayer</string>
 </Properties>
@@ -7786,7 +7851,7 @@ return NightData
 <Properties>
 <string name="Name">StarterPlayerScripts</string>
 </Properties>
-<Item class="LocalScript" referent="RBX000001C2">
+<Item class="LocalScript" referent="RBX000001C4">
 <Properties>
 <string name="Name">ClientController</string>
 <ProtectedString name="Source"><![CDATA[-- ClientController: Main client script handling UI, input, and game interaction
@@ -8268,38 +8333,51 @@ end
 local function playJumpScare(scareType)
 	jumpscareScreenGui.Enabled = true
 
-	-- Screen shake
-	task.spawn(function()
-		local originalCF = camera.CFrame
-		for i = 1, 15 do
-			local shakeX = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
-			local shakeY = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
-			camera.CFrame = camera.CFrame * CFrame.new(shakeX, shakeY, 0)
-			task.wait(0.03)
+	local ok, err = pcall(function()
+		-- Screen shake
+		task.spawn(function()
+			local originalCF = camera.CFrame
+			for i = 1, 15 do
+				local shakeX = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
+				local shakeY = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
+				camera.CFrame = camera.CFrame * CFrame.new(shakeX, shakeY, 0)
+				task.wait(0.03)
+			end
+			camera.CFrame = originalCF
+		end)
+
+		-- Play scare sound
+		playSound("JumpScareSound")
+
+		-- Flash red
+		local scareImage = jumpscareFrame:FindFirstChild("ScareImage")
+		if scareImage then
+			scareImage.Visible = true
+			scareImage.ImageTransparency = 0
+			TweenService:Create(scareImage, TweenInfo.new(Config.JUMPSCARE_DURATION), {ImageTransparency = 1}):Play()
 		end
-		camera.CFrame = originalCF
+
+		-- Red flash
+		local redFlash = jumpscareFrame:FindFirstChild("RedFlash")
+		if redFlash then
+			redFlash.BackgroundTransparency = 0
+			TweenService:Create(redFlash, TweenInfo.new(Config.JUMPSCARE_DURATION), {BackgroundTransparency = 1}):Play()
+		end
+
+		task.wait(Config.JUMPSCARE_DURATION)
 	end)
 
-	-- Play scare sound
-	playSound("JumpScareSound")
-
-	-- Flash red
-	local scareImage = jumpscareFrame:FindFirstChild("ScareImage")
-	if scareImage then
-		scareImage.Visible = true
-		scareImage.ImageTransparency = 0
-		TweenService:Create(scareImage, TweenInfo.new(Config.JUMPSCARE_DURATION), {ImageTransparency = 1}):Play()
-	end
-
-	-- Red flash
-	local redFlash = jumpscareFrame:FindFirstChild("RedFlash")
-	if redFlash then
-		redFlash.BackgroundTransparency = 0
-		TweenService:Create(redFlash, TweenInfo.new(Config.JUMPSCARE_DURATION), {BackgroundTransparency = 1}):Play()
-	end
-
-	task.wait(Config.JUMPSCARE_DURATION)
+	-- ALWAYS disable jumpscare screen (safety net even if error occurs)
 	jumpscareScreenGui.Enabled = false
+
+	-- Safety timeout: force-disable again after 3 seconds in case of race condition
+	task.delay(3, function()
+		jumpscareScreenGui.Enabled = false
+	end)
+
+	if not ok then
+		warn("[ClientController] Jumpscare error: " .. tostring(err))
+	end
 end
 
 -- === DEATH SCREEN ===
@@ -8307,6 +8385,23 @@ local function showDeathScreen(data)
 	isAlive = false
 	stopSound("HeartbeatSound")
 	stopSound("AmbientHorror")
+	stopSound("WindAmbient")
+	stopSound("ClockTick")
+
+	-- Reset CCTV if active (prevents stuck scriptable camera + green tint)
+	if isCCTVActive then
+		isCCTVActive = false
+		cctvScreenGui.Enabled = false
+		camera.CameraType = Enum.CameraType.Custom
+		local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
+		if cctvFilter then cctvFilter.Enabled = false end
+	end
+
+	-- Disable any other overlays that might be stuck
+	jumpscareScreenGui.Enabled = false
+	nightStartScreenGui.Enabled = false
+	menuScreenGui.Enabled = false
+	phoneScreenGui.Enabled = false
 
 	-- Fade-in death screen
 	deathScreenGui.Enabled = true
@@ -8385,8 +8480,9 @@ local function showNightStart(nightNum)
 		task.wait(2)
 		TweenService:Create(titleLabel, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
 		task.wait(0.5)
-		nightStartScreenGui.Enabled = false
 	end
+	-- ALWAYS disable the black overlay (even if TitleLabel missing)
+	nightStartScreenGui.Enabled = false
 end
 
 -- === STAMINA SYSTEM ===
@@ -8665,9 +8761,44 @@ end
 Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nightInfo)
 	currentNight = nightNum
 	isAlive = true
+
+	-- Reset ALL overlay screens to clean state
 	deathScreenGui.Enabled = false
 	phoneScreenGui.Enabled = false
 	menuScreenGui.Enabled = false
+	jumpscareScreenGui.Enabled = false
+	cctvScreenGui.Enabled = false
+	nightStartScreenGui.Enabled = false
+
+	-- Reset CCTV state
+	if isCCTVActive then
+		isCCTVActive = false
+		camera.CameraType = Enum.CameraType.Custom
+		local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
+		if cctvFilter then cctvFilter.Enabled = false end
+	end
+
+	-- Reset lighting/atmosphere to defaults (undo dark atmosphere from previous night)
+	Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+	Lighting.FogEnd = 1000
+	Lighting.FogStart = 0
+	local atmosphere = Lighting:FindFirstChild("Atmosphere")
+	if atmosphere then
+		atmosphere.Density = 0
+	end
+	local bloom = Lighting:FindFirstChild("Bloom")
+	if bloom then bloom.Enabled = false end
+	local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
+	if cctvFilter then cctvFilter.Enabled = false end
+
+	-- Reset player state
+	isSprinting = false
+	stamina = Config.MAX_STAMINA
+	isPhoneActive = false
+	phoneDialogueComplete = false
+	dialogueSkipRequested = false
+	selectedItem = nil
+
 	showNightStart(nightNum)
 end)
 
@@ -8813,7 +8944,25 @@ end)
 local retryBtn = deathFrame:FindFirstChild("RetryButton")
 if retryBtn then
 	retryBtn.MouseButton1Click:Connect(function()
+		-- Reset all overlays before retry
 		deathScreenGui.Enabled = false
+		jumpscareScreenGui.Enabled = false
+		nightStartScreenGui.Enabled = false
+		menuScreenGui.Enabled = false
+		phoneScreenGui.Enabled = false
+		cctvScreenGui.Enabled = false
+
+		-- Reset lighting
+		Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+		Lighting.FogEnd = 1000
+		Lighting.FogStart = 0
+		local cctvFilter2 = Lighting:FindFirstChild("CCTVFilter")
+		if cctvFilter2 then cctvFilter2.Enabled = false end
+
+		-- Reset camera
+		camera.CameraType = Enum.CameraType.Custom
+		isCCTVActive = false
+
 		Remotes:WaitForChild("RequestRetry"):FireServer()
 	end)
 end
@@ -9228,6 +9377,7 @@ local savedNightProgress = 1
 local function showTutorial()
 	if tutorialShown then return end
 	tutorialShown = true
+	lobbyScreenGui.Enabled = false -- hide lobby to prevent double-dark overlay
 	tutorialScreenGui.Enabled = true
 
 	-- Wire dismiss button
@@ -9504,7 +9654,7 @@ end)
 -- Initialize CCTV
 initCCTV()
 
-print("[ClientController] v4.0 — Client initialized for " .. player.Name)
+print("[ClientController] v4.1 — Client initialized for " .. player.Name)
 ]]></ProtectedString>
 <bool name="Disabled">false</bool>
 </Properties>
@@ -9711,7 +9861,7 @@ print("[ClientController] v4.0 — Client initialized for " .. player.Name)
 </Item>
 
 <!-- === TEAMS === -->
-<Item class="Teams" referent="RBX000001C3">
+<Item class="Teams" referent="RBX000001C5">
 <Properties>
 <string name="Name">Teams</string>
 </Properties>

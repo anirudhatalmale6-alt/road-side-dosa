@@ -22,8 +22,10 @@ local TriggerEventRemote = Remotes:WaitForChild("TriggerEvent")
 local UpdateHUDEvent = Remotes:WaitForChild("UpdateHUD")
 local JumpScareEvent = Remotes:WaitForChild("JumpScare")
 
--- BindableEvent to notify NPCManager when a night starts
+-- BindableEvents for server-to-server communication
 local NightStartBindable = ServerStorage:WaitForChild("NightStartBindable")
+local NightEndBindable = ServerStorage:WaitForChild("NightEndBindable")
+local SyncPlayerData = ServerStorage:WaitForChild("SyncPlayerData")
 
 -- Game State
 local GameState = {
@@ -219,9 +221,14 @@ local function startNight(player)
 				nextNight = pData.night
 			})
 
-			-- Sync to DataManager
-			Remotes:WaitForChild("UpdateCurrency"):FireServer(pData.currency)
-			Remotes:WaitForChild("UpdateNightProgress"):FireServer(pData.night)
+			-- Sync to DataManager via BindableEvent (FireServer doesn't work from server)
+			SyncPlayerData:Fire(player, {
+				currency = pData.currency,
+				nightProgress = pData.night
+			})
+
+			-- Notify NPCManager to clean up
+			NightEndBindable:Fire(player)
 
 			-- Play victory sound for surviving
 			local victorySound = SoundService:FindFirstChild("VictorySound")
@@ -236,6 +243,9 @@ local function startNight(player)
 
 	-- Stop ambient on death/exit too
 	if ambientSound then ambientSound:Stop() end
+
+	-- Notify NPCManager to clean up NPCs
+	NightEndBindable:Fire(player)
 end
 
 -- Handle player death
@@ -359,8 +369,8 @@ Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npc
 			serveSuccess = true,
 			npcId = npcId
 		})
-		-- Sync to DataManager
-		Remotes:WaitForChild("RecordServe"):FireServer(itemName)
+		-- Sync serve stat to DataManager via BindableEvent
+		SyncPlayerData:Fire(player, {recordServe = itemName})
 	end
 end)
 
@@ -461,6 +471,12 @@ Remotes:WaitForChild("ReachedSafeRoom").OnServerEvent:Connect(function(player)
 		GameState.nightActive[player] = false
 		pData.night = 6
 		NightCompleteEvent:FireClient(player, "victory")
+
+		-- Sync final progress
+		SyncPlayerData:Fire(player, {
+			currency = pData.currency,
+			nightProgress = 6
+		})
 
 		-- Play victory sound
 		local victorySound = SoundService:FindFirstChild("VictorySound")

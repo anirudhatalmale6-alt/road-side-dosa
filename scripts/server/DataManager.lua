@@ -282,4 +282,47 @@ Remotes:WaitForChild("GameCompleted").OnServerEvent:Connect(function(player)
 	end
 end)
 
+-- Server-to-server data sync via BindableEvent (GameManager → DataManager)
+local ServerStorage = game:GetService("ServerStorage")
+local SyncPlayerData = ServerStorage:WaitForChild("SyncPlayerData")
+
+SyncPlayerData.Event:Connect(function(player, syncData)
+	local data = PlayerCache[player]
+	if not data then return end
+
+	if syncData.currency then
+		data.currency = syncData.currency
+		data.totalEarnings = math.max(data.totalEarnings, syncData.currency)
+		-- Update leaderstats
+		local leaderstats = player:FindFirstChild("leaderstats")
+		if leaderstats then
+			local cash = leaderstats:FindFirstChild("Cash")
+			if cash then cash.Value = data.currency end
+		end
+	end
+
+	if syncData.recordServe then
+		if syncData.recordServe == "Dosa" or syncData.recordServe == "SoothuDosai" then
+			data.stats.dosasServed = data.stats.dosasServed + 1
+		elseif syncData.recordServe == "Soda" then
+			data.stats.sodasServed = data.stats.sodasServed + 1
+		elseif syncData.recordServe == "Ayran" then
+			data.stats.ayransServed = data.stats.ayransServed + 1
+		end
+	end
+
+	if syncData.nightProgress and syncData.nightProgress > data.nightProgress then
+		data.nightProgress = syncData.nightProgress
+		data.stats.nightsSurvived = data.stats.nightsSurvived + 1
+		local leaderstats = player:FindFirstChild("leaderstats")
+		if leaderstats then
+			local night = leaderstats:FindFirstChild("Night")
+			if night then night.Value = syncData.nightProgress end
+		end
+	end
+
+	-- Auto-save after sync
+	savePlayerData(player)
+end)
+
 print("[DataManager] Data system initialized")

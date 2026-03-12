@@ -477,38 +477,51 @@ end
 local function playJumpScare(scareType)
 	jumpscareScreenGui.Enabled = true
 
-	-- Screen shake
-	task.spawn(function()
-		local originalCF = camera.CFrame
-		for i = 1, 15 do
-			local shakeX = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
-			local shakeY = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
-			camera.CFrame = camera.CFrame * CFrame.new(shakeX, shakeY, 0)
-			task.wait(0.03)
+	local ok, err = pcall(function()
+		-- Screen shake
+		task.spawn(function()
+			local originalCF = camera.CFrame
+			for i = 1, 15 do
+				local shakeX = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
+				local shakeY = (math.random() - 0.5) * Config.SCREEN_SHAKE_INTENSITY
+				camera.CFrame = camera.CFrame * CFrame.new(shakeX, shakeY, 0)
+				task.wait(0.03)
+			end
+			camera.CFrame = originalCF
+		end)
+
+		-- Play scare sound
+		playSound("JumpScareSound")
+
+		-- Flash red
+		local scareImage = jumpscareFrame:FindFirstChild("ScareImage")
+		if scareImage then
+			scareImage.Visible = true
+			scareImage.ImageTransparency = 0
+			TweenService:Create(scareImage, TweenInfo.new(Config.JUMPSCARE_DURATION), {ImageTransparency = 1}):Play()
 		end
-		camera.CFrame = originalCF
+
+		-- Red flash
+		local redFlash = jumpscareFrame:FindFirstChild("RedFlash")
+		if redFlash then
+			redFlash.BackgroundTransparency = 0
+			TweenService:Create(redFlash, TweenInfo.new(Config.JUMPSCARE_DURATION), {BackgroundTransparency = 1}):Play()
+		end
+
+		task.wait(Config.JUMPSCARE_DURATION)
 	end)
 
-	-- Play scare sound
-	playSound("JumpScareSound")
-
-	-- Flash red
-	local scareImage = jumpscareFrame:FindFirstChild("ScareImage")
-	if scareImage then
-		scareImage.Visible = true
-		scareImage.ImageTransparency = 0
-		TweenService:Create(scareImage, TweenInfo.new(Config.JUMPSCARE_DURATION), {ImageTransparency = 1}):Play()
-	end
-
-	-- Red flash
-	local redFlash = jumpscareFrame:FindFirstChild("RedFlash")
-	if redFlash then
-		redFlash.BackgroundTransparency = 0
-		TweenService:Create(redFlash, TweenInfo.new(Config.JUMPSCARE_DURATION), {BackgroundTransparency = 1}):Play()
-	end
-
-	task.wait(Config.JUMPSCARE_DURATION)
+	-- ALWAYS disable jumpscare screen (safety net even if error occurs)
 	jumpscareScreenGui.Enabled = false
+
+	-- Safety timeout: force-disable again after 3 seconds in case of race condition
+	task.delay(3, function()
+		jumpscareScreenGui.Enabled = false
+	end)
+
+	if not ok then
+		warn("[ClientController] Jumpscare error: " .. tostring(err))
+	end
 end
 
 -- === DEATH SCREEN ===
@@ -516,6 +529,23 @@ local function showDeathScreen(data)
 	isAlive = false
 	stopSound("HeartbeatSound")
 	stopSound("AmbientHorror")
+	stopSound("WindAmbient")
+	stopSound("ClockTick")
+
+	-- Reset CCTV if active (prevents stuck scriptable camera + green tint)
+	if isCCTVActive then
+		isCCTVActive = false
+		cctvScreenGui.Enabled = false
+		camera.CameraType = Enum.CameraType.Custom
+		local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
+		if cctvFilter then cctvFilter.Enabled = false end
+	end
+
+	-- Disable any other overlays that might be stuck
+	jumpscareScreenGui.Enabled = false
+	nightStartScreenGui.Enabled = false
+	menuScreenGui.Enabled = false
+	phoneScreenGui.Enabled = false
 
 	-- Fade-in death screen
 	deathScreenGui.Enabled = true
@@ -594,8 +624,9 @@ local function showNightStart(nightNum)
 		task.wait(2)
 		TweenService:Create(titleLabel, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
 		task.wait(0.5)
-		nightStartScreenGui.Enabled = false
 	end
+	-- ALWAYS disable the black overlay (even if TitleLabel missing)
+	nightStartScreenGui.Enabled = false
 end
 
 -- === STAMINA SYSTEM ===
@@ -874,9 +905,44 @@ end
 Remotes:WaitForChild("StartNight").OnClientEvent:Connect(function(nightNum, nightInfo)
 	currentNight = nightNum
 	isAlive = true
+
+	-- Reset ALL overlay screens to clean state
 	deathScreenGui.Enabled = false
 	phoneScreenGui.Enabled = false
 	menuScreenGui.Enabled = false
+	jumpscareScreenGui.Enabled = false
+	cctvScreenGui.Enabled = false
+	nightStartScreenGui.Enabled = false
+
+	-- Reset CCTV state
+	if isCCTVActive then
+		isCCTVActive = false
+		camera.CameraType = Enum.CameraType.Custom
+		local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
+		if cctvFilter then cctvFilter.Enabled = false end
+	end
+
+	-- Reset lighting/atmosphere to defaults (undo dark atmosphere from previous night)
+	Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+	Lighting.FogEnd = 1000
+	Lighting.FogStart = 0
+	local atmosphere = Lighting:FindFirstChild("Atmosphere")
+	if atmosphere then
+		atmosphere.Density = 0
+	end
+	local bloom = Lighting:FindFirstChild("Bloom")
+	if bloom then bloom.Enabled = false end
+	local cctvFilter = Lighting:FindFirstChild("CCTVFilter")
+	if cctvFilter then cctvFilter.Enabled = false end
+
+	-- Reset player state
+	isSprinting = false
+	stamina = Config.MAX_STAMINA
+	isPhoneActive = false
+	phoneDialogueComplete = false
+	dialogueSkipRequested = false
+	selectedItem = nil
+
 	showNightStart(nightNum)
 end)
 
@@ -1022,7 +1088,25 @@ end)
 local retryBtn = deathFrame:FindFirstChild("RetryButton")
 if retryBtn then
 	retryBtn.MouseButton1Click:Connect(function()
+		-- Reset all overlays before retry
 		deathScreenGui.Enabled = false
+		jumpscareScreenGui.Enabled = false
+		nightStartScreenGui.Enabled = false
+		menuScreenGui.Enabled = false
+		phoneScreenGui.Enabled = false
+		cctvScreenGui.Enabled = false
+
+		-- Reset lighting
+		Lighting.Brightness = Config.AMBIENT_BRIGHTNESS
+		Lighting.FogEnd = 1000
+		Lighting.FogStart = 0
+		local cctvFilter2 = Lighting:FindFirstChild("CCTVFilter")
+		if cctvFilter2 then cctvFilter2.Enabled = false end
+
+		-- Reset camera
+		camera.CameraType = Enum.CameraType.Custom
+		isCCTVActive = false
+
 		Remotes:WaitForChild("RequestRetry"):FireServer()
 	end)
 end
@@ -1437,6 +1521,7 @@ local savedNightProgress = 1
 local function showTutorial()
 	if tutorialShown then return end
 	tutorialShown = true
+	lobbyScreenGui.Enabled = false -- hide lobby to prevent double-dark overlay
 	tutorialScreenGui.Enabled = true
 
 	-- Wire dismiss button
@@ -1713,4 +1798,4 @@ end)
 -- Initialize CCTV
 initCCTV()
 
-print("[ClientController] v4.0 — Client initialized for " .. player.Name)
+print("[ClientController] v4.1 — Client initialized for " .. player.Name)

@@ -676,11 +676,9 @@ nightStartBindable.Event:Connect(function(player, nightNum)
 	end)
 end)
 
--- Clean up NPCs when night ends
-Remotes:WaitForChild("EndNight").OnClientEvent = nil -- Server doesn't listen to OnClientEvent
+-- Clean up NPCs when night ends (via BindableEvent from GameManager)
+local NightEndBindable = ServerStorage:WaitForChild("NightEndBindable")
 
--- Listen for EndNight sent from client (night survived or death)
--- We need to stop NPC spawning and clean up
 local function cleanupNPCsForPlayer(player)
 	nightActivePerPlayer[player] = nil
 	nightNumPerPlayer[player] = nil
@@ -698,10 +696,8 @@ local function cleanupNPCsForPlayer(player)
 	end
 end
 
--- When StartNight fires to client, we already started spawning.
--- When EndNight fires from server, we should stop spawning.
--- Listen for EndNight remote (server→client, but we intercept the server-side trigger)
-Remotes:WaitForChild("EndNight").OnServerEvent:Connect(function(player)
+-- Listen for NightEndBindable from GameManager (night survived or death)
+NightEndBindable.Event:Connect(function(player)
 	cleanupNPCsForPlayer(player)
 end)
 

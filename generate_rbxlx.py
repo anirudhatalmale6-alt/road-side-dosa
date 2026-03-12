@@ -1422,6 +1422,8 @@ def generate():
 {prop_string("Name", "ServerStorage")}
 </Properties>
 {make_bindable_event("NightStartBindable")}
+{make_bindable_event("NightEndBindable")}
+{make_bindable_event("SyncPlayerData")}
 </Item>
 
 <!-- === STARTER GUI === -->
