@@ -58,19 +58,33 @@ local function cleanupPlayer(player)
 	GameState.nightActive[player] = nil
 end
 
--- Set night atmosphere
+-- Set night atmosphere (progressively darker and more oppressive)
 local function setNightAtmosphere(nightNum)
-	local brightness = Config.AMBIENT_BRIGHTNESS - (nightNum * 0.03)
-	Lighting.Brightness = math.max(brightness, 0.05)
-	Lighting.ClockTime = 22 -- 10 PM
-	Lighting.FogEnd = 200 - (nightNum * 20)
-	Lighting.FogColor = Color3.fromRGB(10, 5, 15)
+	local brightness = Config.AMBIENT_BRIGHTNESS - (nightNum * 0.04)
+	Lighting.Brightness = math.max(brightness, 0.02)
+	Lighting.ClockTime = 22 + (nightNum * 0.5) -- Gets later each night (22:00 → 00:30)
+	Lighting.FogEnd = 200 - (nightNum * 30)
+	Lighting.FogColor = Color3.fromRGB(10 - nightNum, 5 - nightNum, 15 - nightNum * 2)
 
 	local atmosphere = Lighting:FindFirstChild("NightAtmosphere")
 	if atmosphere then
-		atmosphere.Density = 0.3 + (nightNum * 0.05)
-		atmosphere.Glare = 0.1
-		atmosphere.Haze = 2 + nightNum
+		atmosphere.Density = 0.3 + (nightNum * 0.08)
+		atmosphere.Glare = 0.05 + (nightNum * 0.03)
+		atmosphere.Haze = 2 + (nightNum * 1.5)
+	end
+
+	-- Color correction gets more intense each night
+	local colorEffect = Lighting:FindFirstChild("HorrorColor")
+	if colorEffect then
+		colorEffect.Contrast = 0.15 + (nightNum * 0.05)
+		colorEffect.Saturation = -0.3 - (nightNum * 0.1)
+		colorEffect.Brightness = -0.05 - (nightNum * 0.02)
+	end
+
+	-- Bloom intensifies
+	local bloom = Lighting:FindFirstChild("HorrorBloom")
+	if bloom then
+		bloom.Intensity = 0.4 + (nightNum * 0.1)
 	end
 end
 

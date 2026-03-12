@@ -951,10 +951,13 @@ def build_ui():
     death_children = "\n".join([
         make_textlabel("YouDiedLabel", "YOU DIED", "0.25,0,0.2,0", "0.5,0,0,60",
                        text_color=(0.8,0,0), font=8),
-        make_textlabel("CauseLabel", "", "0.2,0,0.4,0", "0.6,0,0,30",
+        make_textlabel("CauseLabel", "", "0.2,0,0.38,0", "0.6,0,0,30",
                        text_color=(0.7,0.7,0.7), font=4),
-        make_textlabel("NightLabel", "Night 1", "0.35,0,0.5,0", "0.3,0,0,25",
+        make_textlabel("NightLabel", "Night 1", "0.35,0,0.46,0", "0.3,0,0,25",
                        text_color=(0.5,0.5,0.5), font=4),
+        # Gameplay tip after death
+        make_textlabel("TipLabel", "", "0.15,0,0.54,0", "0.7,0,0,22",
+                       text_color=(1,0.8,0.3), font=4, visible=False),
         make_textbutton("RetryButton", "RETRY", "0.35,0,0.65,0", "0.3,0,0,50",
                         bg_color=(0.6,0.1,0.1), text_color=(1,1,1),
                         children=make_uicorner(8)),
@@ -1086,7 +1089,28 @@ def build_ui():
     leaderboard = make_frame("LeaderboardUI", "0,0,0,0", "1,0,1,0", bg_color=(0,0,0),
                              bg_transparency=0.4, visible=True, children=leaderboard_children, zindex=6)
 
+    # --- Victory Screen ---
+    victory_children = "\n".join([
+        make_frame("VictoryBG", "0,0,0,0", "1,0,1,0", bg_color=(0.02,0.01,0.03),
+                   bg_transparency=0.1),
+        make_textlabel("VictoryTitle", "YOU SURVIVED ALL 5 NIGHTS!", "0.1,0,0.08,0", "0.8,0,0,70",
+                       text_color=(1,0.85,0), font=8),
+        make_textlabel("VictorySubtitle", "MASTER CHEF", "0.25,0,0.2,0", "0.5,0,0,35",
+                       text_color=(1,0.6,0), font=8),
+        make_textlabel("StatsLabel", "Loading stats...", "0.15,0,0.3,0", "0.7,0,0.4,0",
+                       text_color=(0.85,0.85,0.85), font=4, text_scaled=True),
+        make_textlabel("VictoryQuote", '"The Dhaba will remember you..."',
+                       "0.2,0,0.75,0", "0.6,0,0,25",
+                       text_color=(0.5,0.3,0.3), font=4),
+        make_textbutton("PlayAgainButton", "PLAY AGAIN", "0.35,0,0.82,0", "0.3,0,0,50",
+                        bg_color=(0.1,0.6,0.2), text_color=(1,1,1),
+                        children=make_uicorner(10)),
+    ])
+    victory = make_frame("VictoryUI", "0,0,0,0", "1,0,1,0", bg_transparency=0,
+                          children=victory_children, zindex=11)
+
     # Each overlay goes into its own ScreenGui with Enabled=false
+    victory_gui = make_screengui("VictoryScreenGui", victory, enabled=False, display_order=11)
     lobby_gui = make_screengui("LobbyScreenGui", lobby, enabled=True, display_order=0)
     main_gui = make_screengui("MainUI", "\n".join([hud]), enabled=True, display_order=1)
     phone_gui = make_screengui("PhoneScreenGui", "\n".join([phone, dialogue]), enabled=False, display_order=5)
@@ -1098,7 +1122,7 @@ def build_ui():
     gamepass_gui = make_screengui("GamePassScreenGui", gamepass, enabled=False, display_order=6)
     leaderboard_gui = make_screengui("LeaderboardScreenGui", leaderboard, enabled=False, display_order=6)
 
-    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui, gamepass_gui, leaderboard_gui])
+    return "\n".join([lobby_gui, main_gui, phone_gui, cctv_gui, death_gui, menu_gui, jumpscare_gui, nightstart_gui, gamepass_gui, leaderboard_gui, victory_gui])
 
 # === BUILD REMOTE EVENTS ===
 def build_remotes():

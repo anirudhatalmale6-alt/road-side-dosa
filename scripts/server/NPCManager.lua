@@ -389,9 +389,10 @@ local function createNPCModel(npcType, template)
 	torso.CanCollide = false
 	head.CanCollide = false
 
-	-- Humanoid
+	-- Humanoid (walk speed scales up slightly with night number)
 	local humanoid = Instance.new("Humanoid")
-	humanoid.WalkSpeed = template.walkSpeed
+	local nightBonus = ((nightNumPerPlayer[Players:GetPlayers()[1]] or 1) - 1) * 1
+	humanoid.WalkSpeed = template.walkSpeed + nightBonus
 	humanoid.MaxHealth = 100
 	humanoid.Health = 100
 	humanoid.Parent = model
@@ -428,6 +429,44 @@ local function createNPCModel(npcType, template)
 	model:SetAttribute("IsAnomaly", template.isAnomaly)
 
 	return model
+end
+
+-- Track how many active customers per player (for one-at-a-time logic)
+local activeCustomerCountPerPlayer = {} -- [player] = number
+
+-- Walk NPC out through door then destroy
+local function walkNPCOut(npc, targetPlayer)
+	local humanoid = npc:FindFirstChildOfClass("Humanoid")
+	if humanoid and npc.Parent then
+		-- Walk to door first
+		local doorPos = Vector3.new(0, 1, 14)
+		humanoid:MoveTo(doorPos)
+		humanoid.MoveToFinished:Connect(function(reached)
+			if reached and npc and npc.Parent then
+				-- Walk outside
+				local exitPos = Vector3.new(0, 1, 22)
+				humanoid:MoveTo(exitPos)
+				humanoid.MoveToFinished:Connect(function()
+					if npc and npc.Parent then
+						npc:Destroy()
+						activeNPCs[npc] = nil
+					end
+					if activeCustomerCountPerPlayer[targetPlayer] then
+						activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+					end
+				end)
+			end
+		end)
+	else
+		-- Fallback: just destroy
+		if npc and npc.Parent then
+			npc:Destroy()
+			activeNPCs[npc] = nil
+		end
+		if activeCustomerCountPerPlayer[targetPlayer] then
+			activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
+		end
+	end
 end
 
 -- Spawn an NPC
@@ -477,6 +516,25 @@ local function spawnNPC(npcType, targetPlayer)
 			if reached and model and model.Parent then
 				-- Now walk to counter
 				humanoid:MoveTo(counterPos)
+			end
+		end)
+	end
+
+	-- Dancing Guy: animate arms swinging back and forth
+	if npcType == "DancingGuy" then
+		task.spawn(function()
+			local leftArm = model:FindFirstChild("Left Arm")
+			local rightArm = model:FindFirstChild("Right Arm")
+			local torso = model:FindFirstChild("Torso")
+			if leftArm and rightArm and torso then
+				local phase = 0
+				while model and model.Parent and activeNPCs[model] do
+					phase = phase + 1
+					local swing = math.sin(phase * 0.5) * 1.5
+					leftArm.Position = torso.Position + Vector3.new(-1.3, swing, 0)
+					rightArm.Position = torso.Position + Vector3.new(1.3, -swing, 0)
+					task.wait(0.1)
+				end
 			end
 		end)
 	end
@@ -537,9 +595,6 @@ local function spawnNPC(npcType, targetPlayer)
 	return model
 end
 
--- Track how many active customers per player (for one-at-a-time logic)
-local activeCustomerCountPerPlayer = {} -- [player] = number
-
 -- NPC Spawning loop per player per night (uses NPCManager's own state)
 local function nightNPCLoop(player, nightNum)
 	local nightInfo = NightData.Nights[nightNum]
@@ -556,7 +611,10 @@ local function nightNPCLoop(player, nightNum)
 	local elapsed = 0
 
 	while nightActivePerPlayer[player] do
-		local waitTime = Config.NPC_SPAWN_INTERVAL + math.random(-3, 5)
+		-- Spawn interval gets shorter on harder nights (20s → 14s on night 5)
+		local nightSpeedBonus = (nightNum - 1) * 1.5
+		local waitTime = Config.NPC_SPAWN_INTERVAL - nightSpeedBonus + math.random(-3, 5)
+		waitTime = math.max(waitTime, 10) -- Min 10 seconds
 		task.wait(waitTime)
 		elapsed = elapsed + waitTime
 
@@ -653,41 +711,6 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 -- Handle serve success: remove NPC from active tracking
--- Walk NPC out through door then destroy
-local function walkNPCOut(npc, targetPlayer)
-	local humanoid = npc:FindFirstChildOfClass("Humanoid")
-	if humanoid and npc.Parent then
-		-- Walk to door first
-		local doorPos = Vector3.new(0, 1, 14)
-		humanoid:MoveTo(doorPos)
-		humanoid.MoveToFinished:Connect(function(reached)
-			if reached and npc and npc.Parent then
-				-- Walk outside
-				local exitPos = Vector3.new(0, 1, 22)
-				humanoid:MoveTo(exitPos)
-				humanoid.MoveToFinished:Connect(function()
-					if npc and npc.Parent then
-						npc:Destroy()
-						activeNPCs[npc] = nil
-					end
-					if activeCustomerCountPerPlayer[targetPlayer] then
-						activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
-					end
-				end)
-			end
-		end)
-	else
-		-- Fallback: just destroy
-		if npc and npc.Parent then
-			npc:Destroy()
-			activeNPCs[npc] = nil
-		end
-		if activeCustomerCountPerPlayer[targetPlayer] then
-			activeCustomerCountPerPlayer[targetPlayer] = math.max(0, activeCustomerCountPerPlayer[targetPlayer] - 1)
-		end
-	end
-end
-
 Remotes:WaitForChild("ServeCustomer").OnServerEvent:Connect(function(player, npcId, itemName)
 	-- Find the NPC model that was served
 	local npcsFolder = workspace:FindFirstChild("NPCs")

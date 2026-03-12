@@ -528,19 +528,32 @@ local function showDeathScreen(data)
 	local causeLabel = deathFrame:FindFirstChild("CauseLabel")
 	if causeLabel then
 		local causeText = "You died."
+		local tipText = ""
 		if data.cause then
 			if string.find(data.cause, "gaze") then
-				causeText = "You stared too long..."
-			elseif string.find(data.cause, "truck") then
-				causeText = "The shutters were open... it got in."
+				causeText = "You stared too long into the abyss..."
+				tipText = "TIP: Don't look at cursed objects for more than 5 seconds"
+			elseif string.find(data.cause, "truck_open") then
+				causeText = "The shutters were open... It crawled in."
+				tipText = "TIP: Press [1] [2] [3] to close all shutters when the truck arrives"
 			elseif string.find(data.cause, "saree") then
-				causeText = "You looked at her face..."
+				causeText = "You looked at her face... She was waiting for that."
+				tipText = "TIP: Serve her but NEVER look at her face. Keep your gaze down."
 			elseif string.find(data.cause, "wrong_order") then
-				causeText = "You served the wrong item..."
+				causeText = "Wrong order. He didn't appreciate that."
+				tipText = "TIP: Listen to the manager's rules about what to serve each customer"
 			elseif string.find(data.cause, "should_not_serve") then
-				causeText = "You shouldn't have served him..."
+				causeText = "You shouldn't have served him... He wasn't human."
+				tipText = "TIP: Some customers should be IGNORED completely"
+			elseif string.find(data.cause, "suthan_lights") then
+				causeText = "Suthan found you with the lights on..."
+				tipText = "TIP: Spill batter, turn OFF lights, then RUN to the back room"
 			elseif string.find(data.cause, "suthan") then
-				causeText = "Suthan caught you..."
+				causeText = "Suthan caught you... There was no escape."
+				tipText = "TIP: Press [G] to spill batter, [L] for lights, then run to the back!"
+			elseif string.find(data.cause, "fatal") then
+				causeText = "A fatal mistake. The rules exist for a reason."
+				tipText = "TIP: Follow the manager's phone instructions carefully"
 			elseif string.find(data.cause, "friend_prank") then
 				causeText = "A friend pranked you! (Not a real death)"
 				task.wait(2)
@@ -550,6 +563,15 @@ local function showDeathScreen(data)
 			end
 		end
 		causeLabel.Text = causeText
+
+		-- Show gameplay tip
+		local tipLabel = deathFrame:FindFirstChild("TipLabel")
+		if tipLabel and tipText ~= "" then
+			tipLabel.Text = tipText
+			tipLabel.Visible = true
+		elseif tipLabel then
+			tipLabel.Visible = false
+		end
 	end
 
 	local nightLabel = deathFrame:FindFirstChild("NightLabel")
@@ -900,17 +922,41 @@ end)
 
 Remotes:WaitForChild("NightComplete").OnClientEvent:Connect(function(result)
 	if result == "victory" then
-		-- Victory screen
+		-- Victory screen with stats
 		stopSound("AmbientHorror")
 		stopSound("HeartbeatSound")
 		playSound("VictorySound")
 		deathScreenGui.Enabled = false
-		nightStartScreenGui.Enabled = true
-		local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
-		if titleLabel then
-			titleLabel.Text = "YOU SURVIVED ALL 5 NIGHTS!"
-			titleLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
-			titleLabel.TextTransparency = 0
+
+		-- Show the victory screen
+		local victoryScreenGui = playerGui:FindFirstChild("VictoryScreenGui")
+		if victoryScreenGui then
+			victoryScreenGui.Enabled = true
+			-- Animate title
+			local victoryFrame = victoryScreenGui:FindFirstChild("VictoryUI")
+			if victoryFrame then
+				local titleLbl = victoryFrame:FindFirstChild("VictoryTitle")
+				if titleLbl then
+					titleLbl.TextTransparency = 1
+					TweenService:Create(titleLbl, TweenInfo.new(1.5, Enum.EasingStyle.Sine), {TextTransparency = 0}):Play()
+				end
+				-- Display stats
+				local statsLbl = victoryFrame:FindFirstChild("StatsLabel")
+				if statsLbl then
+					local currencyLbl = hudFrame:FindFirstChild("CurrencyLabel")
+					local earnings = currencyLbl and currencyLbl.Text or "$0"
+					statsLbl.Text = "FINAL STATS\n\nNights Survived: 5/5\nTotal Earnings: " .. earnings .. "\nRating: MASTER CHEF\n\nYou conquered Road Side Dosa!\nThe horrors of the Dhaba are behind you...\n\n...or are they?"
+				end
+			end
+		else
+			-- Fallback: use night start screen
+			nightStartScreenGui.Enabled = true
+			local titleLabel = nightStartFrame:FindFirstChild("TitleLabel")
+			if titleLabel then
+				titleLabel.Text = "YOU SURVIVED ALL 5 NIGHTS!"
+				titleLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
+				titleLabel.TextTransparency = 0
+			end
 		end
 		Remotes:WaitForChild("GameCompleted"):FireServer()
 	end
@@ -1069,6 +1115,55 @@ RunService.Heartbeat:Connect(function()
 		local dist = (hrp.Position - safeTrigger.Position).Magnitude
 		if dist < 6 then
 			Remotes:WaitForChild("ReachedSafeRoom"):FireServer()
+		end
+	end
+end)
+
+-- === AMBIENT HORROR EFFECTS ===
+-- Random creepy events during night gameplay
+task.spawn(function()
+	while true do
+		task.wait(math.random(15, 40)) -- Random interval
+		if not isAlive or currentNight == 0 then continue end
+
+		local roll = math.random(1, 6)
+		if roll == 1 then
+			-- Random whisper sound
+			playSound("WhisperSound")
+		elseif roll == 2 then
+			-- Brief screen flicker
+			local colorCorrection = Lighting:FindFirstChild("HorrorColor")
+			if colorCorrection then
+				local origBrightness = colorCorrection.Brightness
+				colorCorrection.Brightness = -0.3
+				task.wait(0.1)
+				colorCorrection.Brightness = origBrightness
+			end
+		elseif roll == 3 then
+			-- Subtle heartbeat for 2 seconds
+			playSound("HeartbeatSound")
+			task.wait(2)
+			stopSound("HeartbeatSound")
+		elseif roll == 4 then
+			-- Creepy floating text
+			local messages = {
+				"Did you hear that?",
+				"Something moved...",
+				"Don't look behind you...",
+				"Is someone watching?",
+				"The walls are breathing...",
+				"Trust no one.",
+			}
+			showFloatingText(messages[math.random(1, #messages)], Color3.fromRGB(100, 50, 50))
+		elseif roll == 5 then
+			-- Ceiling fan creak sound
+			playSound("DoorCreak")
+		elseif roll == 6 then
+			-- Brief fog change
+			local origFog = Lighting.FogEnd
+			Lighting.FogEnd = origFog * 0.5
+			task.wait(0.5)
+			Lighting.FogEnd = origFog
 		end
 	end
 end)
